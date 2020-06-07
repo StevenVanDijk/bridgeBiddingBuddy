@@ -9,44 +9,31 @@ from enum import Enum
 class BridgeBiddingBuddy(App):
     currentBidding = None
 
-    def ts(self, symb):
-        if symb == k:
-            return '♣'
-        if symb == r:
-            return '♦'
-        if symb == h:
-            return '♥'
-        if symb == s:
-            return '♠'
-
     def build(self):
-        self.currentBidding = GridLayout(cols=4)
-        
+
         bidLayout = BoxLayout()
         def addButtons(addedbuttons):
             result = BoxLayout()
             for elem in addedbuttons:
                 AButton = Button(text=elem)
-                AButton = elem
                 result.add_widget(AButton)
             return result
             
 
         # Every row and it's value. Row 0 is the last including pass, X, XX
         bidLayout1 = addButtons(['1kl', '1ru', '1ha', '1sc'])
-        bidLayout2 = None
-        bidLayout3 = None
-        bidLayout4 = None
-        bidLayout5 = None
-        bidLayout6 = None
-        bidLayout7 = None
-        bidLayout0 = None
+        bidLayout2 = addButtons(['2kl', '2ru', '2ha', '2sc'])
+        bidLayout3 = addButtons(['3kl', '3ru', '3ha', '3sc'])
+        bidLayout4 = addButtons(['4kl', '4ru', '4ha', '4sc'])
+        bidLayout5 = addButtons(['5kl', '5ru', '5ha', '5sc'])
+        bidLayout6 = addButtons(['6kl', '6ru', '6ha', '6sc'])
+        bidLayout7 = addButtons(['7kl', '7ru', '7ha', '7sc'])
+        bidLayout0 = addButtons(['pass', 'X', 'XX'])
 
         bidLayout.add_widget(bidLayout1)
 
         rootLayout = BoxLayout()
-        rootLayout.add_widget(self.currentBidding)
-        return rootLayout
+        return bidLayout
 
 if __name__ == '__main__':
     app = BridgeBiddingBuddy()

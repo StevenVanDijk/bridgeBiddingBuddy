@@ -11,7 +11,7 @@ class BridgeBiddingBuddy(App):
 
     def build(self):
 
-        bidLayout = BoxLayout()
+        bidLayout = BoxLayout(orientation='vertical')
         def addButtons(addedbuttons):
             result = BoxLayout()
             for elem in addedbuttons:
@@ -31,6 +31,14 @@ class BridgeBiddingBuddy(App):
         bidLayout0 = addButtons(['pass', 'X', 'XX'])
 
         bidLayout.add_widget(bidLayout1)
+        bidLayout.add_widget(bidLayout2)
+        bidLayout.add_widget(bidLayout3)
+        bidLayout.add_widget(bidLayout4)
+        bidLayout.add_widget(bidLayout5)
+        bidLayout.add_widget(bidLayout6)
+        bidLayout.add_widget(bidLayout7)
+        bidLayout.add_widget(bidLayout0)
+    
 
         rootLayout = BoxLayout()
         return bidLayout

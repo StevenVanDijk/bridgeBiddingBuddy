@@ -9,12 +9,10 @@ from enum import Enum
 
 class BridgeBiddingBuddy(App):
     currentBidding = None
-    bidTxt = None
     defaultHeight = 50
 
-    def onAddBid(self, instance):
-        self.currentBidding.add_widget(Label(text=instance.text))
-        self.bidTxt.focus = True
+    def onAddBid(self, value):
+        self.currentBidding.add_widget(Label(text=value))
 
     def ts(self, symb):
         if symb == 'k':
@@ -49,6 +47,7 @@ class BridgeBiddingBuddy(App):
             result = BoxLayout()
             for elem in addedbuttons:
                 AButton = Button(text=elem)
+                AButton.bind(on_press=lambda instance: self.onAddBid(elem))
                 result.add_widget(AButton)
             return result
             

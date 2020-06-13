@@ -12,9 +12,9 @@ from kivy.properties import ListProperty
 from kivy.core.window import Window
 
 class BridgeBiddingBuddy(App):
-    currentBidding = None
-    defaultHeight = 50
-    lastBidOrder = 0
+    # constants
+    defaultHeight = 40
+    playOrder = ["N", "E", "S", "W"]
     buttonsDict = {
         '1♣': 1, '2♣': 5, '3♣': 9, '4♣': 13, '5♣': 17, '6♣': 21, '7♣': 25,
         '1♦': 2, '2♦': 6, '3♦': 10, '4♦': 14, '5♦': 18, '6♦': 22, '7♦': 26,
@@ -22,42 +22,89 @@ class BridgeBiddingBuddy(App):
         '1♠': 4, '2♠': 8, '3♠': 12, '4♠': 16, '5♠': 20, '6♠': 24, '7♠': 28  
     }
 
-    def buildLabel(self, txt):
+    currentBidding = []
+    leftLayout: BoxLayout = None
+    whoStarts = 'N'
+
+    def getColor(self, txt):
         textColor = [0,1,0,1] 
         if '♣' in txt or '♠' in txt:
             textColor = [0,0,0,1]
         if '♦' in txt or '♥' in txt:
             textColor = [1,0,0,1]
-        return Label(color=textColor, text=txt, size_hint=(1.0, None),  height=self.defaultHeight, font_name='./consola.ttf')
+        return textColor
+
+    def buildButton(self, txt, callback):
+        btn = Button(color=self.getColor(txt), text=txt, size_hint=(1.0, None),  height=self.defaultHeight * 2, font_name='./consola.ttf')
+        btn.bind(on_press=callback)
+        return btn
+
+    def buildLabel(self, txt):
+        return Label(color=self.getColor(txt), text=txt, size_hint=(1.0, None),  height=self.defaultHeight, font_name='./consola.ttf')
+
+    def isSpecial(self, bid):
+        return bid == 'pass' or bid == 'X' or bid == 'XX'
+
+    def getLastBidOrder(self):
+        previousBids = [elem for elem in self.currentBidding if not self.isSpecial(elem)]
+        if len(previousBids) > 0:
+            return self.buttonsDict[previousBids.pop()]
+        else:
+            return -1
 
     def onAddBid(self, bid):
-        if bid == 'pass' or bid == 'X' or bid == 'XX':
-            self.currentBidding.add_widget(self.buildLabel(bid))
-        else:
-            bidOrder = self.buttonsDict[bid]
-            if bidOrder > self.lastBidOrder:
-                self.lastBidOrder = bidOrder
-                self.currentBidding.add_widget(self.buildLabel(bid))
+        if not self.isSpecial(bid):
+            if self.buttonsDict[bid] <= self.getLastBidOrder():
+                return
+        self.currentBidding.append(bid)
+        self.updateCurrentBidding()
+
+    def onUndo(self):
+        if len(self.currentBidding) > 0: 
+            self.currentBidding.pop()
+        self.updateCurrentBidding()
+
+    def setWhoStarts(self, whoStarts):
+        if (len(self.currentBidding) == 0): 
+            self.whoStarts = whoStarts
+
+    def updateCurrentBidding(self):
+        self.leftLayout.clear_widgets()
+        undoBtn = Button(text="Undo", size_hint=(1.0, None), height=self.defaultHeight)
+        undoBtn.bind(on_press=lambda ins: self.onUndo())
+        self.leftLayout.add_widget(undoBtn)
+
+        currentBidding = GridLayout(cols=4)
+        def createCallback(whoStarts):
+            return lambda instance: self.setWhoStarts(whoStarts)
+        # create buttons for wind directions
+        for elem in self.playOrder:
+            currentBidding.add_widget(self.buildButton(elem, createCallback(elem)))
+
+        # create empty boxes to start at correct starting point
+        for i in range(0, self.playOrder.index(self.whoStarts)):
+            currentBidding.add_widget(self.buildLabel(''))      
+
+        # create labels for all bids  
+        for bid in self.currentBidding:
+            currentBidding.add_widget(self.buildLabel(bid))
+        self.leftLayout.add_widget(currentBidding)
 
     def build(self):
         Window.clearcolor = (1, 1, 1, 1)
         rootLayout = BoxLayout(orientation='horizontal')
-        leftLayout = BoxLayout(orientation='vertical')
+        self.leftLayout = BoxLayout(orientation='vertical')
         rightLayout = BoxLayout(orientation='vertical')
 
-        self.currentBidding = GridLayout(cols=4)
-        for elem in ["N", "E", "S", "W"]:
-            self.currentBidding.add_widget(self.buildLabel(elem))        
-        leftLayout.add_widget(self.currentBidding)
+        self.updateCurrentBidding()
 
         bidLayout = BoxLayout(orientation='vertical')
         def addButtons(addedbuttons):
             result = BoxLayout()
             for elem in addedbuttons:
-                AButton = Button(text=elem, font_name='./consola.ttf')
                 def createCallback(elem):
                     return lambda instance: self.onAddBid(elem)
-                AButton.bind(on_press=createCallback(elem))
+                AButton = self.buildButton(elem, createCallback(elem))
                 self.lastBid = elem
                 result.add_widget(AButton)
             return result            
@@ -82,7 +129,7 @@ class BridgeBiddingBuddy(App):
         bidLayout.add_widget(bidLayout0)
 
         rightLayout.add_widget(bidLayout)
-        rootLayout.add_widget(leftLayout)
+        rootLayout.add_widget(self.leftLayout)
         rootLayout.add_widget(rightLayout)
 
         return rootLayout

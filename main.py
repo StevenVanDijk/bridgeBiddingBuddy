@@ -5,6 +5,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
+from kivy.uix.anchorlayout import AnchorLayout
 from enum import Enum
 from kivy.uix.anchorlayout import AnchorLayout
 
@@ -12,42 +13,32 @@ class BridgeBiddingBuddy(App):
     currentBidding = None
     defaultHeight = 50
 
-    def onAddBid(self, value):
-        self.currentBidding.add_widget(Label(text=value))
+    def buildLabel(self, txt):
+        return Label(text=txt, size_hint=(1.0, None),  height=self.defaultHeight)
 
+    def onAddBid(self, value):
+        self.currentBidding.add_widget(self.buildLabel(value))
 
     def build(self):
         rootLayout = BoxLayout(orientation='horizontal')
         leftLayout = BoxLayout(orientation='vertical')
         rightLayout = BoxLayout(orientation='vertical')
 
-        NOSWlayout = AnchorLayout(
-            anchor_x='center', anchor_y='top')
+        self.currentBidding = GridLayout(cols=4)
         for elem in ["N", "E", "S", "W"]:
-            NOSWlayout.add_widget(Label(text=elem))
-
-
-        
-       
-
-        self.currentBidding = GridLayout(cols=4, size_hint=(1.0, None), height=self.defaultHeight)
-        
-        leftLayout.add_widget(NOSWlayout)
+            self.currentBidding.add_widget(self.buildLabel(elem))        
         leftLayout.add_widget(self.currentBidding)
-
-        self.bidTxt = TextInput(text='', multiline=False)
-        self.bidTxt.bind(on_text_validate=lambda instance: self.onAddBid(instance))
-        rightLayout.add_widget(self.bidTxt)
 
         bidLayout = BoxLayout(orientation='vertical')
         def addButtons(addedbuttons):
             result = BoxLayout()
             for elem in addedbuttons:
                 AButton = Button(text=elem)
-                AButton.bind(on_press=lambda instance: self.onAddBid(elem))
+                def createCallback(elem):
+                    return lambda instance: self.onAddBid(elem)
+                AButton.bind(on_press=createCallback(elem))
                 result.add_widget(AButton)
-            return result
-            
+            return result            
 
         # Every row and it's value. Row 0 is the last including pass, X, XX
         bidLayout1 = addButtons(['1♣', '1♦', '1♥', '1♠'])

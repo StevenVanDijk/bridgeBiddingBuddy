@@ -16,15 +16,18 @@ class BridgeBiddingBuddy(App):
     defaultHeight = 40
     playOrder = ["N", "E", "S", "W"]
     buttonsDict = {
-        '1♣': 1, '2♣': 5, '3♣': 9, '4♣': 13, '5♣': 17, '6♣': 21, '7♣': 25,
-        '1♦': 2, '2♦': 6, '3♦': 10, '4♦': 14, '5♦': 18, '6♦': 22, '7♦': 26,
-        '1♥': 3, '2♥': 7, '3♥': 11, '4♥': 15, '5♥': 19, '6♥': 23, '7♥': 27,
-        '1♠': 4, '2♠': 8, '3♠': 12, '4♠': 16, '5♠': 20, '6♠': 24, '7♠': 28  
+        '1♣': 1, '2♣': 4, '3♣': 9, '4♣': 14, '5♣': 19, '6♣': 24, '7♣': 29,
+        '1♦': 2, '2♦': 5, '3♦': 10, '4♦': 15, '5♦': 20, '6♦': 25, '7♦': 30,
+        '1♥': 3, '2♥': 6, '3♥': 11, '4♥': 16, '5♥': 21, '6♥': 26, '7♥': 31,
+        '1♠': 4, '2♠': 7, '3♠': 12, '4♠': 17, '5♠': 22, '6♠': 27, '7♠': 32,
+        '1SA': 5, '2SA': 8, '3SA': 13, '4SA': 18, '5SA': 23, '6SA': 28, '7SA': 33
     }
 
     currentBidding = []
     leftLayout: BoxLayout = None
     whoStarts = 'N'
+    count_passes = 0
+
 
     def getColor(self, txt):
         textColor = [0,1,0,1] 
@@ -57,6 +60,7 @@ class BridgeBiddingBuddy(App):
             if self.buttonsDict[bid] <= self.getLastBidOrder():
                 return
         self.currentBidding.append(bid)
+
         self.updateCurrentBidding()
 
     def onUndo(self):
@@ -68,27 +72,51 @@ class BridgeBiddingBuddy(App):
         if (len(self.currentBidding) == 0): 
             self.whoStarts = whoStarts
 
+    def clearBidding(self, instance):
+        self.currentBidding.clear()
+
     def updateCurrentBidding(self):
+        def stop_bidding():
+            def clearBidding(instance):
+                self.updateCurrentBidding()
+                self.currentBidding.clear()
+                
+            clearButton = Button(size_hint=(5.0, None))
+            self.leftLayout.add_widget(clearButton)
+            clearButton.bind(on_press= clearBidding)
+
+        def rebuilding():
+            undoBtn = Button(text="Undo", size_hint=(1.0, None), height=self.defaultHeight)
+            undoBtn.bind(on_press=lambda ins: self.onUndo())
+            self.leftLayout.add_widget(undoBtn)
+
+            currentBidding = GridLayout(cols=4)
+            def createCallback(whoStarts):
+                return lambda instance: self.setWhoStarts(whoStarts)
+            # create buttons for wind directions
+            for elem in self.playOrder:
+                currentBidding.add_widget(self.buildButton(elem, createCallback(elem)))
+
+            # create empty boxes to start at correct starting point
+            for i in range(0, self.playOrder.index(self.whoStarts)):
+                currentBidding.add_widget(self.buildLabel(''))      
+
+            # create labels for all bids  
+            for bid in self.currentBidding:
+                currentBidding.add_widget(self.buildLabel(bid))
+            self.leftLayout.add_widget(currentBidding)
+
         self.leftLayout.clear_widgets()
-        undoBtn = Button(text="Undo", size_hint=(1.0, None), height=self.defaultHeight)
-        undoBtn.bind(on_press=lambda ins: self.onUndo())
-        self.leftLayout.add_widget(undoBtn)
 
-        currentBidding = GridLayout(cols=4)
-        def createCallback(whoStarts):
-            return lambda instance: self.setWhoStarts(whoStarts)
-        # create buttons for wind directions
-        for elem in self.playOrder:
-            currentBidding.add_widget(self.buildButton(elem, createCallback(elem)))
-
-        # create empty boxes to start at correct starting point
-        for i in range(0, self.playOrder.index(self.whoStarts)):
-            currentBidding.add_widget(self.buildLabel(''))      
-
-        # create labels for all bids  
-        for bid in self.currentBidding:
-            currentBidding.add_widget(self.buildLabel(bid))
-        self.leftLayout.add_widget(currentBidding)
+        count_biddings = len(self.currentBidding)
+        if count_biddings >= 3:
+            if self.currentBidding[-1] == 'pass' and self.currentBidding[-2] == 'pass' and self.currentBidding[-3] == 'pass':
+                stop_bidding() 
+            else:
+                rebuilding()   
+        else:
+            rebuilding()
+            
 
     def build(self):
         Window.clearcolor = (1, 1, 1, 1)
@@ -110,13 +138,13 @@ class BridgeBiddingBuddy(App):
             return result            
 
         # Every row and it's value. Row 0 is the last including pass, X, XX
-        bidLayout1 = addButtons(['1♣', '1♦', '1♥', '1♠'])
-        bidLayout2 = addButtons(['2♣', '2♦', '2♥', '2♠'])
-        bidLayout3 = addButtons(['3♣', '3♦', '3♥', '3♠'])
-        bidLayout4 = addButtons(['4♣', '4♦', '4♥', '4♠'])
-        bidLayout5 = addButtons(['5♣', '5♦', '5♥', '5♠'])
-        bidLayout6 = addButtons(['6♣', '6♦', '6♥', '6♠'])
-        bidLayout7 = addButtons(['7♣', '7♦', '7♥', '7♠'])
+        bidLayout1 = addButtons(['1♣', '1♦', '1♥', '1♠', '1SA'])
+        bidLayout2 = addButtons(['2♣', '2♦', '2♥', '2♠', '2SA'])
+        bidLayout3 = addButtons(['3♣', '3♦', '3♥', '3♠', '3SA'])
+        bidLayout4 = addButtons(['4♣', '4♦', '4♥', '4♠', '4SA'])
+        bidLayout5 = addButtons(['5♣', '5♦', '5♥', '5♠', '5SA'])
+        bidLayout6 = addButtons(['6♣', '6♦', '6♥', '6♠', '6SA'])
+        bidLayout7 = addButtons(['7♣', '7♦', '7♥', '7♠', '7SA'])
         bidLayout0 = addButtons(['pass', 'X', 'XX'])
 
         bidLayout.add_widget(bidLayout1)
@@ -133,8 +161,6 @@ class BridgeBiddingBuddy(App):
         rootLayout.add_widget(rightLayout)
 
         return rootLayout
-
-            
 
 if __name__ == '__main__':
     app = BridgeBiddingBuddy()

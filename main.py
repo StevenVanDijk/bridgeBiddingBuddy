@@ -6,6 +6,7 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from enum import Enum
+from kivy.uix.anchorlayout import AnchorLayout
 
 class BridgeBiddingBuddy(App):
     currentBidding = None
@@ -14,24 +15,20 @@ class BridgeBiddingBuddy(App):
     def onAddBid(self, value):
         self.currentBidding.add_widget(Label(text=value))
 
-    def ts(self, symb):
-        if symb == 'k':
-            return '♣'
-        if symb == 'r':
-            return '♦'
-        if symb == 'h':
-            return '♥'
-        if symb == 's':
-            return '♠'
 
     def build(self):
         rootLayout = BoxLayout(orientation='horizontal')
         leftLayout = BoxLayout(orientation='vertical')
         rightLayout = BoxLayout(orientation='vertical')
 
-        NOSWlayout = BoxLayout(orientation='horizontal', size_hint=(1.0, None), height=self.defaultHeight)
+        NOSWlayout = AnchorLayout(
+            anchor_x='center', anchor_y='top')
         for elem in ["N", "E", "S", "W"]:
             NOSWlayout.add_widget(Label(text=elem))
+
+
+        
+       
 
         self.currentBidding = GridLayout(cols=4, size_hint=(1.0, None), height=self.defaultHeight)
         
@@ -53,13 +50,13 @@ class BridgeBiddingBuddy(App):
             
 
         # Every row and it's value. Row 0 is the last including pass, X, XX
-        bidLayout1 = addButtons(['1kl', '1ru', '1ha', '1sc'])
-        bidLayout2 = addButtons(['2kl', '2ru', '2ha', '2sc'])
-        bidLayout3 = addButtons(['3kl', '3ru', '3ha', '3sc'])
-        bidLayout4 = addButtons(['4kl', '4ru', '4ha', '4sc'])
-        bidLayout5 = addButtons(['5kl', '5ru', '5ha', '5sc'])
-        bidLayout6 = addButtons(['6kl', '6ru', '6ha', '6sc'])
-        bidLayout7 = addButtons(['7kl', '7ru', '7ha', '7sc'])
+        bidLayout1 = addButtons(['1♣', '1♦', '1♥', '1♠'])
+        bidLayout2 = addButtons(['2♣', '2♦', '2♥', '2♠'])
+        bidLayout3 = addButtons(['3♣', '3♦', '3♥', '3♠'])
+        bidLayout4 = addButtons(['4♣', '4♦', '4♥', '4♠'])
+        bidLayout5 = addButtons(['5♣', '5♦', '5♥', '5♠'])
+        bidLayout6 = addButtons(['6♣', '6♦', '6♥', '6♠'])
+        bidLayout7 = addButtons(['7♣', '7♦', '7♥', '7♠'])
         bidLayout0 = addButtons(['pass', 'X', 'XX'])
 
         bidLayout.add_widget(bidLayout1)

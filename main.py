@@ -14,8 +14,7 @@ from kivy.core.window import Window
 class BridgeBiddingBuddy(App):
     currentBidding = None
     defaultHeight = 50
-    value = 0
-    lastBid = ''
+    lastBidOrder = 0
     buttonsDict = {
         '1♣': 1, '2♣': 5, '3♣': 9, '4♣': 13, '5♣': 17, '6♣': 21, '7♣': 25,
         '1♦': 2, '2♦': 6, '3♦': 10, '4♦': 14, '5♦': 18, '6♦': 22, '7♦': 26,
@@ -32,9 +31,13 @@ class BridgeBiddingBuddy(App):
         return Label(color=textColor, text=txt, size_hint=(1.0, None),  height=self.defaultHeight, font_name='./consola.ttf')
 
     def onAddBid(self, bid):
-        if bid > self.lastBid:
-            self.lastBid = bid
+        if bid == 'pass' or bid == 'X' or bid == 'XX':
             self.currentBidding.add_widget(self.buildLabel(bid))
+        else:
+            bidOrder = self.buttonsDict[bid]
+            if bidOrder > self.lastBidOrder:
+                self.lastBidOrder = bidOrder
+                self.currentBidding.add_widget(self.buildLabel(bid))
 
     def build(self):
         Window.clearcolor = (1, 1, 1, 1)

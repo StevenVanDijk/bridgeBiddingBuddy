@@ -8,6 +8,8 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.anchorlayout import AnchorLayout
 from enum import Enum
 from kivy.uix.anchorlayout import AnchorLayout
+from kivy.properties import ListProperty
+from kivy.core.window import Window
 
 class BridgeBiddingBuddy(App):
     currentBidding = None
@@ -22,7 +24,12 @@ class BridgeBiddingBuddy(App):
     }
 
     def buildLabel(self, txt):
-        return Label(text=txt, size_hint=(1.0, None),  height=self.defaultHeight)
+        textColor = [0,1,0,1] 
+        if '♣' in txt or '♠' in txt:
+            textColor = [0,0,0,1]
+        if '♦' in txt or '♥' in txt:
+            textColor = [1,0,0,1]
+        return Label(color=textColor, text=txt, size_hint=(1.0, None),  height=self.defaultHeight, font_name='./consola.ttf')
 
     def onAddBid(self, bid):
         if bid > self.lastBid:
@@ -30,6 +37,7 @@ class BridgeBiddingBuddy(App):
             self.currentBidding.add_widget(self.buildLabel(bid))
 
     def build(self):
+        Window.clearcolor = (1, 1, 1, 1)
         rootLayout = BoxLayout(orientation='horizontal')
         leftLayout = BoxLayout(orientation='vertical')
         rightLayout = BoxLayout(orientation='vertical')
@@ -43,7 +51,7 @@ class BridgeBiddingBuddy(App):
         def addButtons(addedbuttons):
             result = BoxLayout()
             for elem in addedbuttons:
-                AButton = Button(text=elem)
+                AButton = Button(text=elem, font_name='./consola.ttf')
                 def createCallback(elem):
                     return lambda instance: self.onAddBid(elem)
                 AButton.bind(on_press=createCallback(elem))

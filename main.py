@@ -10,6 +10,7 @@ from enum import Enum
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.properties import ListProperty
 from kivy.core.window import Window
+from kivy.clock import Clock
 
 class BridgeBiddingBuddy(App):
     # constants
@@ -57,16 +58,19 @@ class BridgeBiddingBuddy(App):
             if self.buttonsDict[bid] <= self.getLastBidOrder():
                 return
         self.currentBidding.append(bid)
-        self.updateCurrentBidding()
+        self.scheduleUpdateCurrentBidding()       
 
     def onUndo(self):
         if len(self.currentBidding) > 0: 
             self.currentBidding.pop()
-        self.updateCurrentBidding()
+        self.scheduleUpdateCurrentBidding()
 
     def setWhoStarts(self, whoStarts):
         if (len(self.currentBidding) == 0): 
             self.whoStarts = whoStarts
+
+    def scheduleUpdateCurrentBidding(self):
+        Clock.schedule_once(self.updateCurrentBidding())
 
     def updateCurrentBidding(self):
         self.leftLayout.clear_widgets()

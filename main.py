@@ -25,6 +25,7 @@ class BridgeBiddingBuddy(App):
     }
 
     currentBidding = []
+    rootLayout = BoxLayout(orientation='horizontal')
     leftLayout: BoxLayout = None
     whoStarts = 'N'
     bidding_ended = False
@@ -62,13 +63,13 @@ class BridgeBiddingBuddy(App):
                 if self.buttonsDict[bid] <= self.getLastBidOrder():
                     return
             self.currentBidding.append(bid)
-        self.scheduleUpdateCurrentBidding()   
+        self.updateUI()   
 
     def onUndo(self):
         self.bidding_ended = False
         if len(self.currentBidding) > 0: 
             self.currentBidding.pop()
-        self.scheduleUpdateCurrentBidding()
+        self.updateUI()
 
     def setWhoStarts(self, whoStarts):
         if (len(self.currentBidding) == 0): 
@@ -77,8 +78,12 @@ class BridgeBiddingBuddy(App):
     def clearBidding(self, instance):
         self.currentBidding.clear()
         
-    def scheduleUpdateCurrentBidding(self):
-        Clock.schedule_once(lambda dt: self.updateCurrentBidding())
+    def updateUI(self):
+        def clearAndBuild(dt):
+            self.rootLayout.clear_widgets()
+            self.build()
+
+        Clock.schedule_once(clearAndBuild)
 
     def updateCurrentBidding(self):
         def stop_bidding():
@@ -128,7 +133,6 @@ class BridgeBiddingBuddy(App):
 
     def build(self):
         Window.clearcolor = (1, 1, 1, 1)
-        rootLayout = BoxLayout(orientation='horizontal')
         self.leftLayout = BoxLayout(orientation='vertical')
         rightLayout = BoxLayout(orientation='vertical')
 
@@ -165,10 +169,10 @@ class BridgeBiddingBuddy(App):
         bidLayout.add_widget(bidLayout0)
 
         rightLayout.add_widget(bidLayout)
-        rootLayout.add_widget(self.leftLayout)
-        rootLayout.add_widget(rightLayout)
+        self.rootLayout.add_widget(self.leftLayout)
+        self.rootLayout.add_widget(rightLayout)
 
-        return rootLayout
+        return self.rootLayout
 
 if __name__ == '__main__':
     app = BridgeBiddingBuddy()

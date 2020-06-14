@@ -26,7 +26,7 @@ class BridgeBiddingBuddy(App):
     currentBidding = []
     leftLayout: BoxLayout = None
     whoStarts = 'N'
-    count_passes = 0
+    bidding_ended = False
 
 
     def getColor(self, txt):
@@ -56,14 +56,16 @@ class BridgeBiddingBuddy(App):
             return -1
 
     def onAddBid(self, bid):
-        if not self.isSpecial(bid):
-            if self.buttonsDict[bid] <= self.getLastBidOrder():
-                return
-        self.currentBidding.append(bid)
+        if not self.bidding_ended:
+            if not self.isSpecial(bid):
+                if self.buttonsDict[bid] <= self.getLastBidOrder():
+                    return
+            self.currentBidding.append(bid)
 
         self.updateCurrentBidding()
 
     def onUndo(self):
+        self.bidding_ended = False
         if len(self.currentBidding) > 0: 
             self.currentBidding.pop()
         self.updateCurrentBidding()
@@ -80,8 +82,10 @@ class BridgeBiddingBuddy(App):
             def clearBidding(instance):
                 self.updateCurrentBidding()
                 self.currentBidding.clear()
-                
-            clearButton = Button(size_hint=(5.0, None))
+
+            self.bidding_ended = True    
+            text = 'next bidding'    
+            clearButton = Button(size_hint=(1, None), height=self.defaultHeight, text=text)
             self.leftLayout.add_widget(clearButton)
             clearButton.bind(on_press= clearBidding)
 
@@ -109,8 +113,9 @@ class BridgeBiddingBuddy(App):
         self.leftLayout.clear_widgets()
 
         count_biddings = len(self.currentBidding)
-        if count_biddings >= 3:
+        if count_biddings >= 4:
             if self.currentBidding[-1] == 'pass' and self.currentBidding[-2] == 'pass' and self.currentBidding[-3] == 'pass':
+                rebuilding()
                 stop_bidding() 
             else:
                 rebuilding()   

@@ -78,7 +78,7 @@ class BridgeBiddingBuddy(App):
         self.currentBidding.clear()
         
     def scheduleUpdateCurrentBidding(self):
-        Clock.schedule_once(self.updateCurrentBidding())
+        Clock.schedule_once(lambda dt: self.updateCurrentBidding())
 
     def updateCurrentBidding(self):
         def stop_bidding():

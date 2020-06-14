@@ -5,9 +5,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
-from kivy.uix.anchorlayout import AnchorLayout
 from enum import Enum
-from kivy.uix.anchorlayout import AnchorLayout
 from kivy.properties import ListProperty
 from kivy.core.window import Window
 from kivy.clock import Clock
@@ -96,6 +94,8 @@ class BridgeBiddingBuddy(App):
             clearButton = Button(size_hint=(1, None), height=self.defaultHeight, text=text)
             self.leftLayout.add_widget(clearButton)
             clearButton.bind(on_press= clearBidding)
+            self.bidding_ended = False
+
 
         def rebuilding():
             undoBtn = Button(text="Undo", size_hint=(1.0, None), height=self.defaultHeight)

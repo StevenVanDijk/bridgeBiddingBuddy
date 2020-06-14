@@ -136,9 +136,7 @@ class BridgeBiddingBuddy(App):
         rootLayout.add_widget(self.leftLayout)
         rootLayout.add_widget(rightLayout)
 
-        return rootLayout
-
-            
+        return rootLayout        
 
 if __name__ == '__main__':
     app = BridgeBiddingBuddy()

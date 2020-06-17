@@ -24,7 +24,6 @@ class BridgeBiddingBuddy(App):
 
     currentBidding = []
     rootLayout = BoxLayout(orientation='horizontal')
-    leftLayout: BoxLayout = None
     whoStarts = 'N'
     bidding_ended = False
 
@@ -84,23 +83,23 @@ class BridgeBiddingBuddy(App):
         Clock.schedule_once(clearAndBuild)
 
     def updateCurrentBidding(self):
+        leftLayout = BoxLayout(orientation='vertical')
         def stop_bidding():
             def clearBidding(instance):
-                self.updateCurrentBidding()
                 self.currentBidding.clear()
+                self.updateUI()
 
             self.bidding_ended = True    
             text = 'next bidding'    
             clearButton = Button(size_hint=(1, None), height=self.defaultHeight, text=text)
-            self.leftLayout.add_widget(clearButton)
+            leftLayout.add_widget(clearButton)
             clearButton.bind(on_press= clearBidding)
             self.bidding_ended = False
-
 
         def rebuilding():
             undoBtn = Button(text="Undo", size_hint=(1.0, None), height=self.defaultHeight)
             undoBtn.bind(on_press=lambda ins: self.onUndo())
-            self.leftLayout.add_widget(undoBtn)
+            leftLayout.add_widget(undoBtn)
 
             currentBidding = GridLayout(cols=4)
             def createCallback(whoStarts):
@@ -116,9 +115,7 @@ class BridgeBiddingBuddy(App):
             # create labels for all bids  
             for bid in self.currentBidding:
                 currentBidding.add_widget(self.buildLabel(bid))
-            self.leftLayout.add_widget(currentBidding)
-
-        self.leftLayout.clear_widgets()
+            leftLayout.add_widget(currentBidding)
 
         count_biddings = len(self.currentBidding)
         if count_biddings >= 4:
@@ -129,14 +126,12 @@ class BridgeBiddingBuddy(App):
                 rebuilding()   
         else:
             rebuilding()
-            
+        return leftLayout            
 
     def build(self):
         Window.clearcolor = (1, 1, 1, 1)
-        self.leftLayout = BoxLayout(orientation='vertical')
+        leftLayout = self.updateCurrentBidding()
         rightLayout = BoxLayout(orientation='vertical')
-
-        self.updateCurrentBidding()
 
         bidLayout = BoxLayout(orientation='vertical')
         def addButtons(addedbuttons):
@@ -169,7 +164,7 @@ class BridgeBiddingBuddy(App):
         bidLayout.add_widget(bidLayout0)
 
         rightLayout.add_widget(bidLayout)
-        self.rootLayout.add_widget(self.leftLayout)
+        self.rootLayout.add_widget(leftLayout)
         self.rootLayout.add_widget(rightLayout)
 
         return self.rootLayout

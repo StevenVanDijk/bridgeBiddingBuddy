@@ -84,7 +84,7 @@ class BridgeBiddingBuddy(App):
 
     def updateCurrentBidding(self):
         leftLayout = BoxLayout(orientation='vertical')
-        def stop_bidding():
+        def stop_bidding(container):
             def clearBidding(instance):
                 self.currentBidding.clear()
                 self.updateUI()
@@ -92,14 +92,14 @@ class BridgeBiddingBuddy(App):
             self.bidding_ended = True    
             text = 'next bidding'    
             clearButton = Button(size_hint=(1, None), height=self.defaultHeight, text=text)
-            leftLayout.add_widget(clearButton)
-            clearButton.bind(on_press= clearBidding)
+            container.add_widget(clearButton)
+            clearButton.bind(on_press=clearBidding)
             self.bidding_ended = False
 
-        def rebuilding():
+        def rebuilding(container):
             undoBtn = Button(text="Undo", size_hint=(1.0, None), height=self.defaultHeight)
             undoBtn.bind(on_press=lambda ins: self.onUndo())
-            leftLayout.add_widget(undoBtn)
+            container.add_widget(undoBtn)
 
             currentBidding = GridLayout(cols=4)
             def createCallback(whoStarts):
@@ -115,17 +115,17 @@ class BridgeBiddingBuddy(App):
             # create labels for all bids  
             for bid in self.currentBidding:
                 currentBidding.add_widget(self.buildLabel(bid))
-            leftLayout.add_widget(currentBidding)
+            container.add_widget(currentBidding)
 
         count_biddings = len(self.currentBidding)
         if count_biddings >= 4:
             if self.currentBidding[-1] == 'pass' and self.currentBidding[-2] == 'pass' and self.currentBidding[-3] == 'pass':
-                rebuilding()
-                stop_bidding() 
+                rebuilding(leftLayout)
+                stop_bidding(leftLayout) 
             else:
-                rebuilding()   
+                rebuilding(leftLayout)   
         else:
-            rebuilding()
+            rebuilding(leftLayout)
         return leftLayout            
 
     def build(self):

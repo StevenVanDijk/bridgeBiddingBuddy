@@ -26,7 +26,8 @@ class BridgeBiddingBuddy(App):
     leftLayout: BoxLayout = None
     whoStarts = 'N'
     bidding_ended = False
-
+    opponent = False
+    partner = False
 
     def getColor(self, txt):
         textColor = [0,1,0,1] 
@@ -55,12 +56,35 @@ class BridgeBiddingBuddy(App):
             return -1
 
     def onAddBid(self, bid):
+        biddings_passed = len(self.currentBidding)
+        
         if not self.bidding_ended:
             if not self.isSpecial(bid):
                 if self.buttonsDict[bid] <= self.getLastBidOrder():
                     return
+            
+   
+            else:
+                if biddings_passed >= 2:    
+                    if self.currentBidding[-1] == 'pass' and self.currentBidding[-2] == 'pass':
+                        self.opponent = True
+                        self.partner = True     
+                    if self.currentBidding[-1] != 'pass':
+                        if self.currentBidding[-2] == 'pass':
+                            self.partner = True
+                            self.opponent = False
+                        else:
+                            self.opponent = True
+                            self.partner = False    
+                if biddings_passed >= 4:
+                    if self.partner == True:
+                        if bid == 'X':
+                            rigthLayout.remove_widget(bid)
+
             self.currentBidding.append(bid)
-        self.scheduleUpdateCurrentBidding()   
+        self.scheduleUpdateCurrentBidding()               
+                
+                
 
     def onUndo(self):
         self.bidding_ended = False
@@ -71,10 +95,7 @@ class BridgeBiddingBuddy(App):
     def setWhoStarts(self, whoStarts):
         if (len(self.currentBidding) == 0): 
             self.whoStarts = whoStarts
-
-    def clearBidding(self, instance):
-        self.currentBidding.clear()
-        
+       
     def scheduleUpdateCurrentBidding(self):
         Clock.schedule_once(lambda dt: self.updateCurrentBidding())
 
@@ -116,6 +137,8 @@ class BridgeBiddingBuddy(App):
         self.leftLayout.clear_widgets()
 
         count_biddings = len(self.currentBidding)
+
+
         if count_biddings >= 4:
             if self.currentBidding[-1] == 'pass' and self.currentBidding[-2] == 'pass' and self.currentBidding[-3] == 'pass':
                 rebuilding()

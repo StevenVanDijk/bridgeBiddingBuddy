@@ -1,3 +1,5 @@
+__version__ = "0.0.2"
+
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
@@ -23,7 +25,7 @@ class BridgeBiddingBuddy(App):
     }
 
     currentBidding = []
-    leftLayout: BoxLayout = None
+    rootLayout = BoxLayout(orientation='horizontal')
     whoStarts = 'N'
     bidding_ended = False
     opponent = False
@@ -82,41 +84,46 @@ class BridgeBiddingBuddy(App):
                             rigthLayout.remove_widget(bid)
 
             self.currentBidding.append(bid)
-        self.scheduleUpdateCurrentBidding()               
-                
-                
+        self.updateUI()   
 
     def onUndo(self):
         self.bidding_ended = False
         if len(self.currentBidding) > 0: 
             self.currentBidding.pop()
-        self.scheduleUpdateCurrentBidding()
+        self.updateUI()
 
     def setWhoStarts(self, whoStarts):
         if (len(self.currentBidding) == 0): 
             self.whoStarts = whoStarts
-       
-    def scheduleUpdateCurrentBidding(self):
-        Clock.schedule_once(lambda dt: self.updateCurrentBidding())
+
+    def clearBidding(self, instance):
+        self.currentBidding.clear()
+        
+    def updateUI(self):
+        def clearAndBuild(dt):
+            self.rootLayout.clear_widgets()
+            self.build()
+
+        Clock.schedule_once(clearAndBuild)
 
     def updateCurrentBidding(self):
-        def stop_bidding():
+        leftLayout = BoxLayout(orientation='vertical')
+        def stop_bidding(container):
             def clearBidding(instance):
-                self.updateCurrentBidding()
                 self.currentBidding.clear()
+                self.updateUI()
 
             self.bidding_ended = True    
             text = 'next bidding'    
             clearButton = Button(size_hint=(1, None), height=self.defaultHeight, text=text)
-            self.leftLayout.add_widget(clearButton)
-            clearButton.bind(on_press= clearBidding)
+            container.add_widget(clearButton)
+            clearButton.bind(on_press=clearBidding)
             self.bidding_ended = False
 
-
-        def rebuilding():
+        def rebuilding(container):
             undoBtn = Button(text="Undo", size_hint=(1.0, None), height=self.defaultHeight)
             undoBtn.bind(on_press=lambda ins: self.onUndo())
-            self.leftLayout.add_widget(undoBtn)
+            container.add_widget(undoBtn)
 
             currentBidding = GridLayout(cols=4)
             def createCallback(whoStarts):
@@ -132,30 +139,25 @@ class BridgeBiddingBuddy(App):
             # create labels for all bids  
             for bid in self.currentBidding:
                 currentBidding.add_widget(self.buildLabel(bid))
-            self.leftLayout.add_widget(currentBidding)
-
-        self.leftLayout.clear_widgets()
+            container.add_widget(currentBidding)
 
         count_biddings = len(self.currentBidding)
 
 
         if count_biddings >= 4:
             if self.currentBidding[-1] == 'pass' and self.currentBidding[-2] == 'pass' and self.currentBidding[-3] == 'pass':
-                rebuilding()
-                stop_bidding() 
+                rebuilding(leftLayout)
+                stop_bidding(leftLayout) 
             else:
-                rebuilding()   
+                rebuilding(leftLayout)   
         else:
-            rebuilding()
-            
+            rebuilding(leftLayout)
+        return leftLayout            
 
     def build(self):
         Window.clearcolor = (1, 1, 1, 1)
-        rootLayout = BoxLayout(orientation='horizontal')
-        self.leftLayout = BoxLayout(orientation='vertical')
+        leftLayout = self.updateCurrentBidding()
         rightLayout = BoxLayout(orientation='vertical')
-
-        self.updateCurrentBidding()
 
         bidLayout = BoxLayout(orientation='vertical')
         def addButtons(addedbuttons):
@@ -188,10 +190,10 @@ class BridgeBiddingBuddy(App):
         bidLayout.add_widget(bidLayout0)
 
         rightLayout.add_widget(bidLayout)
-        rootLayout.add_widget(self.leftLayout)
-        rootLayout.add_widget(rightLayout)
+        self.rootLayout.add_widget(leftLayout)
+        self.rootLayout.add_widget(rightLayout)
 
-        return rootLayout
+        return self.rootLayout
 
 if __name__ == '__main__':
     app = BridgeBiddingBuddy()

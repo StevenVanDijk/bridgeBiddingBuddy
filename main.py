@@ -1,4 +1,4 @@
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 
 from kivy.app import App
 from kivy.uix.button import Button
@@ -60,28 +60,34 @@ class BridgeBiddingBuddy(App):
     def onAddBid(self, bid):
         biddings_passed = len(self.currentBidding)
         
+        if bid == 'X' and biddings_passed < 2:
+            return
+
+        if bid == 'X':
+            if self.currentBidding[-1] == 'X':
+                return
+            if self.currentBidding[-2] == 'X' or self.currentBidding[-3] == 'X' and self.currentBidding[-1] == 'pass':
+                return
+            
         if not self.bidding_ended:
             if not self.isSpecial(bid):
                 if self.buttonsDict[bid] <= self.getLastBidOrder():
-                    return
-            
-   
+                    return        
             else:
                 if biddings_passed >= 2:    
                     if self.currentBidding[-1] == 'pass' and self.currentBidding[-2] == 'pass':
                         self.opponent = True
-                        self.partner = True     
-                    if self.currentBidding[-1] != 'pass':
-                        if self.currentBidding[-2] == 'pass':
+                        self.partner = False     
+                    if self.currentBidding[-1] == 'pass':
+                        if self.currentBidding[-2] != 'pass':
                             self.partner = True
                             self.opponent = False
                         else:
                             self.opponent = True
                             self.partner = False    
-                if biddings_passed >= 4:
-                    if self.partner == True:
-                        if bid == 'X':
-                            rigthLayout.remove_widget(bid)
+                if self.partner == True:
+                    if bid == 'X':
+                        return
 
             self.currentBidding.append(bid)
         self.updateUI()   

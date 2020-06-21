@@ -8,7 +8,6 @@ class Bidding:
         '1SA': 5, '2SA': 8, '3SA': 13, '4SA': 18, '5SA': 23, '6SA': 28, '7SA': 33
     }
 
-
     current = []
     whoStarts = 'N'
     bidding_ended = False
@@ -39,7 +38,7 @@ class Bidding:
 
     def isAllowed(self, bid):
         biddings_passed = len(self.current)
-        
+                
         if bid == 'X' and biddings_passed < 2:
             return False
 

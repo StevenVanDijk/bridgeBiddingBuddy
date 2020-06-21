@@ -1,4 +1,4 @@
-__version__ = "0.0.3"
+__version__ = "0.0.4"
 
 from kivy.app import App
 from kivy.uix.button import Button
@@ -11,25 +11,14 @@ from enum import Enum
 from kivy.properties import ListProperty
 from kivy.core.window import Window
 from kivy.clock import Clock
+from bidding import Bidding
 
 class BridgeBiddingBuddy(App):
     # constants
     defaultHeight = 40
-    playOrder = ["N", "E", "S", "W"]
-    buttonsDict = {
-        '1♣': 1, '2♣': 4, '3♣': 9, '4♣': 14, '5♣': 19, '6♣': 24, '7♣': 29,
-        '1♦': 2, '2♦': 5, '3♦': 10, '4♦': 15, '5♦': 20, '6♦': 25, '7♦': 30,
-        '1♥': 3, '2♥': 6, '3♥': 11, '4♥': 16, '5♥': 21, '6♥': 26, '7♥': 31,
-        '1♠': 4, '2♠': 7, '3♠': 12, '4♠': 17, '5♠': 22, '6♠': 27, '7♠': 32,
-        '1SA': 5, '2SA': 8, '3SA': 13, '4SA': 18, '5SA': 23, '6SA': 28, '7SA': 33
-    }
-
-    currentBidding = []
+    
+    bidding = Bidding()
     rootLayout = BoxLayout(orientation='horizontal')
-    whoStarts = 'N'
-    bidding_ended = False
-    opponent = False
-    partner = False
 
     def getColor(self, txt):
         textColor = [0,1,0,1] 
@@ -47,64 +36,15 @@ class BridgeBiddingBuddy(App):
     def buildLabel(self, txt):
         return Label(color=self.getColor(txt), text=txt, size_hint=(1.0, None),  height=self.defaultHeight, font_name='./consola.ttf')
 
-    def isSpecial(self, bid):
-        return bid == 'pass' or bid == 'X' or bid == 'XX'
-
-    def getLastBidOrder(self):
-        previousBids = [elem for elem in self.currentBidding if not self.isSpecial(elem)]
-        if len(previousBids) > 0:
-            return self.buttonsDict[previousBids.pop()]
-        else:
-            return -1
-
     def onAddBid(self, bid):
-        biddings_passed = len(self.currentBidding)
-        
-        if bid == 'X' and biddings_passed < 2:
-            return
-
-        if bid == 'X':
-            if self.currentBidding[-1] == 'X':
-                return
-            if self.currentBidding[-2] == 'X' or self.currentBidding[-3] == 'X' and self.currentBidding[-1] == 'pass':
-                return
-            
-        if not self.bidding_ended:
-            if not self.isSpecial(bid):
-                if self.buttonsDict[bid] <= self.getLastBidOrder():
-                    return        
-            else:
-                if biddings_passed >= 2:    
-                    if self.currentBidding[-1] == 'pass' and self.currentBidding[-2] == 'pass':
-                        self.opponent = True
-                        self.partner = False     
-                    if self.currentBidding[-1] == 'pass':
-                        if self.currentBidding[-2] != 'pass':
-                            self.partner = True
-                            self.opponent = False
-                        else:
-                            self.opponent = True
-                            self.partner = False    
-                if self.partner == True:
-                    if bid == 'X':
-                        return
-
-            self.currentBidding.append(bid)
+        if self.bidding.isAllowed(bid):
+            self.bidding.addBid(bid)
         self.updateUI()   
 
     def onUndo(self):
-        self.bidding_ended = False
-        if len(self.currentBidding) > 0: 
-            self.currentBidding.pop()
+        self.bidding.removeLastBid()
         self.updateUI()
 
-    def setWhoStarts(self, whoStarts):
-        if (len(self.currentBidding) == 0): 
-            self.whoStarts = whoStarts
-
-    def clearBidding(self, instance):
-        self.currentBidding.clear()
-        
     def updateUI(self):
         def clearAndBuild(dt):
             self.rootLayout.clear_widgets()
@@ -116,15 +56,12 @@ class BridgeBiddingBuddy(App):
         leftLayout = BoxLayout(orientation='vertical')
         def stop_bidding(container):
             def clearBidding(instance):
-                self.currentBidding.clear()
+                self.bidding.reset()
                 self.updateUI()
 
-            self.bidding_ended = True    
-            text = 'next bidding'    
-            clearButton = Button(size_hint=(1, None), height=self.defaultHeight, text=text)
+            clearButton = Button(size_hint=(1, None), height=self.defaultHeight, text='next bidding')
             container.add_widget(clearButton)
             clearButton.bind(on_press=clearBidding)
-            self.bidding_ended = False
 
         def rebuilding(container):
             undoBtn = Button(text="Undo", size_hint=(1.0, None), height=self.defaultHeight)
@@ -133,31 +70,26 @@ class BridgeBiddingBuddy(App):
 
             currentBidding = GridLayout(cols=4)
             def createCallback(whoStarts):
-                return lambda instance: self.setWhoStarts(whoStarts)
+                return lambda instance: self.bidding.setWhoStarts(whoStarts)
+
             # create buttons for wind directions
-            for elem in self.playOrder:
+            for elem in self.bidding.playOrder:
                 currentBidding.add_widget(self.buildButton(elem, createCallback(elem)))
 
             # create empty boxes to start at correct starting point
-            for i in range(0, self.playOrder.index(self.whoStarts)):
+            for i in range(0, self.bidding.playOrder.index(self.bidding.whoStarts)):
                 currentBidding.add_widget(self.buildLabel(''))      
 
             # create labels for all bids  
-            for bid in self.currentBidding:
+            for bid in self.bidding.current:
                 currentBidding.add_widget(self.buildLabel(bid))
             container.add_widget(currentBidding)
 
-        count_biddings = len(self.currentBidding)
-
-
-        if count_biddings >= 4:
-            if self.currentBidding[-1] == 'pass' and self.currentBidding[-2] == 'pass' and self.currentBidding[-3] == 'pass':
-                rebuilding(leftLayout)
-                stop_bidding(leftLayout) 
-            else:
-                rebuilding(leftLayout)   
+        if self.bidding.finished():
+            stop_bidding(leftLayout)
         else:
             rebuilding(leftLayout)
+
         return leftLayout            
 
     def build(self):
@@ -171,9 +103,8 @@ class BridgeBiddingBuddy(App):
             for elem in addedbuttons:
                 def createCallback(elem):
                     return lambda instance: self.onAddBid(elem)
-                AButton = self.buildButton(elem, createCallback(elem))
-                self.lastBid = elem
-                result.add_widget(AButton)
+                button = self.buildButton(elem, createCallback(elem))
+                result.add_widget(button)
             return result            
 
         # Every row and it's value. Row 0 is the last including pass, X, XX

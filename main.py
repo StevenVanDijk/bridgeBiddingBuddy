@@ -8,17 +8,18 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from enum import Enum
-from kivy.properties import ListProperty
+from kivy.properties import ListProperty, ObjectProperty
 from kivy.core.window import Window
 from kivy.clock import Clock
 from bidding import Bidding
+from kivy.uix.screenmanager import ScreenManager, Screen
 
 class ButtonKind(Enum):
     number = 1
     color = 2
     special = 3
 
-class BridgeBiddingBuddy(App):
+class BiddingScreen(Screen):
     # constants
     defaultLength = 40
     
@@ -60,7 +61,7 @@ class BridgeBiddingBuddy(App):
         Clock.schedule_once(clearAndBuild)
 
     def updateCurrentBidding(self):
-        leftLayout = BoxLayout(orientation='vertical')
+        layout = BoxLayout(orientation='vertical')
         def stop_bidding(container):
             def clearBidding(instance):
                 self.bidding.reset()
@@ -70,7 +71,7 @@ class BridgeBiddingBuddy(App):
             container.add_widget(clearButton)
             clearButton.bind(on_press=clearBidding)
 
-        def rebuilding(container):
+        def show_bidding(container):
             undoBtn = Button(text="Undo", size_hint=(1.0, None), height=self.defaultLength)
             undoBtn.bind(on_press=lambda ins: self.onUndo())
             container.add_widget(undoBtn)
@@ -93,11 +94,17 @@ class BridgeBiddingBuddy(App):
             container.add_widget(currentBidding)
 
         if self.bidding.finished():
-            stop_bidding(leftLayout)
+            stop_bidding(layout)
         else:
-            rebuilding(leftLayout)
+            show_bidding(layout)
 
-        return leftLayout            
+        return layout            
+
+    def __init__(self, **kwargs):
+        super(Screen, self).__init__(**kwargs)
+
+        self.add_widget(self.rootLayout)
+        self.build()
 
     def build(self):
         topLayout = self.updateCurrentBidding()
@@ -107,7 +114,8 @@ class BridgeBiddingBuddy(App):
         def addButtons(addedbuttons, buttonKind):
             result = BoxLayout()
             for elem in addedbuttons:
-                def invoke(elem):
+                def invoke(elem):                    
+                    if elem == '?': return self.manager.switch_to(self.manager.testScreen)
                     if buttonKind == ButtonKind.special: return self.onAddBid(elem)
                     elif buttonKind == ButtonKind.color: self.currentColor = elem
                     elif buttonKind == ButtonKind.number: self.currentNumber = elem
@@ -131,12 +139,21 @@ class BridgeBiddingBuddy(App):
         self.rootLayout.add_widget(topLayout)
         self.rootLayout.add_widget(bottomLayout)
 
-        return self.rootLayout
+class TestScreen(Screen):
+    pass
+
+class Manager(ScreenManager):
+    biddingScreen = ObjectProperty(None)
+    testScreen = ObjectProperty(None)
+
+class BridgeBiddingBuddy(App):
+    def build(self):
+        return Manager()
 
 if __name__ == '__main__':
     Window.clearcolor = (1, 1, 1, 1)
     Window.size = (600, 800)
     Window.top = 50
-    app = BridgeBiddingBuddy()
-    app.run()
+
+    BridgeBiddingBuddy().run()
         

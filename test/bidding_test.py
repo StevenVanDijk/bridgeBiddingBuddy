@@ -21,3 +21,6 @@ def testIsDblAllowed():
 
     bidding.current = [ '1♣', '2♦', 'pass', 'pass' ]
     assert bidding.isAllowed('X')
+
+    bidding.current = ['1♣', 'X']
+    assert not bidding.isAllowed('X')

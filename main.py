@@ -13,12 +13,19 @@ from kivy.core.window import Window
 from kivy.clock import Clock
 from bidding import Bidding
 
+class ButtonKind(Enum):
+    number = 1
+    color = 2
+    special = 3
+
 class BridgeBiddingBuddy(App):
     # constants
-    defaultHeight = 40
+    defaultLength = 40
     
+    currentNumber = None
+    currentColor = None
     bidding = Bidding()
-    rootLayout = BoxLayout(orientation='horizontal')
+    rootLayout = BoxLayout(orientation='vertical')
 
     def getColor(self, txt):
         textColor = [0,1,0,1] 
@@ -29,12 +36,12 @@ class BridgeBiddingBuddy(App):
         return textColor
 
     def buildButton(self, txt, callback):
-        btn = Button(color=self.getColor(txt), text=txt, size_hint=(1.0, None),  height=self.defaultHeight * 2, font_name='./consola.ttf')
+        btn = Button(color=self.getColor(txt), text=txt, size_hint=(1.0, None),  height=self.defaultLength * 2, width=self.defaultLength * 2, font_name='./consola.ttf')
         btn.bind(on_press=callback)
         return btn
 
     def buildLabel(self, txt):
-        return Label(color=self.getColor(txt), text=txt, size_hint=(1.0, None),  height=self.defaultHeight, font_name='./consola.ttf')
+        return Label(color=self.getColor(txt), text=txt, size_hint=(1.0, None),  height=self.defaultLength, font_name='./consola.ttf')
 
     def onAddBid(self, bid):
         if self.bidding.isAllowed(bid):
@@ -59,12 +66,12 @@ class BridgeBiddingBuddy(App):
                 self.bidding.reset()
                 self.updateUI()
 
-            clearButton = Button(size_hint=(1, None), height=self.defaultHeight, text='next bidding')
+            clearButton = Button(size_hint=(1, None), height=self.defaultLength, text='next bidding')
             container.add_widget(clearButton)
             clearButton.bind(on_press=clearBidding)
 
         def rebuilding(container):
-            undoBtn = Button(text="Undo", size_hint=(1.0, None), height=self.defaultHeight)
+            undoBtn = Button(text="Undo", size_hint=(1.0, None), height=self.defaultLength)
             undoBtn.bind(on_press=lambda ins: self.onUndo())
             container.add_widget(undoBtn)
 
@@ -93,46 +100,43 @@ class BridgeBiddingBuddy(App):
         return leftLayout            
 
     def build(self):
-        Window.clearcolor = (1, 1, 1, 1)
-        leftLayout = self.updateCurrentBidding()
-        rightLayout = BoxLayout(orientation='vertical')
+        topLayout = self.updateCurrentBidding()
+        bottomLayout = BoxLayout(orientation='vertical')
 
         bidLayout = BoxLayout(orientation='vertical')
-        def addButtons(addedbuttons):
+        def addButtons(addedbuttons, buttonKind):
             result = BoxLayout()
             for elem in addedbuttons:
+                def invoke(elem):
+                    if buttonKind == ButtonKind.special: return self.onAddBid(elem)
+                    elif buttonKind == ButtonKind.color: self.currentColor = elem
+                    elif buttonKind == ButtonKind.number: self.currentNumber = elem
+                    if (self.currentNumber != None and self.currentColor != None):
+                        self.onAddBid(self.currentNumber + self.currentColor)
+                        self.currentColor = self.currentNumber = None
                 def createCallback(elem):
-                    return lambda instance: self.onAddBid(elem)
+                    return lambda instance: invoke(elem)
                 button = self.buildButton(elem, createCallback(elem))
                 result.add_widget(button)
             return result            
 
-        # Every row and it's value. Row 0 is the last including pass, X, XX
-        bidLayout1 = addButtons(['1♣', '1♦', '1♥', '1♠', '1SA'])
-        bidLayout2 = addButtons(['2♣', '2♦', '2♥', '2♠', '2SA'])
-        bidLayout3 = addButtons(['3♣', '3♦', '3♥', '3♠', '3SA'])
-        bidLayout4 = addButtons(['4♣', '4♦', '4♥', '4♠', '4SA'])
-        bidLayout5 = addButtons(['5♣', '5♦', '5♥', '5♠', '5SA'])
-        bidLayout6 = addButtons(['6♣', '6♦', '6♥', '6♠', '6SA'])
-        bidLayout7 = addButtons(['7♣', '7♦', '7♥', '7♠', '7SA'])
-        bidLayout0 = addButtons(['pass', 'X', 'XX'])
+        numberBtns = addButtons(['1', '2', '3', '4', '5', '6', '7'], ButtonKind.number)
+        colorBtns = addButtons(['♣', '♦', '♥', '♠', 'SA'], ButtonKind.color)
+        extraBtns = addButtons(['pass', 'X', 'XX', '?'], ButtonKind.special)
+        bidLayout.add_widget(numberBtns)
+        bidLayout.add_widget(colorBtns)
+        bidLayout.add_widget(extraBtns)
 
-        bidLayout.add_widget(bidLayout1)
-        bidLayout.add_widget(bidLayout2)
-        bidLayout.add_widget(bidLayout3)
-        bidLayout.add_widget(bidLayout4)
-        bidLayout.add_widget(bidLayout5)
-        bidLayout.add_widget(bidLayout6)
-        bidLayout.add_widget(bidLayout7)
-        bidLayout.add_widget(bidLayout0)
-
-        rightLayout.add_widget(bidLayout)
-        self.rootLayout.add_widget(leftLayout)
-        self.rootLayout.add_widget(rightLayout)
+        bottomLayout.add_widget(bidLayout)
+        self.rootLayout.add_widget(topLayout)
+        self.rootLayout.add_widget(bottomLayout)
 
         return self.rootLayout
 
 if __name__ == '__main__':
+    Window.clearcolor = (1, 1, 1, 1)
+    Window.size = (600, 800)
+    Window.top = 50
     app = BridgeBiddingBuddy()
     app.run()
         

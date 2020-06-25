@@ -8,8 +8,6 @@ class bidding_tree():
     pass_1SA_Pa = False
     _1SA_Pa = False
 
-
-
     def __init__(self, current_bidding):
         #pass
         if len(current_bidding) == 0: 
@@ -44,10 +42,10 @@ class bidding_tree():
         if self._ == True or self.pass_ == True or self.pass_pass_ == True:
             if points >= 12:
                 if highest_series <= 5 and lowest_series >= 2:
-                    if points >= 15 and <= 17:
+                    if points >= 15 and points <= 17:
                         return '1SA'
 
-                    if points >= 20 and <=22:
+                    if points >= 20 and points <= 22:
                         return '2SA'            
                 
                 elif points >= 22 or (points >= 15 and higest_series >= 7):
@@ -57,17 +55,17 @@ class bidding_tree():
                     return '1' + color_hs
 
                 elif highest_series == 4:
-                    if color != ♥ and color != ♠ return '1' + color_hs
+                    if color != '♥' and color != '♠': return '1' + color_hs
 
                 else:
                     return '1♣'
 
             if _1SA_Pa:
-                if color == ♥ or color == ♠:
+                if color == '♥' or color == '♠':
                     if highest_series >= 5:
-                        if color == ♥:
+                        if color == '♥':
                             return '2♦'
-                        if color == ♠:
+                        if color == '♠':
                             return '2♥'
 
                     if points >= 8:   
@@ -99,21 +97,4 @@ class bidding_tree():
 
             
         
-        return None
-
-                # if highest_series == 4:
-                #     if color_hs == '♠' or color_hs == '♥':
-                        
-        
-
-
-    #def last_bid_1_clubs(current_bidding, count_bids, points):
-       # if count_bids > 1
-      #      if current_bidding[0] == 'pass' and current_bidding[1] == '1♣' or current_bidding[0] == '1♣':
-     #           if points > 8:
-
-                
-
-
-
-
+        return None            

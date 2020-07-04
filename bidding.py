@@ -1,3 +1,9 @@
+def biddingIsAllowed(previousBids, bid):
+    currentBid = Bidding()
+    for b in previousBids:
+        currentBid.addBid(b)
+    return currentBid.isAllowed(bid)
+    
 class Bidding:
     playOrder = ["N", "E", "S", "W"]
     buttonsDict = {
@@ -40,7 +46,7 @@ class Bidding:
         biddings_passed = len(self.current)
                 
         if bid == 'X' and biddings_passed < 2:
-            return Falsee
+            return False
         if bid == 'X':
             if self.current[-1] == 'X':
                 return False

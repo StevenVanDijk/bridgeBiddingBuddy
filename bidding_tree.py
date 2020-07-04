@@ -32,7 +32,7 @@ class bidding_tree():
                 self.pass_1SA_rightOp = True
         
         #partner
-        if len(current_bidding) == 1:
+        if len(current_bidding) >= 1:
             if current_bidding[0] == '1SA' and current_bidding[1] == 'pass':
                 self._1SA_Pa = True
         
@@ -54,18 +54,18 @@ class bidding_tree():
                 elif highest_series >= 5:
                     return '1' + color_hs
 
-                elif highest_series == 4:
-                    if color != '♥' and color != '♠': return '1' + color_hs
-
+                elif highest_series == 4 and color_hs != '♥' and color_hs != '♠': 
+                    return '1' + color_hs
+    
                 else:
                     return '1♣'
 
-            if _1SA_Pa:
-                if color == '♥' or color == '♠':
+            if self._1SA_Pa:
+                if color_hs == '♥' or color_hs == '♠':
                     if highest_series >= 5:
-                        if color == '♥':
+                        if color_hs == '♥':
                             return '2♦'
-                        if color == '♠':
+                        if color_hs == '♠':
                             return '2♥'
 
                     if points >= 8:   
@@ -92,6 +92,8 @@ class bidding_tree():
                     else: 
                         return 'pass'
 
+                else:
+                    return 'pass'
             else: 
                 return 'pass'
                     

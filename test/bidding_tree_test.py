@@ -73,20 +73,22 @@ def testYouOpen2clubs():
     assert bt.you_open(cb, points, highest, lowest, color) == '2♣'
 
 def testYouOpen2hearts():
-    cb = ['1SA', 'pass']
+    cb = []
     bt = bidding_tree(cb)
     points = 0
-    highest = 5
+    highest = 6
     lowest = 0
-    color = '♠'
+    color = '♥'
     assert bt.you_open(cb, points, highest, lowest, color) == '2♥'
 
 def testYouOpen2SA():
-    cb = ['1SA', 'pass']
+    cb = []
     bt = bidding_tree(cb)
-    points = 8
-    highest = 4
-    lowest = 0
+    points = 21
+    highest = 5
+    lowest = 3
     color = '♥'
     assert bt.you_open(cb, points, highest, lowest, color) == '2SA'
+
+def testYou
     

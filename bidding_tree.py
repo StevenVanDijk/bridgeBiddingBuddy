@@ -108,6 +108,3 @@ class bidding_tree():
 
         return None            
 
-
-if __name__ == '__main__':
-    print("Bumba = " + bumbuMariekemagie())

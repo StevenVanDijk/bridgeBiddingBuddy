@@ -1,3 +1,5 @@
+from bidding import bumbuMariekemagie 
+
 class bidding_tree():
     _ = False
     pass_ = False
@@ -35,6 +37,8 @@ class bidding_tree():
         if len(current_bidding) >= 1:
             if current_bidding[0] == '1SA' and current_bidding[1] == 'pass':
                 self._1SA_Pa = True
+
+
         
 
 
@@ -60,7 +64,28 @@ class bidding_tree():
                 else:
                     return '1♣'
 
-            if self._1SA_Pa:
+
+            if points < 12:
+                if points <= 10:
+                    if highest_series >= 6:
+                        if highest_series == 6:
+                            return '2' + color_hs
+                        if highest_series == 7:
+                            return '3' + color_hs
+                        if highest_series == 8:
+                            return '4' + color_hs
+
+                    else: 
+                        if isAllowed(current_bidding, 'pass'): 
+                            return 'pass'
+
+                else:
+                    return 'pass'
+            else: 
+                return 'pass'
+
+
+        if self._1SA_Pa:
                 if color_hs == '♥' or color_hs == '♠':
                     if highest_series >= 5:
                         if color_hs == '♥':
@@ -78,26 +103,11 @@ class bidding_tree():
                 elif points >= 10:
                     return '3SA'
 
-
-            if points < 12:
-                if points <= 10:
-                    if highest_series >= 6:
-                        if highest_series == 6:
-                            return '2' + color_hs
-                        if highest_series == 7:
-                            return '3' + color_hs
-                        if highest_series == 8:
-                            return '4' + color_hs
-
-                    else: 
-                        return 'pass'
-
-                else:
+                else: 
                     return 'pass'
-            else: 
-                return 'pass'
-                    
 
-            
-        
         return None            
+
+
+if __name__ == '__main__':
+    print("Bumba = " + bumbuMariekemagie())

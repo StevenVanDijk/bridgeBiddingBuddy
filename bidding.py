@@ -1,3 +1,7 @@
+def bumbuMariekemagie():
+    return 'Bumbabloe'
+
+
 class Bidding:
     playOrder = ["N", "E", "S", "W"]
     buttonsDict = {

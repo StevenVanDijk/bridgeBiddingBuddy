@@ -90,5 +90,42 @@ def testYouOpen2SA():
     color = '♥'
     assert bt.you_open(cb, points, highest, lowest, color) == '2SA'
 
-def testYou
+def testJacoby():
+    cb = ['1SA', 'pass']
+    bt = bidding_tree(cb)
+    points = 0
+    highest = 5
+    lowest = 0
+    color = '♥'
+    assert bt.you_open(cb, points, highest, lowest, color) == '2♦'
+
+def testStayman():
+    cb = ['1SA', 'pass']
+    bt = bidding_tree(cb)
+    points = 8
+    highest = 4
+    lowest = 0
+    color = '♥'
+    assert bt.you_open(cb, points, highest, lowest, color) == '2♣'
+
+def testAnswer2SATo1SA():
+    cb = ['1SA', 'pass']
+    bt = bidding_tree(cb)
+    points = 8
+    highest = 4
+    lowest = 0
+    color = '♣'
+    assert bt.you_open(cb, points, highest, lowest, color) == '2SA'
+
+def testAnswer3SATo1SA():
+    cb = ['1SA', 'pass']
+    bt = bidding_tree(cb)
+    points = 10
+    highest = 4
+    lowest = 0
+    color = '♣'
+    assert bt.you_open(cb, points, highest, lowest, color) == '3SA'
+
+
+
     

@@ -48,7 +48,7 @@ class bidding_tree():
                     if points >= 20 and points <= 22:
                         return '2SA'            
                 
-                elif points >= 22 or (points >= 15 and higest_series >= 7):
+                elif points >= 22 or (points >= 15 and highest_series >= 7):
                     return '2♣'                
 
                 elif highest_series >= 5:
@@ -88,11 +88,12 @@ class bidding_tree():
                             return '3' + color_hs
                         if highest_series == 8:
                             return '4' + color_hs
-                    
-                    else:
+
+                    else: 
                         return 'pass'
-                else: 
-                    return 'pass'
+
+            else: 
+                return 'pass'
                     
 
             

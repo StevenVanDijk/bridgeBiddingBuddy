@@ -1,4 +1,4 @@
-from bidding import bumbuMariekemagie 
+from bidding import biddingIsAllowed 
 
 class bidding_tree():
     _ = False
@@ -115,7 +115,7 @@ class bidding_tree():
         if self.Pa_pass:
             if points > 5:
                 bid = '1' + color_hs
-                if addBid(current_bidding, bid):
+                if biddingIsAllowed(current_bidding, bid):
                     return '1' + color_hs
                 else:
                     return '1SA'

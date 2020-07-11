@@ -13,6 +13,7 @@ from kivy.core.window import Window
 from kivy.clock import Clock
 from bidding import Bidding
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.togglebutton import ToggleButton
 
 class ButtonKind(Enum):
     number = 1
@@ -115,7 +116,7 @@ class BiddingScreen(Screen):
             result = BoxLayout()
             for elem in addedbuttons:
                 def invoke(elem):                    
-                    if elem == '?': return self.manager.switch_to(self.manager.testScreen)
+                    if elem == '?': return self.manager.switch_to(self.manager.specificationScreen)
                     if buttonKind == ButtonKind.special: return self.onAddBid(elem)
                     elif buttonKind == ButtonKind.color: self.currentColor = elem
                     elif buttonKind == ButtonKind.number: self.currentNumber = elem
@@ -139,12 +140,12 @@ class BiddingScreen(Screen):
         self.rootLayout.add_widget(topLayout)
         self.rootLayout.add_widget(bottomLayout)
 
-class TestScreen(Screen):
+class SpecificationScreen(Screen):
     pass
 
 class Manager(ScreenManager):
     biddingScreen = ObjectProperty(None)
-    testScreen = ObjectProperty(None)
+    specificationScreen = ObjectProperty(None)
 
 class BridgeBiddingBuddy(App):
     def build(self):
@@ -155,5 +156,4 @@ if __name__ == '__main__':
     Window.size = (600, 800)
     Window.top = 50
 
-    BridgeBiddingBuddy().run()
-        
+    BridgeBiddingBuddy().run()       

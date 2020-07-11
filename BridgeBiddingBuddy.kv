@@ -1,22 +1,16 @@
-#: import Window kivy.core.window.Window
+#:kivy 1.11.1
 <Manager>:
     id: screen_manager
 
     biddingScreen: biddingScreen
-    testScreen: testScreen
+    specificationScreen: specificationScreen
 
     BiddingScreen:
         id: biddingScreen
         name: 'bidding'
         manager: screen_manager
 
-    TestScreen:
-        id: testScreen
-        name: 'test'
+    SpecificationScreen:
+        id: specificationScreen
+        name: 'specification'
         manager: screen_manager
-        Button:
-            text: "Click me to go back"
-            on_press: 
-                testScreen.manager.transition.direction = 'right'
-                testScreen.manager.switch_to(testScreen.manager.biddingScreen)
-

@@ -1,3 +1,5 @@
+from bidding import bumbuMariekemagie 
+
 class bidding_tree():
     _ = False
     pass_ = False
@@ -7,6 +9,7 @@ class bidding_tree():
     _1SA_rightOp = False
     pass_1SA_Pa = False
     _1SA_Pa = False
+    Pa_pass = False
 
     def __init__(self, current_bidding):
         #pass
@@ -35,10 +38,15 @@ class bidding_tree():
         if len(current_bidding) >= 1:
             if current_bidding[0] == '1SA' and current_bidding[1] == 'pass':
                 self._1SA_Pa = True
-        
+
+        #answering partner
+        if len(current_bidding) >= 2:
+            if current_bidding[0] != 'pass' and current_bidding[1] == 'pass':
+                self.Pa_pass = True       
 
 
-    def you_open(self, current_bidding, points, highest_series, lowest_series, color_hs):
+    def bids(self, current_bidding, points, highest_series, lowest_series, color_hs):
+        # opening
         if self._ == True or self.pass_ == True or self.pass_pass_ == True:
             if points >= 12:
                 if highest_series <= 5 and lowest_series >= 2:
@@ -60,25 +68,6 @@ class bidding_tree():
                 else:
                     return '1♣'
 
-            if self._1SA_Pa:
-                if color_hs == '♥' or color_hs == '♠':
-                    if highest_series >= 5:
-                        if color_hs == '♥':
-                            return '2♦'
-                        if color_hs == '♠':
-                            return '2♥'
-
-                    if points >= 8:   
-                        if highest_series == 4:
-                            return '2♣'
-                
-                elif points == 8 or points == 9:
-                    return '2SA'
-
-                elif points >= 10:
-                    return '3SA'
-
-
             if points < 12:
                 if points <= 10:
                     if highest_series >= 6:
@@ -90,14 +79,47 @@ class bidding_tree():
                             return '4' + color_hs
 
                     else: 
-                        return 'pass'
+                        if isAllowed(current_bidding, 'pass'): 
+                            return 'pass'
 
                 else:
                     return 'pass'
             else: 
                 return 'pass'
-                    
 
+        # answering
+        # answering to 1SA
+        if self._1SA_Pa:
+            if color_hs == '♥' or color_hs == '♠':
+                # Jacoby
+                if highest_series >= 5:
+                    if color_hs == '♥':
+                        return '2♦'
+                    if color_hs == '♠':
+                        return '2♥'
+                # Stayman
+                if points >= 8:   
+                    if highest_series == 4:
+                        return '2♣'
             
-        
-        return None            
+            elif points == 8 or points == 9:
+                return '2SA'
+
+            elif points >= 10:
+                return '3SA'
+
+            else: 
+                return 'pass'
+
+            # Answering to random bid partner
+        if self.Pa_pass:
+            if points > 5:
+                bid = '1' + color_hs
+                if addBid(current_bidding, bid):
+                    return '1' + color_hs
+                else:
+                    return '1SA'
+
+
+        return "i'm sorry, this bid doesn't exist yet"            
+

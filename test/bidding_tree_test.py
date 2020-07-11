@@ -7,7 +7,7 @@ def testYouOpen():
     highest = 5
     lowest = 0 
     color = '♥'
-    assert bt.you_open(cb, points, highest, lowest, color) == "1♥"
+    assert bt.bids(cb, points, highest, lowest, color) == "1♥"
 
 def testYouOpenPass():
     cb = []
@@ -16,7 +16,7 @@ def testYouOpenPass():
     highest = 6
     lowest = 0
     color = '♠'
-    assert bt.you_open(cb, points, highest, lowest, color) == 'pass'
+    assert bt.bids(cb, points, highest, lowest, color) == 'pass'
 
 def testYouOpenPreemtif():
     cb = []
@@ -25,7 +25,7 @@ def testYouOpenPreemtif():
     highest = 7
     lowest = 0
     color = '♠'
-    assert bt.you_open(cb, points, highest, lowest, color) == '3♠'
+    assert bt.bids(cb, points, highest, lowest, color) == '3♠'
 
 def testYouOpen1SA():
     cb = []
@@ -34,7 +34,7 @@ def testYouOpen1SA():
     highest = 5
     lowest = 2
     color = '♠'
-    assert bt.you_open(cb, points, highest, lowest, color) == '1SA'
+    assert bt.bids(cb, points, highest, lowest, color) == '1SA'
 
 def testYouOpen1clubs():
     cb = []
@@ -43,7 +43,7 @@ def testYouOpen1clubs():
     highest = 4
     lowest = 0
     color = '♠'
-    assert bt.you_open(cb, points, highest, lowest, color) == '1♣'
+    assert bt.bids(cb, points, highest, lowest, color) == '1♣'
 
 def testYouOpen2SA():
     cb = []
@@ -52,7 +52,7 @@ def testYouOpen2SA():
     highest = 5
     lowest = 2
     color = '♥'
-    assert bt.you_open(cb, points, highest, lowest, color) == '2SA'
+    assert bt.bids(cb, points, highest, lowest, color) == '2SA'
 
 def testYouOpen2clubsWithPoints():
     cb = []
@@ -61,7 +61,7 @@ def testYouOpen2clubsWithPoints():
     highest = 0
     lowest = 0
     color = '♥'
-    assert bt.you_open(cb, points, highest, lowest, color) == '2♣'
+    assert bt.bids(cb, points, highest, lowest, color) == '2♣'
 
 def testYouOpen2clubs():
     cb = []
@@ -70,7 +70,7 @@ def testYouOpen2clubs():
     highest = 7
     lowest = 0
     color = '♥'
-    assert bt.you_open(cb, points, highest, lowest, color) == '2♣'
+    assert bt.bids(cb, points, highest, lowest, color) == '2♣'
 
 def testYouOpen2hearts():
     cb = []
@@ -79,7 +79,7 @@ def testYouOpen2hearts():
     highest = 6
     lowest = 0
     color = '♥'
-    assert bt.you_open(cb, points, highest, lowest, color) == '2♥'
+    assert bt.bids(cb, points, highest, lowest, color) == '2♥'
 
 def testYouOpen2SA():
     cb = []
@@ -88,7 +88,54 @@ def testYouOpen2SA():
     highest = 5
     lowest = 3
     color = '♥'
-    assert bt.you_open(cb, points, highest, lowest, color) == '2SA'
+    assert bt.bids(cb, points, highest, lowest, color) == '2SA'
 
-def testYou
+def testJacoby():
+    cb = ['1SA', 'pass']
+    bt = bidding_tree(cb)
+    points = 0
+    highest = 5
+    lowest = 0
+    color = '♥'
+    assert bt.bids(cb, points, highest, lowest, color) == '2♦'
+
+def testStayman():
+    cb = ['1SA', 'pass']
+    bt = bidding_tree(cb)
+    points = 8
+    highest = 4
+    lowest = 0
+    color = '♥'
+    assert bt.bids(cb, points, highest, lowest, color) == '2♣'
+
+def testAnswer2SATo1SA():
+    cb = ['1SA', 'pass']
+    bt = bidding_tree(cb)
+    points = 8
+    highest = 4
+    lowest = 0
+    color = '♣'
+    assert bt.bids(cb, points, highest, lowest, color) == '2SA'
+
+def testAnswer3SATo1SA():
+    cb = ['1SA', 'pass']
+    bt = bidding_tree(cb)
+    points = 10
+    highest = 4
+    lowest = 0
+    color = '♣'
+    assert bt.bids(cb, points, highest, lowest, color) == '3SA'
+
+def testAnswerToPartnerAtLevel1():
+    cb = ['1♣', 'pass']
+    bt = bidding_tree(cb)
+    points = 90
+    highest = 4
+    lowest = 0
+    color = '♥'
+    assert bt.bids(cb, points, highest, lowest, color) == '1♥'
+
+
+
+
     

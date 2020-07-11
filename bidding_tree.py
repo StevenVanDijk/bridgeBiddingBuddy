@@ -114,11 +114,12 @@ class bidding_tree():
             # Answering to random bid partner
         if self.Pa_pass:
             if points > 5:
-                bid = 1 + 'color_hs'
-                if isAllowed(current_bidding, bid):
-                    return bid
+                bid = '1' + color_hs
+                if addBid(current_bidding, bid):
+                    return '1' + color_hs
                 else:
                     return '1SA'
 
-        return None            
+
+        return "i'm sorry, this bid doesn't exist yet"            
 

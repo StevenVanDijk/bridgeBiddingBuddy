@@ -1,26 +1,32 @@
-from bidding import bumbuMariekemagie 
+from bidding import biddingIsAllowed 
 
 class bidding_tree():
-    _ = False
-    pass_ = False
-    pass_pass_ = False
-    pass_bid_ = False
-    pass_1SA_rightOp = False
-    _1SA_rightOp = False
-    pass_1SA_Pa = False
-    _1SA_Pa = False
-    Pa_pass = False
+    _ = False # ✔
+    pass_ = False # ✔
+    pass_pass_ = False # ✔
+    pass_bid_ = False # ❌ 
+    pass_1SA_rightOp = False # ✔
+    _1SA_rightOp = False # ✔
+    pass_1SA_Pa = False # ❌
+    PaStayman = False # ✔
+    OpStayman = False # ✔
+    PaJacobyDs = False # ❌
+    PaJacobyHs = False 
+    OpJacobyDs = False # ❌
+    OpJacobyHs = False 
+    _1SA_Pa = False # ✔
+    Pa_pass = False # ✔
 
     def __init__(self, current_bidding):
         #pass
         if len(current_bidding) == 0: 
             self._ = True
 
-        if len(current_bidding) >= 1:
+        if len(current_bidding) == 1:
             if current_bidding[0] == 'pass': 
                 self.pass_ = True
 
-        if len(current_bidding) >= 2:   
+        if len(current_bidding) == 2:   
             if current_bidding[0] == 'pass' and current_bidding[1] == 'pass': 
                 self.pass_pass_ = True
 
@@ -39,6 +45,29 @@ class bidding_tree():
             if current_bidding[0] == '1SA' and current_bidding[1] == 'pass':
                 self._1SA_Pa = True
 
+        #answer to Stayman and Jacoby
+        if len(current_bidding) >= 3:
+            if current_bidding[0] == '1SA':
+                if current_bidding[2] == '2♣':
+                    if current_bidding[3] == 'pass':
+                        self.PaStayman = True
+                    else:
+                        self.OpStayman = True
+
+                if current_bidding[2] == '2♦' or current_bidding[2] == '2♥':
+                    if current_bidding[3] == 'pass':
+                        if current_bidding[2] == '2♦':
+                            self.PaJacobyDs = True
+                        if current_bidding[2] == '2♥':
+                            self.PaJacobyHs = True
+                    else:
+                        if current_bidding[2] == '2♦':
+                            self.OpJacobyDs = True
+                        if current_bidding[2] == '2♥':
+                            self.OpJacobyHs = True
+                        
+         
+        
         #answering partner
         if len(current_bidding) >= 2:
             if current_bidding[0] != 'pass' and current_bidding[1] == 'pass':
@@ -79,7 +108,7 @@ class bidding_tree():
                             return '4' + color_hs
 
                     else: 
-                        if isAllowed(current_bidding, 'pass'): 
+                        if biddingIsAllowed(current_bidding, 'pass'): 
                             return 'pass'
 
                 else:
@@ -111,15 +140,45 @@ class bidding_tree():
             else: 
                 return 'pass'
 
-            # Answering to random bid partner
+        # Answering to Jacoby and Stayman
+        if self.PaStayman == True:
+            if color_hs == '♥':
+                return '2♥'
+            if color_hs == '♠':
+                return '2♠'
+            if color_hs != '♠' and color_hs != '♥':
+                return '2♦'
+        
+        if self.OpStayman:
+            if points > 10:
+                if highest_series == '♣':
+                    return 'X'
+            return 'pass'
+
+        if self.PaJacobyDs:
+            return '2♥'
+        if self.PaJacobyHs:
+            return '2♠'
+
+        if self.OpJacobyDs:
+            if color_hs == '♦':
+                if highest_series > 5:
+                    return 'X'
+
+        if self.OpJacobyHs:
+            if color_hs == '♥':
+                if highest_series > 5:
+                    return 'X'        
+
+        # Answering to random bid partner
         if self.Pa_pass:
             if points > 5:
                 bid = '1' + color_hs
-                if addBid(current_bidding, bid):
+                if biddingIsAllowed(current_bidding, bid):
                     return '1' + color_hs
                 else:
                     return '1SA'
 
 
-        return "i'm sorry, this bid doesn't exist yet"            
+        return "i'm sorry, BidBud doesn't know this yet, but he keeps learning!"            
 

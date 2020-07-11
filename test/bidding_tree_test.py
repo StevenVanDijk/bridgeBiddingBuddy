@@ -14,6 +14,7 @@ testcases = [
     ("you open 2SA", [], 21, 5, 3, 'Hs', '2SA'),
     ("jacoby", ["1SA", "pass"], 0, 5, 0, 'Hs', '2Ds'),
     ("stayman", ["1SA", "pass"], 8, 4, 0, 'Hs', '2Cs'),
+    ("answer to Stayman", ["1SA", "pass", "2♣", "pass"], 16, 4, 0, 'Hs', '2Hs'),
     ("answer 2SA to 1SA", ["1SA", "pass"], 8, 4, 0, 'Cs', '2SA'),
     ("answer 3SA to 1SA", ["1SA", "pass"], 10, 4, 0, 'Cs', '3SA'),
     ("answer to partner lvl 1", ["1Cs", "pass"], 90, 4, 0, 'Hs', '1Hs')
@@ -26,3 +27,4 @@ def testBidding(descr, cb, points, highest, lowest, color, expected):
     current = [pretty(b) for b in cb]
     bt = bidding_tree(current)
     assert bt.bids(current, points, highest, lowest, pretty(color)) == pretty(expected)
+

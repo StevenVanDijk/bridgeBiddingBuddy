@@ -1,6 +1,6 @@
 from bidding import biddingIsAllowed 
 
-class bidding_tree():   
+class bidding_tree():
     _ = False # ✔
     pass_ = False # ✔
     pass_pass_ = False # ✔
@@ -10,20 +10,12 @@ class bidding_tree():
     pass_1SA_Pa = False # ❌
     PaStayman = False # ✔
     OpStayman = False # ✔
-    PaJacobyDs = False # ✔
-    PaJacobyHs = False # ✔
-    OpJacobyDs = False # ✔
-    OpJacobyHs = False # ✔
+    PaJacobyDs = False # ❌
+    PaJacobyHs = False 
+    OpJacobyDs = False # ❌
+    OpJacobyHs = False 
     _1SA_Pa = False # ✔
     Pa_pass = False # ✔
-    _1x_pass_1SA_pass = False 
-    _1x_pass_1x_pass = False # ❌
-    _1x_pass_2x_pass = False # ❌
-    _1x_pass_3x_pass = False # ❌
-    level1 = False
-    if current_bidding[0] == '1♣' or current_bidding[0] == '1♦' or current_bidding[0] == '1♥' or current_bidding[0] == '1♠' or current_bidding[0] == '1SA':
-        level1 = True
-
 
     def __init__(self, current_bidding):
         #pass
@@ -37,31 +29,13 @@ class bidding_tree():
         if len(current_bidding) == 2:   
             if current_bidding[0] == 'pass' and current_bidding[1] == 'pass': 
                 self.pass_pass_ = True
-                
-        count_pass = 0
-        done = False
-
-        while not done:
-            if len(current_bidding) >= 1:
-                if current_bidding[0] == 'pass':
-                    current_bidding.remove('pass')
-                    count_pass += 1
-                    if len(current_bidding) == 0:
-                        while count_pass != 0:
-                            current_bidding.insert(0, 'pass')
-                            count_pass -= 1
-                            if count_pass == 0:
-                                done = True
-                else:
-                    done = True
-            else: 
-                done = True
-
-
-        
 
         #1SA
         #opponents
+        if current_bidding[0] == '1SA':
+            if current_bidding[1] == 'pass':
+                
+        
         if len(current_bidding) == 1:
             if current_bidding[0] == '1SA':
                 self._1SA_rightOp = True
@@ -71,12 +45,14 @@ class bidding_tree():
                 self.pass_1SA_rightOp = True
         
         #partner
-        if len(current_bidding) == 2:
+        if len(current_bidding) >= 1:
+            
             if current_bidding[0] == '1SA' and current_bidding[1] == 'pass':
                 self._1SA_Pa = True
 
         #answer to Stayman and Jacoby
         if len(current_bidding) >= 3:
+            
             if current_bidding[0] == '1SA':
                 if current_bidding[2] == '2♣':
                     if current_bidding[3] == 'pass':
@@ -101,24 +77,8 @@ class bidding_tree():
         #answering partner
         if len(current_bidding) >= 2:
             if current_bidding[0] != 'pass' and current_bidding[1] == 'pass':
-                self.Pa_pass = True    
+                self.Pa_pass = True       
 
-        #let's go to the manch!
-        if len(current_bidding) >= 4:
-            if self.level1:
-                if current_bidding[1] == 'pass' and current_bidding[3] == 'pass':
-                    if current_bidding[2] == '1SA':
-                        self._1x_pass_1SA_pass = True
-                    if current_bidding[2] == '1♣' or current_bidding[2] == '1♦' or current_bidding[2] == '1♥' or current_bidding[2] == '1♠':
-                        self._1x_pass_1x_pass = True
-                    if current_bidding[2] == '2♣' or current_bidding[2] == '2♦' or current_bidding[2] == '2♥' or current_bidding[2] == '2♠':
-                        self._1x_pass_2x_pass = True
-                    if current_bidding[2] == '3♣' or current_bidding[2] == '3♦' or current_bidding[2] == '3♥' or current_bidding[2] == '3♠':
-                        self._1x_pass_3x_pass = True                 
-           
-        while count_pass != 0:
-            current_bidding.insert(0, 'pass')
-            count_pass -= 1
 
     def bids(self, current_bidding, points, highest_series, lowest_series, color_hs):
         # opening

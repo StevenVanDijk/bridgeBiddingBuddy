@@ -20,6 +20,15 @@ class bidding_tree():
     _1x_pass_1x_pass = False # ❌
     _1x_pass_2x_pass = False # ❌
     _1x_pass_3x_pass = False # ❌
+    _1x_pass_2x_pass_same = False
+    _1x_pass_3x_pass_same = False
+    _1x_pass_4x_pass_same = False
+    # negatief doublet
+    -X_hs = False
+    -X_Ms = False 
+    
+
+
     level1 = False
     if current_bidding[0] == '1♣' or current_bidding[0] == '1♦' or current_bidding[0] == '1♥' or current_bidding[0] == '1♠' or current_bidding[0] == '1SA':
         level1 = True
@@ -62,6 +71,14 @@ class bidding_tree():
 
         #1SA
         #opponents
+        if len(current_bidding) >= 2:
+            if current_bidding[0] == '1♣' or current_bidding[0] == '1♦':
+                if current_bidding[1] == '1♦':
+                    self.-X_Ms = True
+                if current_bidding[1] == '1♥' or current_bidding[1] == '1♠':
+                    self.-X_hs = True                             
+
+        
         if len(current_bidding) == 1:
             if current_bidding[0] == '1SA':
                 self._1SA_rightOp = True
@@ -109,16 +126,14 @@ class bidding_tree():
                 if current_bidding[1] == 'pass' and current_bidding[3] == 'pass':
                     if current_bidding[2] == '1SA':
                         self._1x_pass_1SA_pass = True
-                    if current_bidding[2] == '1♣' or current_bidding[2] == '1♦' or current_bidding[2] == '1♥' or current_bidding[2] == '1♠':
+                    if current_bidding[2] == '1♣' or current_bidding[2] == '1♦' or current_bidding[2] == '1♥' or current_bidding[2] == '1♠':                        
                         self._1x_pass_1x_pass = True
                     if current_bidding[2] == '2♣' or current_bidding[2] == '2♦' or current_bidding[2] == '2♥' or current_bidding[2] == '2♠':
                         self._1x_pass_2x_pass = True
                     if current_bidding[2] == '3♣' or current_bidding[2] == '3♦' or current_bidding[2] == '3♥' or current_bidding[2] == '3♠':
-                        self._1x_pass_3x_pass = True                 
+                        self._1x_pass_3x_pass = True      
+                               
            
-        while count_pass != 0:
-            current_bidding.insert(0, 'pass')
-            count_pass -= 1
 
     def bids(self, current_bidding, points, highest_series, lowest_series, color_hs):
         # opening
@@ -189,7 +204,7 @@ class bidding_tree():
         # Answering to Jacoby and Stayman
         if self.PaStayman == True:
             if color_hs == '♥':
-                return '2♥'
+                return '2♥'o
             if color_hs == '♠':
                 return '2♠'
             if color_hs != '♠' and color_hs != '♥':
@@ -214,7 +229,15 @@ class bidding_tree():
         if self.OpJacobyHs:
             if color_hs == '♥':
                 if highest_series > 5:
-                    return 'X'        
+                    return 'X'    
+
+        # Answering -X
+        if self.-X_Ms:
+            pass
+
+        if self.-X_hs:
+            if color_hs == '♥':
+                return 'X'
 
         # Answering to random bid partner
         if self.Pa_pass:
@@ -224,6 +247,25 @@ class bidding_tree():
                     return '1' + color_hs
                 else:
                     return '1SA'
+
+        if self._1x_pass_1SA_pass:
+            if points < 14:
+                return 'pass'
+            return '2' + color_hs
+
+        if self._1x_pass_2x_pass_same:
+            if points < 14:
+                return 'pass'
+            elif points > 14 and points < 18:
+                return '2' + color_hs
+            else:
+                return '4' + color_hs
+        
+        if self._1x_pass_3x_pass_same:
+            if points <= 13:
+                return 'pass'
+            if points > 14:
+                return '4' + color_hs            
 
 
         return "i'm sorry, BidBud doesn't know this yet, but he keeps learning!"            

@@ -44,16 +44,18 @@ class Bidding:
 
     def isAllowed(self, bid):
         biddings_passed = len(self.current)
-                
-        if bid == 'X' and biddings_passed < 2:
+        if bid == 'X' and biddings_passed < 1:
             return False
         if bid == 'X':
-            if self.current[-1] == 'X':
+            if self.current[-1] == 'X' or self.current[-1] == 'XX':
                 return False
             if biddings_passed >= 3:
                 if self.current[-2] == 'X' or self.current[-3] == 'X' and self.current[-1] == 'pass':
                     return False
-            
+        if bid == 'XX' and biddings_passed < 2:
+            return False
+        if bid == 'XX' and self.current[-1] != 'X':
+            return False
         if not self.bidding_ended:
             if not self.isSpecial(bid):
                 if self.buttonsDict[bid] <= self.getLastBidOrder():

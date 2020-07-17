@@ -71,7 +71,7 @@ class BiddingScreen(Screen):
 
     def build(self):
         topLayout = self.updateCurrentBidding()
-        bottomLayout = BoxLayout(orientation='vertical')
+        bottomLayout = BoxLayout(orientation='vertical', size_hint=(1.0, 0.3))
 
         bidLayout = BoxLayout(orientation='vertical')
         def addButtons(addedbuttons, buttonKind):

@@ -24,3 +24,25 @@ def testIsDblAllowed():
 
     bidding.current = ['1♣', 'X']
     assert not bidding.isAllowed('X')
+
+
+def testIsRdblAllowed():
+    bidding = Bidding()
+
+    bidding.current = ["1♣", 'X']
+    assert bidding.isAllowed('XX')
+
+
+def testDoubleRdbl():
+    bidding = Bidding()
+
+    bidding.current = ["1♣", 'XX']
+    assert not bidding.isAllowed('XX')
+
+
+def testRdblnoDbl():
+    bidding = Bidding()
+
+    bidding.current = ['1♣']
+    assert not bidding.isAllowed('XX')
+

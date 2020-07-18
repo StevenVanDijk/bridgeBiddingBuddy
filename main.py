@@ -8,19 +8,22 @@ from biddingScreen import BiddingScreen
 from specificationScreen import SpecificationScreen
 from bidding import Bidding
 
+
 class Manager(ScreenManager):
     pass
 
+
 class BridgeBiddingBuddy(App):
     bidding = Bidding()
-    biddingScreen = BiddingScreen(name = 'biddingScreen')
+    biddingScreen = BiddingScreen(name='biddingScreen')
 
     def build(self):
         sm = Manager()
         sm.add_widget(self.biddingScreen)
-        sm.add_widget(SpecificationScreen(name = 'specificationScreen'))
+        sm.add_widget(SpecificationScreen(name='specificationScreen'))
         self.biddingScreen.setBidding(self.bidding)
         return sm
+
 
 if __name__ == '__main__':
     Window.clearcolor = (1, 1, 1, 1)

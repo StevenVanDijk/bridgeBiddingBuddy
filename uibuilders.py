@@ -48,10 +48,11 @@ def getColor(txt):
     return (textColor, background_color)
 
 
-def buildButton(txt, callback, size=None):
+def buildButton(txt, callback, size_hint=None, size=None):
     widgetSize = normalSize if size == None else size
+    widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
     (col, bcol) = getColor(txt)
-    widget = Button(color=col, text=txt, size_hint=(1.0, None), height=widgetSize, font_name=defaultFont,
+    widget = Button(color=col, text=txt, size_hint=widgetSizeHint, height=widgetSize, font_name=defaultFont,
                     background_normal='', background_color=bcol, padding=(10, 10))
     widget.bind(on_press=callback)
     return widget

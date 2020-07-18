@@ -39,7 +39,22 @@ class BiddingScreen(Screen):
 
         Clock.schedule_once(clearAndBuild)
 
-    def updateCurrentBidding(self):
+    def buildHeaders(self):
+        headers = BoxLayout(orientation='vertical', padding=[0,3])
+        headers.add_widget(buildButton('Undo', lambda ins: self.onUndo()))
+        suits = GridLayout(cols=4)
+        def createCallback(whoStarts):
+            return lambda instance: self.bidding.setWhoStarts(whoStarts)
+
+        # create buttons for suits
+        if self.bidding != None:
+            for elem in self.bidding.playOrder:
+                suits.add_widget(buildButton(elem, createCallback(elem)))
+
+        headers.add_widget(suits)
+        return headers
+
+    def buildCurrentBidding(self):
         layout = BoxLayout(orientation='vertical')
         def stop_bidding(container):
             def clearBidding(instance):
@@ -70,36 +85,36 @@ class BiddingScreen(Screen):
             nrOfPointsLyt.add_widget(buildLabel('Nr of points?', size=smallSize, size_hint=(0.6, None)))
             def createCallback():
                 def cb(instance, value):
-                    self.bidding.setNrOfPoints(value)
+                    self.bidding.setNrOfPoints(int(value))
                     self.updateUI()
                 return cb 
-            nrOfPointsLyt.add_widget(buildNumericInput(createCallback(), size=smallSize))
+            nrOfPoints = buildNumericInput(createCallback(), size=smallSize)
+            nrOfPoints.text = str(self.bidding.nrOfPoints)
+            nrOfPointsLyt.add_widget(nrOfPoints)
 
             return nrOfPointsLyt
 
         def show_bidding(container):
-            container.add_widget(buildButton('Undo', lambda ins: self.onUndo()))
-
-            questions = BoxLayout(orientation='vertical')
-            questions.add_widget(createQuestionHighestColor())
-            questions.add_widget(createQuestionNumberOfPoints())
-            container.add_widget(questions)
+            # questions = BoxLayout(orientation='vertical')
+            # questions.add_widget(createQuestionHighestColor())
+            # questions.add_widget(createQuestionNumberOfPoints())
+            # container.add_widget(questions)
 
             currentBidding = GridLayout(cols=4)
-            def createCallback(whoStarts):
-                return lambda instance: self.bidding.setWhoStarts(whoStarts)
-
-            # create buttons for wind directions
-            for elem in self.bidding.playOrder:
-                currentBidding.add_widget(buildButton(elem, createCallback(elem)))
 
             # create empty boxes to start at correct starting point
-            for i in range(0, self.bidding.playOrder.index(self.bidding.whoStarts)):
+            numEmpty = self.bidding.playOrder.index(self.bidding.whoStarts)
+            for i in range(0, numEmpty):
                 currentBidding.add_widget(buildLabel(''))      
 
             # create labels for all bids  
             for bid in self.bidding.current:
                 currentBidding.add_widget(buildLabel(bid))
+
+            # create empty boxes to fill out the row
+            for i in range(0, 4 - (numEmpty + len(self.bidding.current)) % 4):
+                currentBidding.add_widget(buildLabel(''))      
+
             container.add_widget(currentBidding)
 
         if self.bidding == None or self.bidding.finished():
@@ -109,13 +124,10 @@ class BiddingScreen(Screen):
 
         return layout            
 
-    def build(self):
-        topLayout = self.updateCurrentBidding()
-        bottomLayout = BoxLayout(orientation='vertical', size_hint=(1.0, 0.3))
-
+    def buildBidChooser(self):
         bidLayout = BoxLayout(orientation='vertical')
         def addButtons(addedbuttons, buttonKind):
-            result = BoxLayout()
+            result = BoxLayout(spacing=6, padding=[0,3])
             for elem in addedbuttons:
                 def invoke(elem):                    
                     if elem == '?': return self.manager.switch_to(self.manager.specificationScreen)
@@ -136,7 +148,17 @@ class BiddingScreen(Screen):
         bidLayout.add_widget(numberBtns)
         bidLayout.add_widget(colorBtns)
         bidLayout.add_widget(extraBtns)
+        return bidLayout
 
-        bottomLayout.add_widget(bidLayout)
+    def build(self):
+        topLayout = BoxLayout(orientation='vertical', size_hint=(1.0, 0.2))
+        topLayout.add_widget(self.buildHeaders())
+
+        currentBidding = self.buildCurrentBidding()
+
+        bottomLayout = BoxLayout(orientation='vertical', size_hint=(1.0, 0.3))
+        bottomLayout.add_widget(self.buildBidChooser())
+
         self.rootLayout.add_widget(topLayout)
+        self.rootLayout.add_widget(currentBidding)
         self.rootLayout.add_widget(bottomLayout)

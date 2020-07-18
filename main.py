@@ -24,7 +24,7 @@ class BridgeBiddingBuddy(App):
 
 if __name__ == '__main__':
     Window.clearcolor = (1, 1, 1, 1)
-    Window.size = (600, 800)
+    Window.size = (500, 700)
     Window.top = 50
 
-    BridgeBiddingBuddy().run()       
+    BridgeBiddingBuddy().run()

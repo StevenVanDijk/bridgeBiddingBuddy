@@ -180,5 +180,5 @@ class bidding_tree():
                     return '1SA'
 
 
-        return "i'm sorry, BidBud doesn't know this yet, but he keeps learning!"            
+        return "i'm sorry, BidBud doesn't know this yet, but he keeps learning!"
 

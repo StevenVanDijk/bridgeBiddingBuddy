@@ -16,6 +16,8 @@ class Bidding:
 
     current = []
     whoStarts = 'N'
+    highestColor = None
+    nrOfPoints = None
     bidding_ended = False
     opponent = False
     partner = False
@@ -26,6 +28,12 @@ class Bidding:
     def setWhoStarts(self, whoStarts):
         if (len(self.current) == 0): 
             self.whoStarts = whoStarts
+
+    def setHighestColor(self, color):
+        self.highestColor = color
+
+    def setNrOfPoints(self, value):
+        self.nrOfPoints = value
 
     def getLastBidOrder(self):
         previousBids = [elem for elem in self.current if not self.isSpecial(elem)]

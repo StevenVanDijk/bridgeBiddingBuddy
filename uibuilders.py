@@ -1,10 +1,18 @@
 from kivy.uix.label import Label
 from kivy.uix.button import Button
+from kivy.uix.togglebutton  import ToggleButton
+from kivy.uix.textinput import TextInput
 from kivy.lang import Builder
 from enum import Enum
+import re
 
-defaultLength = 40
+font_size = 12
+bigSize = 160
+normalSize = 80
+smallSize = 40
+smallestSize = 20
 defaultFont = './consola.ttf'
+colors = ['♣', '♠', '♦', '♥']
 
 class ButtonKind(Enum):
     number = 1
@@ -19,26 +27,52 @@ def getColor(txt):
         textColor = [1,0,0,1]
     return textColor
 
-kv="""
-<RoundedButton@Button>:
-    background_color: 0,0,0,0  # the last zero is the critical on, make invisible
-    canvas.before:
-        Color:
-            rgba: (.4,.4,.4,1) if self.state=='normal' else (0,.7,.7,1)  # visual feedback of press
-        RoundedRectangle:
-            pos: self.pos
-            size: self.size
-            radius: [10,]
-"""
-class RoundedButton(Button):
-    pass
+def buildButton(txt, callback, size=None):
+    widgetSize = normalSize if size == None else size
+    widget = Button(
+        color=getColor(txt), 
+        text=txt, 
+        size_hint=(1.0, None),  
+        height=widgetSize, 
+        font_name=defaultFont)
+    widget.bind(on_press=callback)
+    return widget
 
-Builder.load_string(kv)
+def buildLabel(txt, size=None, size_hint=None):
+    widgetSize = normalSize if size == None else size
+    widgetSizeHint = (1.0, None) if size_hint == None else size_hint
+    return Label(
+        color=getColor(txt), 
+        text=txt, 
+        size_hint=widgetSizeHint,  
+        height=widgetSize, 
+        font_name=defaultFont)
 
-def buildButton(txt, callback):
-    btn = Button(color=getColor(txt), text=txt, size_hint=(1.0, None),  height=defaultLength * 2, width=defaultLength * 2, font_name=defaultFont)
-    btn.bind(on_press=callback)
-    return btn
+def buildToggle(txt, isDown, callback, group=None, size=None):
+    state = 'down' if isDown else 'normal'
+    widgetSize = normalSize if size == None else size
+    widget = ToggleButton(
+        group=group, 
+        state=state, 
+        color=getColor(txt), 
+        text=txt, 
+        size_hint=(1.0, None),  
+        height=widgetSize, 
+        font_name=defaultFont)
+    widget.bind(on_press=callback)
+    return widget
 
-def buildLabel(txt):
-    return Label(color=getColor(txt), text=txt, size_hint=(1.0, None),  height=defaultLength, font_name=defaultFont)
+def buildNumericInput(callback, size=None):
+    class NumInput(TextInput):
+        pat = re.compile('[^0-9]')
+        def insert_text(self, substring, from_undo=False):
+            pat = self.pat
+            s = re.sub(pat, '', substring)
+            return super(NumInput, self).insert_text(s, from_undo=from_undo)
+    
+    widgetSize = normalSize if size == None else size
+    widget = NumInput(
+        size_hint=(1.0, None),  
+        height=widgetSize        
+    )
+    return widget

@@ -1,7 +1,7 @@
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen
-from uibuilders import defaultLength, buildButton, buildLabel, ButtonKind
+from uibuilders import buildButton, buildLabel, ButtonKind
 
 
 class SpecificationScreen(Screen):

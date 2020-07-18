@@ -268,5 +268,5 @@ class bidding_tree():
                 return '4' + color_hs            
 
 
-        return "i'm sorry, BidBud doesn't know this yet, but he keeps learning!"            
+        return "i'm sorry, BidBud doesn't know this yet, but he keeps learning!"
 

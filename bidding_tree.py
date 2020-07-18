@@ -4,7 +4,6 @@ class bidding_tree():
     _ = False # ✔
     pass_ = False # ✔
     pass_pass_ = False # ✔
-    pass_bid_ = False # ❌ 
     pass_1SA_rightOp = False # ✔
     _1SA_rightOp = False # ✔
     pass_1SA_Pa = False # ❌
@@ -24,8 +23,8 @@ class bidding_tree():
     _1x_pass_3x_pass_same = False
     _1x_pass_4x_pass_same = False
     # negatief doublet
-    -X_hs = False
-    -X_Ms = False 
+    _-X_hs = False
+    _-X_Ms = False 
     
 
 
@@ -74,9 +73,9 @@ class bidding_tree():
         if len(current_bidding) >= 2:
             if current_bidding[0] == '1♣' or current_bidding[0] == '1♦':
                 if current_bidding[1] == '1♦':
-                    self.-X_Ms = True
+                    self._-X_Ms = True
                 if current_bidding[1] == '1♥' or current_bidding[1] == '1♠':
-                    self.-X_hs = True                             
+                    self._-X_hs = True                             
 
         
         if len(current_bidding) == 1:
@@ -204,7 +203,7 @@ class bidding_tree():
         # Answering to Jacoby and Stayman
         if self.PaStayman == True:
             if color_hs == '♥':
-                return '2♥'o
+                return '2♥'
             if color_hs == '♠':
                 return '2♠'
             if color_hs != '♠' and color_hs != '♥':
@@ -232,10 +231,10 @@ class bidding_tree():
                     return 'X'    
 
         # Answering -X
-        if self.-X_Ms:
+        if self._-X_Ms:
             pass
 
-        if self.-X_hs:
+        if self._-X_hs:
             if color_hs == '♥':
                 return 'X'
 
@@ -251,6 +250,7 @@ class bidding_tree():
         if self._1x_pass_1SA_pass:
             if points < 14:
                 return 'pass'
+            return '2, your 2nd highest card'
             return '2' + color_hs
 
         if self._1x_pass_2x_pass_same:

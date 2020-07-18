@@ -23,17 +23,16 @@ class bidding_tree():
     _1x_pass_3x_pass_same = False
     _1x_pass_4x_pass_same = False
     # negatief doublet
-    _-X_hs = False
-    _-X_Ms = False 
-    
-
-
-    level1 = False
-    if current_bidding[0] == '1♣' or current_bidding[0] == '1♦' or current_bidding[0] == '1♥' or current_bidding[0] == '1♠' or current_bidding[0] == '1SA':
-        level1 = True
-
+    NX_hs = False
+    NX_Ms = False 
+    answerPaStayman = False
+    answerPaJAcoby = False
 
     def __init__(self, current_bidding):
+        level1 = False
+        if current_bidding[0] == '1♣' or current_bidding[0] == '1♦' or current_bidding[0] == '1♥' or current_bidding[0] == '1♠' or current_bidding[0] == '1SA':
+            level1 = True
+            
         #pass
         if len(current_bidding) == 0: 
             self._ = True
@@ -73,9 +72,9 @@ class bidding_tree():
         if len(current_bidding) >= 2:
             if current_bidding[0] == '1♣' or current_bidding[0] == '1♦':
                 if current_bidding[1] == '1♦':
-                    self._-X_Ms = True
+                    self.NX_Ms = True
                 if current_bidding[1] == '1♥' or current_bidding[1] == '1♠':
-                    self._-X_hs = True                             
+                    self.NX_hs = True                             
 
         
         if len(current_bidding) == 1:
@@ -96,6 +95,8 @@ class bidding_tree():
             if current_bidding[0] == '1SA':
                 if current_bidding[2] == '2♣':
                     if current_bidding[3] == 'pass':
+                        if len(current_bidding) >= 6:
+                            self.answerPaStayman
                         self.PaStayman = True
                     else:
                         self.OpStayman = True
@@ -231,10 +232,10 @@ class bidding_tree():
                     return 'X'    
 
         # Answering -X
-        if self._-X_Ms:
+        if self.NX_Ms:
             pass
 
-        if self._-X_hs:
+        if self.NX_hs:
             if color_hs == '♥':
                 return 'X'
 
@@ -268,5 +269,5 @@ class bidding_tree():
                 return '4' + color_hs            
 
 
-        return "i'm sorry, BidBud doesn't know this yet, but he keeps learning!"
+        return "i'm sorry, BidBud doesn't know this yet, but he keeps learning!"            
 

@@ -260,6 +260,15 @@ class bidding_tree():
                 if points > 10:
                     return '2SA'
 
+        if self._2♣_pass_2♦_pass:
+            if points >= 22:
+                return '2SA'
+            else:
+                return '2' + color_hs
+
+        if self._2♣_pass_2♥_pass:
+            if color_hs == '♠'
+
         if self.Pa_pass:
             if points > 5:
                 bid = '1' + color_hs

@@ -1,4 +1,5 @@
 from bidding import biddingIsAllowed 
+from bidding_states import *
 
 class bidding_tree():   
     _ = False # ✔
@@ -215,7 +216,7 @@ class bidding_tree():
                 return 'pass'
 
         # Answering to Jacoby and Stayman
-        if self.PaStayman == True:
+        if isStayman(current_bidding):
             if color_hs == '♥':
                 return '2♥'
             if color_hs == '♠':

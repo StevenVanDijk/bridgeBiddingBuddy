@@ -14,13 +14,16 @@ class Bidding:
         '1SA': 5, '2SA': 8, '3SA': 13, '4SA': 18, '5SA': 23, '6SA': 28, '7SA': 33
     }
 
-    current = []
-    whoStarts = 'N'
-    nrOfPoints = None
-    nrOfCards = {}
-    bidding_ended = False
-    opponent = False
-    partner = False
+    current: list
+    whoStarts: str
+    nrOfPoints: int
+    nrOfCards: dict
+    bidding_ended: bool
+    opponent: bool
+    partner: bool
+
+    def __init__(self):
+        self.reset()
 
     def isSpecial(self, bid):
         return bid == 'pass' or bid == 'X' or bid == 'XX'
@@ -95,3 +98,9 @@ class Bidding:
 
     def reset(self):
         self.current = []
+        self.whoStarts = 'N'
+        self.nrOfPoints = None
+        self.nrOfCards = {}
+        self.bidding_ended = False
+        self.opponent = False
+        self.partner = False

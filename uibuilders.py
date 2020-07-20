@@ -60,7 +60,7 @@ def buildButton(txt, callback, size_hint=None):
 
 
 def buildLabel(txt, size_hint=None):
-    widgetSizeHint = (1.0, None) if size_hint == None else size_hint
+    widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
     (col, bcol) = getColor(txt)
     return Label(
         color=col,
@@ -77,6 +77,7 @@ def buildToggle(txt, isDown, callback, group=None, size_hint=None):
         group=group,
         state=state,
         color=col,
+        background_color=bcol,
         text=txt,
         size_hint=widgetSizeHint,
         font_name=defaultFont)

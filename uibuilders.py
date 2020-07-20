@@ -97,4 +97,5 @@ def buildNumericInput(callback, size_hint=None):
     widget = NumInput(
         size_hint=widgetSizeHint    
     )
+    widget.bind(text=callback)
     return widget

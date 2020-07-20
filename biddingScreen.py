@@ -11,6 +11,7 @@ class BiddingScreen(Screen):
     currentNumber = None
     currentColor = None
     bidding = None
+    showQuestions: bool = True
     rootLayout = BoxLayout(orientation='vertical')
 
     def __init__(self, **kwargs):
@@ -41,7 +42,13 @@ class BiddingScreen(Screen):
 
     def buildHeaders(self):
         headers = BoxLayout(orientation='vertical')
-        headers.add_widget(buildButton('Undo', lambda ins: self.onUndo()))
+        topButtons = BoxLayout(orientation='horizontal')
+        def cb(instance):
+            self.showQuestions = True
+            self.updateUI()
+        topButtons.add_widget(buildButton('Q', cb, size_hint=(0.2, 1.0)))
+        topButtons.add_widget(buildButton('Undo', lambda ins: self.onUndo()))
+        headers.add_widget(topButtons)
         suits = GridLayout(cols=4, spacing=[gap, 0], padding=[0, gap])
 
         def createCallback(whoStarts):
@@ -50,7 +57,8 @@ class BiddingScreen(Screen):
         # create buttons for suits
         if self.bidding != None:
             for elem in self.bidding.playOrder:
-                suits.add_widget(buildToggle(elem, elem == self.bidding.whoStarts, createCallback(elem), 'whoStarts'))
+                suits.add_widget(buildToggle(
+                    elem, elem == self.bidding.whoStarts, createCallback(elem), 'whoStarts'))
 
         headers.add_widget(suits)
         return headers
@@ -65,10 +73,10 @@ class BiddingScreen(Screen):
 
             container.add_widget(buildButton('next bidding', clearBidding))
 
-        def createQuestionHighestColor():
+        def createQuestionNumberInSuit():
             highestColorLyt = BoxLayout(orientation='horizontal')
             highestColorLyt.add_widget(buildLabel(
-                'Highest color?', size=smallSize, size_hint=(0.6, None)))
+                'Nr of cards in suit?', size_hint=(0.6, 1.0)))
 
             def createCallback(color):
                 def cb(instance):
@@ -76,10 +84,21 @@ class BiddingScreen(Screen):
                     self.updateUI()
                 return cb
 
-            toggleLyt = BoxLayout(orientation='horizontal')
+            toggleLyt = GridLayout(cols=4)
             for color in colors:
-                toggleLyt.add_widget(buildToggle(color, color == self.bidding.highestColor, createCallback(
-                    color), group='highestColor', size=smallSize))
+                toggleLyt.add_widget(buildLabel(color))
+            for color in colors:
+                def createCallback(color):
+                    def cb(instance, value):
+                        if value.isdigit(): 
+                            newValue = int(value) 
+                            if not color in self.bidding.nrOfCards or newValue != self.bidding.nrOfCards[color]:
+                                self.bidding.nrOfCards[color] = newValue
+                                self.updateUI()
+                    return cb
+                nrOfCards = buildNumericInput(createCallback(color))
+                nrOfCards.text = str(self.bidding.nrOfCards[color]) if color in self.bidding.nrOfCards else ""
+                toggleLyt.add_widget(nrOfCards)
             highestColorLyt.add_widget(toggleLyt)
 
             return highestColorLyt
@@ -87,25 +106,33 @@ class BiddingScreen(Screen):
         def createQuestionNumberOfPoints():
             nrOfPointsLyt = BoxLayout(orientation='horizontal')
             nrOfPointsLyt.add_widget(buildLabel(
-                'Nr of points?', size=smallSize, size_hint=(0.6, None)))
+                'Nr of points?', size_hint=(0.6, 1.0)))
 
             def createCallback():
                 def cb(instance, value):
-                    self.bidding.setNrOfPoints(int(value))
-                    self.updateUI()
+                    if (value != ''):
+                        nrOfPoints = int(value)
+                        if nrOfPoints != self.bidding.nrOfPoints:
+                            self.bidding.setNrOfPoints(nrOfPoints)
+                            self.updateUI()
                 return cb
             nrOfPoints = buildNumericInput(createCallback())
-            nrOfPoints.text = str(self.bidding.nrOfPoints)
+            nrOfPoints.text = str(self.bidding.nrOfPoints) if self.bidding.nrOfPoints != None else ''
             nrOfPointsLyt.add_widget(nrOfPoints)
 
             return nrOfPointsLyt
 
-        def show_bidding(container):
-            # questions = BoxLayout(orientation='vertical')
-            # questions.add_widget(createQuestionHighestColor())
-            # questions.add_widget(createQuestionNumberOfPoints())
-            # container.add_widget(questions)
+        def show_questions(container):
+            questions = BoxLayout(orientation='vertical')
+            questions.add_widget(createQuestionNumberOfPoints())
+            questions.add_widget(createQuestionNumberInSuit())
+            def cb(instance):
+                self.showQuestions = False
+                self.updateUI()
+            questions.add_widget(buildButton("Close", cb))
+            container.add_widget(questions)
 
+        def show_bidding(container):
             currentBidding = GridLayout(cols=4)
 
             # create empty boxes to start at correct starting point
@@ -126,7 +153,10 @@ class BiddingScreen(Screen):
         if self.bidding == None or self.bidding.finished():
             stop_bidding(layout)
         else:
-            show_bidding(layout)
+            if (self.showQuestions or self.bidding.nrOfPoints == None or not all([color in self.bidding.nrOfCards for color in colors])):
+                show_questions(layout)
+            else:
+                show_bidding(layout)
 
         return layout
 
@@ -153,10 +183,13 @@ class BiddingScreen(Screen):
                     return lambda instance: invoke(elem)
 
                 def isSelected(elem, buttonKind):
-                    if buttonKind == ButtonKind.color: return elem == self.currentColor
-                    if buttonKind == ButtonKind.number: return elem == self.currentNumber
+                    if buttonKind == ButtonKind.color:
+                        return elem == self.currentColor
+                    if buttonKind == ButtonKind.number:
+                        return elem == self.currentNumber
                     return False
-                result.add_widget(buildToggle(elem, isSelected(elem, buttonKind), createCallback(elem), "buttons_" + str(buttonKind)))
+                result.add_widget(buildToggle(elem, isSelected(
+                    elem, buttonKind), createCallback(elem), "buttons_" + str(buttonKind)))
             return result
 
         numberBtns = addButtons(

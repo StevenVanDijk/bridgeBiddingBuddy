@@ -16,10 +16,8 @@ class Bidding:
 
     current = []
     whoStarts = 'N'
-    highestColor = None
     nrOfPoints = None
-    highestSeries: int
-    lowestSeries: int
+    nrOfCards = {}
     bidding_ended = False
     opponent = False
     partner = False
@@ -30,9 +28,6 @@ class Bidding:
     def setWhoStarts(self, whoStarts):
         if (len(self.current) == 0): 
             self.whoStarts = whoStarts
-
-    def setHighestColor(self, color):
-        self.highestColor = color
 
     def setNrOfPoints(self, value):
         self.nrOfPoints = value

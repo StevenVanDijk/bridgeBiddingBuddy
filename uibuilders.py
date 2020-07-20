@@ -12,6 +12,8 @@ bigSize = 160
 normalSize = 80
 smallSize = 40
 smallestSize = 20
+gap = 6
+halfGap = 3
 defaultFont = './consola.ttf'
 colors = ['♣', '♠', '♦', '♥']
 
@@ -48,45 +50,42 @@ def getColor(txt):
     return (textColor, background_color)
 
 
-def buildButton(txt, callback, size_hint=None, size=None):
-    widgetSize = normalSize if size == None else size
+def buildButton(txt, callback, size_hint=None):
     widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
     (col, bcol) = getColor(txt)
-    widget = Button(color=col, text=txt, size_hint=widgetSizeHint, height=widgetSize, font_name=defaultFont,
+    widget = Button(color=col, text=txt, size_hint=widgetSizeHint, font_name=defaultFont,
                     background_normal='', background_color=bcol, padding=(10, 10))
     widget.bind(on_press=callback)
     return widget
 
 
-def buildLabel(txt, size=None, size_hint=None):
-    widgetSize = normalSize if size == None else size
+def buildLabel(txt, size_hint=None):
     widgetSizeHint = (1.0, None) if size_hint == None else size_hint
     (col, bcol) = getColor(txt)
     return Label(
         color=col,
         text=txt,
         size_hint=widgetSizeHint,
-        height=widgetSize,
         font_name=defaultFont)
 
 
-def buildToggle(txt, isDown, callback, group=None, size=None):
+def buildToggle(txt, isDown, callback, group=None, size_hint=None):
+    widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
     state = 'down' if isDown else 'normal'
-    widgetSize = normalSize if size == None else size
     (col, bcol) = getColor(txt)
     widget = ToggleButton(
         group=group,
         state=state,
         color=col,
         text=txt,
-        size_hint=(1.0, None),
-        height=widgetSize,
+        size_hint=widgetSizeHint,
         font_name=defaultFont)
     widget.bind(on_press=callback)
     return widget
 
 
-def buildNumericInput(callback, size=None):
+def buildNumericInput(callback, size_hint=None):
+    widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
     class NumInput(TextInput):
         pat = re.compile('[^0-9]')
 
@@ -95,9 +94,7 @@ def buildNumericInput(callback, size=None):
             s = re.sub(pat, '', substring)
             return super(NumInput, self).insert_text(s, from_undo=from_undo)
 
-    widgetSize = normalSize if size == None else size
     widget = NumInput(
-        size_hint=(1.0, None),
-        height=widgetSize
+        size_hint=widgetSizeHint    
     )
     return widget

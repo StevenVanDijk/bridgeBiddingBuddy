@@ -18,6 +18,8 @@ class Bidding:
     whoStarts = 'N'
     highestColor = None
     nrOfPoints = None
+    highestSeries: int
+    lowestSeries: int
     bidding_ended = False
     opponent = False
     partner = False

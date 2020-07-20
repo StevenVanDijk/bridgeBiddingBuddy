@@ -25,11 +25,11 @@ class bidding_tree():
     # negatief doublet
     NX_hs = False
     NX_Ms = False 
-    _2♣ = False
-    _2♣_pass_2♦_pass = False
-    _2♣_pass_2♥_pass = False
-    _2♣_pass_2♠_pass = False
-    _2♣_pass_2SA_pass = False 
+    _2Cs = False
+    _2Cs_pass_2Ds_pass = False
+    _2Cs_pass_2Hs_pass = False
+    _2Cs_pass_2Ss_pass = False
+    _2Cs_pass_2SA_pass = False 
     answerPaStayman = False
     answerPaJAcoby = False
 
@@ -110,22 +110,23 @@ class bidding_tree():
                             self.OpJacobyDs = True
                         if current_bidding[2] == '2♥':
                             self.OpJacobyHs = True
-                        
+
+        return               
         if current_bidding[0] == '2♣':
-            self._2♣ = True
+            self._2Cs = True
             if len(current_bidding) > 4:
                 if current_bidding[1] == 'pass':
-                    self._2♣ = False
+                    self._2Cs = False
                     if current_bidding[2] == '2♦':
-                        self._2♣_pass_2♦_pass = True                        
+                        self._2Cs_pass_2Ds_pass = True                        
                     elif current_bidding[2] == '2♥':
-                        self._2♣_pass_2♥_pass = True
+                        self._2Cs_pass_2Hs_pass = True
                     elif current_bidding[2] == '2♠':
-                        self._2♣_pass_2♠_pass = True
+                        self._2Cs_pass_2Ss_pass = True
                     elif current_bidding[2] == '2SA':
-                        self._2♣_pass_2SA_pass = True
+                        self._2Cs_pass_2SA_pass = True
                     else:
-                        self._2♣ = True                                          
+                        self._2Cs = True                                          
         
         #answering partner
         if len(current_bidding) >= 2:
@@ -253,21 +254,22 @@ class bidding_tree():
                 return 'X'
 
         # Answering to random bid partner
-        if self._2♣:
+        if self._2Cs:
             if points > 8:
                 if highest_series >= 5:
                     return '2' + color_hs
                 if points > 10:
                     return '2SA'
 
-        if self._2♣_pass_2♦_pass:
+        if self._2Cs_pass_2Ds_pass:
             if points >= 22:
                 return '2SA'
             else:
                 return '2' + color_hs
 
-        if self._2♣_pass_2♥_pass:
-            if color_hs == '♠'
+        if self._2Cs_pass_2Hs_pass:
+            if color_hs == '♠':
+                pass
 
         if self.Pa_pass:
             if points > 5:

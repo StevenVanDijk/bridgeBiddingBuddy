@@ -2,156 +2,10 @@ from bidding import biddingIsAllowed
 from bidding_states import *
 
 class bidding_tree():   
-    _ = False # ✔
-    pass_ = False # ✔
-    pass_pass_ = False # ✔
-    pass_1SA_rightOp = False # ✔
-    _1SA_rightOp = False # ✔
-    pass_1SA_Pa = False # ❌
-    PaStayman = False # ✔
-    OpStayman = False # ✔
-    PaJacobyDs = False # ✔
-    PaJacobyHs = False # ✔
-    OpJacobyDs = False # ✔
-    OpJacobyHs = False # ✔
-    _1SA_Pa = False # ✔
-    Pa_pass = False # ✔
-    _1x_pass_1SA_pass = False 
-    _1x_pass_1x_pass = False # ❌
-    _1x_pass_2x_pass = False # ❌
-    _1x_pass_3x_pass = False # ❌
-    _1x_pass_2x_pass_same = False
-    _1x_pass_3x_pass_same = False
-    _1x_pass_4x_pass_same = False
-    # negatief doublet
-    NX_hs = False
-    NX_Ms = False 
-    _2Cs = False
-    _2Cs_pass_2Ds_pass = False
-    _2Cs_pass_2Hs_pass = False
-    _2Cs_pass_2Ss_pass = False
-    _2Cs_pass_2SA_pass = False 
-    answerPaStayman = False
-    answerPaJAcoby = False
-
-    def __init__(self, current_bidding):  
-        #pass
-        if len(current_bidding) == 0: 
-            self._ = True
-
-        if len(current_bidding) == 1:
-            if current_bidding[0] == 'pass': 
-                self.pass_ = True
-
-        if len(current_bidding) == 2:   
-            if current_bidding[0] == 'pass' and current_bidding[1] == 'pass': 
-                self.pass_pass_ = True
-                
-        count_pass = 0
-        done = False
-
-        while not done:
-            if len(current_bidding) >= 1:
-                if current_bidding[0] == 'pass':
-                    current_bidding.remove('pass')
-                    count_pass += 1
-                    if len(current_bidding) == 0:
-                        while count_pass != 0:
-                            current_bidding.insert(0, 'pass')
-                            count_pass -= 1
-                            if count_pass == 0:
-                                done = True
-                else:
-                    done = True
-            else: 
-                done = True
-
-        #1SA
-        #opponents
-        if len(current_bidding) >= 2:
-            if current_bidding[0] == '1♣' or current_bidding[0] == '1♦':
-                if current_bidding[1] == '1♦':
-                    self.NX_Ms = True
-                if current_bidding[1] == '1♥' or current_bidding[1] == '1♠':
-                    self.NX_hs = True                             
-
-        
-        if len(current_bidding) == 1:
-            if current_bidding[0] == '1SA':
-                self._1SA_rightOp = True
-
-        if len(current_bidding) == 2:
-            if current_bidding[0] == 'pass' and current_bidding[1] == '1SA':
-                self.pass_1SA_rightOp = True
-        
-        #partner
-        if len(current_bidding) == 2:
-            if current_bidding[0] == '1SA' and current_bidding[1] == 'pass':
-                self._1SA_Pa = True
-
-        #answer to Stayman and Jacoby
-        if len(current_bidding) >= 3:
-            if current_bidding[0] == '1SA':
-                if current_bidding[2] == '2♣':
-                    if current_bidding[3] == 'pass':
-                        if len(current_bidding) >= 6:
-                            self.answerPaStayman
-                        self.PaStayman = True
-                    else:
-                        self.OpStayman = True
-
-                if current_bidding[2] == '2♦' or current_bidding[2] == '2♥':
-                    if current_bidding[3] == 'pass':
-                        if current_bidding[2] == '2♦':
-                            self.PaJacobyDs = True
-                        if current_bidding[2] == '2♥':
-                            self.PaJacobyHs = True
-                    else:
-                        if current_bidding[2] == '2♦':
-                            self.OpJacobyDs = True
-                        if current_bidding[2] == '2♥':
-                            self.OpJacobyHs = True
-
-        return               
-        if current_bidding[0] == '2♣':
-            self._2Cs = True
-            if len(current_bidding) > 4:
-                if current_bidding[1] == 'pass':
-                    self._2Cs = False
-                    if current_bidding[2] == '2♦':
-                        self._2Cs_pass_2Ds_pass = True                        
-                    elif current_bidding[2] == '2♥':
-                        self._2Cs_pass_2Hs_pass = True
-                    elif current_bidding[2] == '2♠':
-                        self._2Cs_pass_2Ss_pass = True
-                    elif current_bidding[2] == '2SA':
-                        self._2Cs_pass_2SA_pass = True
-                    else:
-                        self._2Cs = True                                          
-        
-        #answering partner
-        if len(current_bidding) >= 2:
-            if current_bidding[0] != 'pass' and current_bidding[1] == 'pass':
-                self.Pa_pass = True    
-
-        #let's go to the manch!
-        if len(current_bidding) >= 4:
-            if current_bidding[0] == '1♣' or current_bidding[0] == '1♦' or current_bidding[0] == '1♥' or current_bidding[0] == '1♠' or current_bidding[0] == '1SA':
-                if current_bidding[1] == 'pass' and current_bidding[3] == 'pass':
-                    if current_bidding[2] == '1SA':
-                        self._1x_pass_1SA_pass = True
-                    if current_bidding[2] == '1♣' or current_bidding[2] == '1♦' or current_bidding[2] == '1♥' or current_bidding[2] == '1♠':                        
-                        self._1x_pass_1x_pass = True
-                    if current_bidding[2] == '2♣' or current_bidding[2] == '2♦' or current_bidding[2] == '2♥' or current_bidding[2] == '2♠':
-                        self._1x_pass_2x_pass = True
-                    if current_bidding[2] == '3♣' or current_bidding[2] == '3♦' or current_bidding[2] == '3♥' or current_bidding[2] == '3♠':
-                        self._1x_pass_3x_pass = True      
-                               
-           
-
     def bids(self, current_bidding, points, highest_series, lowest_series, color_hs):
+        remove_starting_passes(current_bidding)
         # opening
-        if self._ == True or self.pass_ == True or self.pass_pass_ == True:
+        if len(current_bidding) == 0:
             if points >= 12:
                 if highest_series <= 5 and lowest_series >= 2:
                     if points >= 15 and points <= 17:
@@ -193,7 +47,7 @@ class bidding_tree():
 
         # answering
         # answering to 1SA
-        if self._1SA_Pa:
+        if is1SA_Pa(current_bidding):
             if color_hs == '♥' or color_hs == '♠':
                 # Jacoby
                 if highest_series >= 5:
@@ -224,55 +78,55 @@ class bidding_tree():
             if color_hs != '♠' and color_hs != '♥':
                 return '2♦'
         
-        if self.OpStayman:
+        if isOpStayman(current_bidding):
             if points > 10:
                 if highest_series == '♣':
                     return 'X'
             return 'pass'
 
-        if self.PaJacobyDs:
+        if isPaJacobyDs(current_bidding):
             return '2♥'
-        if self.PaJacobyHs:
+        if isPaJacobyHs(current_bidding):
             return '2♠'
 
-        if self.OpJacobyDs:
+        if isOpJacobyDs(current_bidding):
             if color_hs == '♦':
                 if highest_series > 5:
                     return 'X'
 
-        if self.OpJacobyHs:
+        if isOpJacobyHs(current_bidding):
             if color_hs == '♥':
                 if highest_series > 5:
                     return 'X'    
 
         # Answering -X
-        if self.NX_Ms:
+        if isNX_Ms(current_bidding):
             if color_hs == '♥':
                 return 'if you have 4+ ♠, X. Else: pass'
 
-        if self.NX_hs:
+        if isNX_hs(current_bidding):
             if color_hs == '♥':
                 return 'X'
 
         # Answering to random bid partner
-        if self._2Cs:
+        if is2Cs_open(current_bidding):
             if points > 8:
                 if highest_series >= 5:
                     return '2' + color_hs
                 if points > 10:
                     return '2SA'
 
-        if self._2Cs_pass_2Ds_pass:
+        if is2Cs_pass_2Ds_pass(current_bidding):
             if points >= 22:
                 return '2SA'
             else:
                 return '2' + color_hs
 
-        if self._2Cs_pass_2Hs_pass:
+        if is2Cs_pass_2Hs_pass(current_bidding):
             if color_hs == '♠':
                 pass
 
-        if self.Pa_pass:
+        if isAnswerPa(current_bidding):
             if points > 5:
                 bid = '1' + color_hs
                 if biddingIsAllowed(current_bidding, bid):
@@ -280,19 +134,19 @@ class bidding_tree():
                 else:
                     return '1SA'
 
-        if self._1x_pass_1x_pass:
+        if is1x_pass_1x_pass(current_bidding):
             if points <= 14:
                 return '1SA'
             else: 
                 return '2, your 2nd highest card'
 
-        if self._1x_pass_1SA_pass:
+        if is1x_pass_1SA_pass(current_bidding):
             if points < 14:
                 return 'pass'
             return '2, your 2nd highest card'
             return '2' + color_hs
 
-        if self._1x_pass_2x_pass_same:
+        if is1x_pass_2x_pass_same(current_bidding):
             if points < 14:
                 return 'pass'
             elif points > 14 and points < 18:
@@ -300,11 +154,14 @@ class bidding_tree():
             else:
                 return '4' + color_hs
         
-        if self._1x_pass_3x_pass_same:
+        if is1x_pass_3x_pass_same(current_bidding):
             if points <= 13:
                 return 'pass'
             if points > 14:
-                return '4' + color_hs            
+                return '4' + color_hs 
+
+        if is1x_pass_4x_pass_same(current_bidding):
+            return 'pass'           
 
 
         return "i'm sorry, BidBud doesn't know this yet, but he keeps learning!"            

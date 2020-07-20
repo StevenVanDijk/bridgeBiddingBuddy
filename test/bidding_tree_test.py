@@ -25,6 +25,6 @@ def testBidding(descr, cb, points, highest, lowest, color, expected):
     def pretty(s):
         return s.replace("Hs", "♥").replace("Ss", "♠").replace("Ds", "♦").replace("Cs", "♣")
     current = [pretty(b) for b in cb]
-    bt = bidding_tree(current)
+    bt = bidding_tree()
     assert bt.bids(current, points, highest, lowest, pretty(color)) == pretty(expected)
 

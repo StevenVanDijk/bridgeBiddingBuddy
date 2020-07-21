@@ -156,7 +156,6 @@ class BiddingScreen(Screen):
 
             # create empty boxes to fill out the screen
             for i in range(0, 32 - len(self.bidding.current)):
-                print(str(i))
                 currentBidding.add_widget(buildLabel(''))
 
             container.add_widget(currentBidding)

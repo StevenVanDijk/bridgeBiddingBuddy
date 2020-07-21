@@ -2,7 +2,40 @@ from bidding import biddingIsAllowed
 from bidding_states import *
 
 class bidding_tree():   
-    def bids(self, current_bidding, points, highest_series, lowest_series, color_hs):
+    def bids(self, current_bidding, points, klaver, ruiten, harten, schoppen):
+        colors = [klaver, ruiten, harten, schoppen]
+        highest_series = 0
+        secondhighest_series = 0
+        thirththighest_series = 0
+        lowest_series = 13
+        color_hs = None
+
+        for color in colors:
+            if color > highest_series:
+                highest_series = color        
+                if color == colors[0]: 
+                    color_hs = '♣'
+                if color == colors[1]: 
+                    color_hs = '♦'
+                if color == colors[2]: 
+                    color_hs = '♥'
+                if color == colors[3]: 
+                    color_hs = '♠'
+
+
+        colors = [klaver, ruiten, harten, schoppen]
+        highest_series = 0
+        secondhighest_series = 0
+        thirthhighest_series = 0
+        lowest_series = 13
+        color_hs = None
+
+        colors.sort()
+        colors[0] = lowest_series
+        colors[1] = secondhighest_series
+        colors[2] = thirththighest_series
+        colors[3] = highest_series    
+
         remove_starting_passes(current_bidding)
         # opening
         if len(current_bidding) == 0:
@@ -138,13 +171,12 @@ class bidding_tree():
             if points <= 14:
                 return '1SA'
             else: 
-                return '2, your 2nd highest card'
+                return '2' + 
 
         if is1x_pass_1SA_pass(current_bidding):
             if points < 14:
                 return 'pass'
-            return '2, your 2nd highest card'
-            return '2' + color_hs
+            return '2' + secondhighest_series
 
         if is1x_pass_2x_pass_same(current_bidding):
             if points < 14:

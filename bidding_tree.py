@@ -1,5 +1,6 @@
 from bidding import biddingIsAllowed 
 from bidding_states import *
+from uitleg import *
 
 class bidding_tree():   
     def bids(self, current_bidding, points, schoppen, harten, ruiten, klaver):
@@ -21,14 +22,11 @@ class bidding_tree():
                     color_hs = '♥'
                 if color == colors[0]: 
                     color_hs = '♠'
-        
-   
-
+    
         colors.sort()
-        colors[0] = lowest_series
-        colors[1] = secondhighest_series
-        colors[2] = thirththighest_series
-        colors[3] = highest_series    
+        lowest_series = colors[0]
+        thirththighest_series = colors[1]
+        secondhighest_series = colors[2]
 
         remove_starting_passes(current_bidding)
         # opening
@@ -36,7 +34,7 @@ class bidding_tree():
             if points >= 12:
                 if highest_series <= 5 and lowest_series >= 2:
                     if points >= 15 and points <= 17:
-                        return '1SA'
+                        return '1SA' 
                     
                     if points >= 20 and points <= 22:
                         return '2SA'            

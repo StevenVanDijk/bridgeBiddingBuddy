@@ -5,7 +5,7 @@ testcases = [
     ("you open", [], 12, 3, 5, 2, 0, "1Hs"),
     ("you open pass", [], 11, 0, 0, 5, 0, "pass"),
     ("you open preemtif", [], 8, 7, 0, 0, 0, '3Ss'),
-    ("you open 1SA", [], 16, 5, 2, 0, 0, '1SA'),
+    ("you open 1SA", [], 16, 5, 2, 3, 3, '1SA'),
     ("you open 1Cs", [], 13, 4, 4, 3, 2, '1Cs'),
     ("you open 2SA", [], 21, 5, 2, 3, 4, '2SA'),
     ("you open 2Cs w pts", [], 25, 0, 0, 0, 0, '2Cs'),

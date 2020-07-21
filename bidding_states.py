@@ -57,7 +57,7 @@ def is1SA_rightOp(current_bidding):
 
 def isNX_hs(current_bidding):
     remove_starting_passes(current_bidding)
-    if len(current_bidding) >= 2:
+    if len(current_bidding) == 2:
             if current_bidding[0] == '1♣' or current_bidding[0] == '1♦':
                 if current_bidding[1] == '1♥' or current_bidding[1] == '1♠':
                     return True
@@ -65,7 +65,7 @@ def isNX_hs(current_bidding):
 
 def isNx_Ms(current_bidding):
     remove_starting_passes(current_bidding)
-    if len(current_bidding) >= 2:
+    if len(current_bidding) == 2:
             if current_bidding[0] == '1♣' or current_bidding[0] == '1♦':
                 if current_bidding[1] == '1♦':
                     return True

@@ -17,8 +17,26 @@ testcases = [
     ("answer to Stayman", ["1SA", "pass", "2♣", "pass"], 16, 4, 0, 'Hs', '2Hs'),
     ("answer 2SA to 1SA", ["1SA", "pass"], 8, 4, 0, 'Cs', '2SA'),
     ("answer 3SA to 1SA", ["1SA", "pass"], 10, 4, 0, 'Cs', '3SA'),
-    ("answer to partner lvl 1", ["1Cs", "pass"], 90, 4, 0, 'Hs', '1Hs')
-]
+    ("answer to partner lvl 1", ["1Cs", "pass"], 90, 4, 0, 'Hs', '1Hs'),
+    ("preemptief3", [], 8, 7, 0, 'Hs', '3Hs'),
+    ("answer pass", ["1Ss", "pass"], 2, 4, 0, 'Ss', 'pass'),
+    ("informatiedoublet", ['1Ss'], 13, 4, 3, 'Hs', 'X'),
+    ("answer 1SA 6 card", ['1SA', 'pass', '2hs', 'pass', '2Ss', 'pass'], 11, 6, 0, 'Ss', '4Ss'),
+    ("volgbod", ['1Ds'], 9, 5, 0, "Hs", "1Hs"),
+    ("preemptief volgbod", ['1Ds'], 8, 7, 0, "Hs", "3Hs"),
+    ("preemptief4", [], 3, 8, 0, "Cs", "4Cs"),
+    ("weak2", [], 8, 6, 0, "Ds", "2Ds"),
+    ("invite3", ["pass", "1Hs", "pass"], 10, 5, 2, "Ss", "3Hs"),
+    ("acceptinvite3", ['1Hs', 'pass', '3Hs', 'pass'], 15, 5, 0, 'Sch', '4sch'),
+    ('passto2sa', ['2sa', "pass"], 2, 4, 0, "Cs", "pass"),
+    ('roundpass', ["pass", "pass", "pass"], 11, 5, 0, "Ds", "pass")]
+
+
+
+
+
+
+
 
 @pytest.mark.parametrize('descr, cb, points, highest, lowest, color, expected', testcases)
 def testBidding(descr, cb, points, highest, lowest, color, expected):

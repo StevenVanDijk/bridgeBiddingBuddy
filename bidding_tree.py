@@ -10,7 +10,7 @@ class bidding_tree():
                 if highest_series <= 5 and lowest_series >= 2:
                     if points >= 15 and points <= 17:
                         return '1SA'
-
+                    
                     if points >= 20 and points <= 22:
                         return '2SA'            
                 

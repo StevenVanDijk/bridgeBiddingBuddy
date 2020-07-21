@@ -18,9 +18,6 @@ class Bidding:
     whoStarts: str
     nrOfPoints: int
     nrOfCards: dict
-    bidding_ended: bool
-    opponent: bool
-    partner: bool
 
     def __init__(self):
         self.reset()
@@ -64,24 +61,12 @@ class Bidding:
             return False
         if bid == 'XX' and self.current[-1] != 'X':
             return False
-        if not self.bidding_ended:
-            if not self.isSpecial(bid):
-                if self.buttonsDict[bid] <= self.getLastBidOrder():
-                    return False        
-            else:
-                if biddings_passed >= 2:    
-                    if self.current[-1] == 'pass' and self.current[-2] == 'pass':
-                        self.opponent = True
-                        self.partner = False     
-                    if self.current[-1] == 'pass':
-                        if self.current[-2] != 'pass':
-                            self.partner = True
-                            self.opponent = False
-                        else:
-                            self.opponent = True
-                            self.partner = False    
-                if self.partner == True:
-                    if bid == 'X':
+        if not self.isSpecial(bid):
+            if self.buttonsDict[bid] <= self.getLastBidOrder():
+                return False        
+        else:
+            if bid == 'X' and biddings_passed >= 2:    
+                    if self.current[-1] == 'pass' and self.current[-2] != 'pass':
                         return False
         return True
     
@@ -92,7 +77,6 @@ class Bidding:
         self.current.append(bid)
 
     def removeLastBid(self):
-        self.bidding_ended = False
         if len(self.current) > 0: 
             self.current.pop()
 
@@ -101,6 +85,3 @@ class Bidding:
         self.whoStarts = 'N'
         self.nrOfPoints = None
         self.nrOfCards = {}
-        self.bidding_ended = False
-        self.opponent = False
-        self.partner = False

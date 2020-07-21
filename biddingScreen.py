@@ -5,6 +5,7 @@ from kivy.uix.screenmanager import Screen
 from uibuilders import buildButton, buildLabel, ButtonKind, buildToggle, buildNumericInput, colors, font_size, smallSize, gap, halfGap
 from kivy.clock import Clock
 from bidding import Bidding
+from constants import colors
 
 
 class BiddingScreen(Screen):

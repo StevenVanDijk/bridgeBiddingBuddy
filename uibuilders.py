@@ -6,6 +6,7 @@ from kivy.uix.anchorlayout import AnchorLayout
 from kivy.lang import Builder
 from enum import Enum
 import re
+from constants import colors
 
 font_size = 12
 bigSize = 160
@@ -15,8 +16,6 @@ smallestSize = 20
 gap = 6
 halfGap = 3
 defaultFont = './consola.ttf'
-colors = ['♣', '♠', '♦', '♥']
-
 
 class ButtonKind(Enum):
     number = 1

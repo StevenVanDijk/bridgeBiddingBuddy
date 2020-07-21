@@ -76,7 +76,8 @@ def is1SA_Pa(current_bidding):
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 2:
             if current_bidding[0] == '1SA' and current_bidding[1] == 'pass':
-                return False
+                return True
+    return False
 
 
 def isPaStayman(current_bidding):

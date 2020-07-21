@@ -5,32 +5,35 @@ from kivy.uix.screenmanager import Screen
 from uibuilders import buildButton, buildLabel, ButtonKind, buildToggle, buildNumericInput, colors, font_size, smallSize, gap, halfGap
 from kivy.clock import Clock
 from bidding import Bidding
+from constants import colors, clubs, spades, hearts, diamonds
+from mediator import Mediator
+from bidding_tree import bids
 
-
-class BiddingScreen(Screen):
+class BiddingScreen(Screen, Mediator):
     currentNumber = None
     currentColor = None
-    bidding = None
     showQuestions: bool = True
     rootLayout = BoxLayout(orientation='vertical')
+    mediator: Mediator
 
-    def __init__(self, **kwargs):
+    def __init__(self, mediator, **kwargs):
         super(Screen, self).__init__(**kwargs)
 
+        self.mediator = mediator
         self.add_widget(self.rootLayout)
         self.build()
 
     def onAddBid(self, bid):
-        if self.bidding.isAllowed(bid):
-            self.bidding.addBid(bid)
+        if self.mediator.bidding.isAllowed(bid):
+            self.mediator.bidding.addBid(bid)
         self.updateUI()
 
     def onUndo(self):
-        self.bidding.removeLastBid()
+        self.mediator.bidding.removeLastBid()
         self.updateUI()
 
     def setBidding(self, bidding):
-        self.bidding = bidding
+        self.mediator.bidding = bidding
         self.updateUI()
 
     def updateUI(self):
@@ -53,13 +56,13 @@ class BiddingScreen(Screen):
         suits = GridLayout(cols=4, spacing=[gap, 0], padding=[0, gap])
 
         def createCallback(whoStarts):
-            return lambda instance: self.bidding.setWhoStarts(whoStarts)
+            return lambda instance: self.mediator.bidding.setWhoStarts(whoStarts)
 
         # create buttons for suits
-        if self.bidding != None:
-            for elem in self.bidding.playOrder:
+        if self.mediator.bidding != None:
+            for elem in self.mediator.bidding.playOrder:
                 suits.add_widget(buildToggle(
-                    elem, elem == self.bidding.whoStarts, createCallback(elem), 'whoStarts'))
+                    elem, elem == self.mediator.bidding.whoStarts, createCallback(elem), 'whoStarts'))
 
         headers.add_widget(suits)
         return headers
@@ -84,13 +87,13 @@ class BiddingScreen(Screen):
                     def cb(instance, value):
                         if value.isdigit():
                             newValue = int(value)
-                            if not color in self.bidding.nrOfCards or newValue != self.bidding.nrOfCards[color]:
-                                self.bidding.nrOfCards[color] = newValue
+                            if not color in self.mediator.bidding.nrOfCards or newValue != self.mediator.bidding.nrOfCards[color]:
+                                self.mediator.bidding.nrOfCards[color] = newValue
                                 self.updateUI()
                     return cb
                 nrOfCards = buildNumericInput(createCallback(color))
                 nrOfCards.text = str(
-                    self.bidding.nrOfCards[color]) if color in self.bidding.nrOfCards else ""
+                    self.mediator.bidding.nrOfCards[color]) if color in self.mediator.bidding.nrOfCards else ""
                 numEntriesLyt.add_widget(nrOfCards)
             bottomLyt.add_widget(numEntriesLyt)
             container.add_widget(bottomLyt)
@@ -107,13 +110,13 @@ class BiddingScreen(Screen):
                 def cb(instance, value):
                     if (value != ''):
                         nrOfPoints = int(value)
-                        if nrOfPoints != self.bidding.nrOfPoints:
-                            self.bidding.setNrOfPoints(nrOfPoints)
+                        if nrOfPoints != self.mediator.bidding.nrOfPoints:
+                            self.mediator.bidding.setNrOfPoints(nrOfPoints)
                             self.updateUI()
                 return cb
             nrOfPoints = buildNumericInput(createCallback())
             nrOfPoints.text = str(
-                self.bidding.nrOfPoints) if self.bidding.nrOfPoints != None else ''
+                self.mediator.bidding.nrOfPoints) if self.mediator.bidding.nrOfPoints != None else ''
             nrOfPointsLyt.add_widget(nrOfPoints)
 
             return nrOfPointsLyt
@@ -121,7 +124,7 @@ class BiddingScreen(Screen):
         questions.add_widget(buildLabel(
             "Please enter some information about your own hand.", size_hint=(1.0, 0.1)))
         questions.add_widget(BoxLayout())  # empty space
-        if self.bidding != None:
+        if self.mediator.bidding != None:
             questions.add_widget(createQuestionNumberOfPoints())
             questions.add_widget(createQuestionNumberInSuit())
 
@@ -137,7 +140,7 @@ class BiddingScreen(Screen):
 
         def stop_bidding(container):
             def clearBidding(instance):
-                self.bidding.reset()
+                self.mediator.bidding.reset()
                 self.updateUI()
 
             container.add_widget(buildButton('next bidding', clearBidding))
@@ -146,21 +149,21 @@ class BiddingScreen(Screen):
             currentBidding = GridLayout(cols=4)
 
             # create empty boxes to start at correct starting point
-            numEmpty = self.bidding.playOrder.index(self.bidding.whoStarts)
+            numEmpty = self.mediator.bidding.playOrder.index(self.mediator.bidding.whoStarts)
             for i in range(0, numEmpty):
                 currentBidding.add_widget(buildLabel(''))
 
             # create labels for all bids
-            for bid in self.bidding.current:
+            for bid in self.mediator.bidding.current:
                 currentBidding.add_widget(buildLabel(bid))
 
             # create empty boxes to fill out the screen
-            for i in range(0, 32 - len(self.bidding.current)):
+            for i in range(0, 32 - len(self.mediator.bidding.current)):
                 currentBidding.add_widget(buildLabel(''))
 
             container.add_widget(currentBidding)
 
-        if self.bidding == None or self.bidding.finished():
+        if self.mediator.bidding == None or self.mediator.bidding.finished():
             stop_bidding(layout)
         else:
             show_bidding(layout)
@@ -175,9 +178,13 @@ class BiddingScreen(Screen):
             for elem in addedbuttons:
                 def invoke(elem):
                     if elem == '?':
-                        return self.manager.switch_to(self.manager.specificationScreen)
-                    if buttonKind == ButtonKind.special:
-                        return self.onAddBid(elem)
+                        bidding = self.mediator.bidding
+                        advice = bids(bidding.current, bidding.nrOfPoints, bidding.nrOfCards[spades], bidding.nrOfCards[hearts], bidding.nrOfCards[diamonds], bidding.nrOfCards[clubs])
+                        bidLayout.add_widget(buildLabel(advice))
+                        return
+                    elif buttonKind == ButtonKind.special:
+                        self.onAddBid(elem)
+                        return
                     elif buttonKind == ButtonKind.color:
                         self.currentColor = elem
                     elif buttonKind == ButtonKind.number:
@@ -209,7 +216,7 @@ class BiddingScreen(Screen):
         return bidLayout
 
     def build(self):
-        if (self.showQuestions or self.bidding.nrOfPoints == None or not all([color in self.bidding.nrOfCards for color in colors])):
+        if (self.showQuestions or self.mediator.bidding.nrOfPoints == None or not all([color in self.mediator.bidding.nrOfCards for color in colors])):
             self.rootLayout.add_widget(self.buildQuestions())
         else:
             topLayout = BoxLayout(orientation='vertical', size_hint=(1.0, 0.2))

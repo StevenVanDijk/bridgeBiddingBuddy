@@ -1,1 +1,5 @@
 colors = ['♣', '♦', '♥', '♠']
+clubs = colors[0]
+diamonds = colors[1]
+hearts = colors[2]
+spades = colors[3]

@@ -285,6 +285,16 @@ def is2SA_openingPa(current_bidding):
             return True
     return False
 
+def is1x(current_bidding):
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 1:
+        if current_bidding[0] != 'pass':
+            return True
+    return False
+
+
+    
+
 
 
 

@@ -29,7 +29,8 @@ testcases = [
     ("invite3", ["pass", "1Hs", "pass"], 10, 5, 3, 2, 2, "Ss", "3Hs"),
     ("acceptinvite3", ['1Hs', 'pass', '3Hs', 'pass'], 15, 5, 0, 0, 0, '4Ss'),
     ('passto2sa', ['2sa', "pass"], 2, 0, 0, 0, 4, "pass"),
-    ('roundpass', ["pass", "pass", "pass"], 11, 0, 0, 5, 0, "pass", 'rondpass')
+    ('roundpass', ["pass", "pass", "pass"], 11, 0, 0, 5, 0, "pass", 'rondpass'),
+
     ]
 
 @pytest.mark.parametrize('descr, cb, points, schoppen, harten, ruiten, klaveren, expected, explain', testcases)

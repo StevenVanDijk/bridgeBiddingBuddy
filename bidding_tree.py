@@ -152,6 +152,8 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
                 return ('2' + color_hs, '2Cs-2x')
             if points > 10:
                 return '2SA'
+        else:
+            return ('2♦', '2Cs-2Ds')
 
     if is2Cs_pass_2Ds_pass(current_bidding):
         if points >= 22:
@@ -197,8 +199,28 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
             return '4' + color_hs 
 
     if is1x_pass_4x_pass_same(current_bidding):
-        return 'pass'           
+        return 'pass'   
+
+    if is1x(current_bidding):
+        if points > 4:
+            bid = '1' + highest_series
+
+            if biddingIsAllowed(current_bidding, bid):
+                return bid
+
+            elif secondhighest_series >= 4:  
+                bid2 = '1' + secondhighest_series
+                if biddingIsAllowed(current_bidding, bid2):
+                    return bid2
+
+            else:
+                return '1SA'
 
 
-    return "i'm sorry, BidBud doesn't know this yet, but he keeps learning!"            
+                
+            
+        
+
+
+    return "i'm sorry, BidBud doesn't know this yet, but he keeps learning!, i reccomend pass"            
 

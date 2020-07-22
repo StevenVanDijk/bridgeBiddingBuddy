@@ -63,7 +63,7 @@ def buildLabel(txt, size_hint=None):
     (col, bcol) = getColor(txt)
     return Label(
         color=col,
-        text=txt,
+        text=str(txt),
         size_hint=widgetSizeHint,
         font_name=defaultFont)
 

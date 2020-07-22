@@ -4,20 +4,26 @@ from kivy.uix.screenmanager import Screen
 from uibuilders import buildButton, buildLabel, ButtonKind
 from mediator import Mediator
 
-
-class SpecificationScreen(Screen):
+class AdviceScreen(Screen):
     mediator: Mediator
     rootLayout = BoxLayout(orientation='vertical')
 
     def __init__(self, mediator, **kwargs):
         super(Screen, self).__init__(**kwargs)
+
         self.mediator = mediator
 
         self.add_widget(self.rootLayout)
-        self.build()
+        self.reset()
 
     def build(self):
-        pass
-    
+        self.rootLayout.add_widget(buildLabel(self.mediator.advice))
+        self.rootLayout.add_widget(buildButton('Close', lambda i: self.mediator.closeAdvice()))
+
+    def reset(self):
+        self.rootLayout.clear_widgets()
+        if (self.mediator.advice != None):
+            self.build()
+
     def onDisplay(self):
-        pass
+        self.reset()

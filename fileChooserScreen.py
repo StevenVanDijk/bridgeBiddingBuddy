@@ -18,4 +18,5 @@ class FileChooserScreen(Screen):
         filechooser.add_widget(FileChooserIconLayout())
         self.rootLayout.add_widget(filechooser)
 
-        return self.rootLayout
+    def onDisplay(self):
+        pass

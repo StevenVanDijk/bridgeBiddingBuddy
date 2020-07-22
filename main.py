@@ -16,16 +16,17 @@ class Manager(ScreenManager):
 
 
 class BridgeBiddingBuddy(App):
-    mediator = Mediator()
+    sm = Manager()
+    mediator = Mediator(sm)
     biddingScreen = BiddingScreen(mediator, name='biddingScreen')
-    fileChooserScreen = FileChooserScreen(name='fileChooserScreen')
+    fileChooserScreen = FileChooserScreen(mediator, name='fileChooserScreen')
+    specificationScreen = SpecificationScreen(mediator, name='specificationScreen')
 
     def build(self):
-        sm = Manager()
-        sm.add_widget(self.biddingScreen)
-        sm.add_widget(self.fileChooserScreen)
-        sm.add_widget(SpecificationScreen(name='specificationScreen'))
-        return sm
+        self.sm.add_widget(self.fileChooserScreen)
+        self.sm.add_widget(self.biddingScreen)
+        self.sm.add_widget(self.specificationScreen)
+        return self.sm
 
 
 if __name__ == '__main__':

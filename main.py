@@ -7,25 +7,23 @@ from kivy.uix.screenmanager import ScreenManager
 from biddingScreen import BiddingScreen
 from specificationScreen import SpecificationScreen
 from fileChooserScreen import FileChooserScreen
+from adviceScreen import AdviceScreen
 from bidding import Bidding
-from mediator import Mediator
-
-
-class Manager(ScreenManager):
-    pass
+from mediator import Mediator, biddingScreen, fileChooserScreen, specificationScreen, adviceScreen
 
 
 class BridgeBiddingBuddy(App):
-    sm = Manager()
+    sm = ScreenManager()
     mediator = Mediator(sm)
-    biddingScreen = BiddingScreen(mediator, name='biddingScreen')
-    fileChooserScreen = FileChooserScreen(mediator, name='fileChooserScreen')
-    specificationScreen = SpecificationScreen(mediator, name='specificationScreen')
+    biddingScreen = BiddingScreen(mediator, name=biddingScreen)
+    specificationScreen = SpecificationScreen(mediator, name=specificationScreen)
+    adviceScreen = AdviceScreen(mediator, name=adviceScreen)
+    fileChooserScreen = FileChooserScreen(mediator, name=fileChooserScreen)
 
     def build(self):
-        self.sm.add_widget(self.fileChooserScreen)
-        self.sm.add_widget(self.biddingScreen)
-        self.sm.add_widget(self.specificationScreen)
+        for screen in [self.biddingScreen, self.fileChooserScreen, self.specificationScreen, self.adviceScreen]:
+            self.sm.add_widget(screen)
+            screen.bind(on_pre_enter=lambda i: screen.onDisplay())
         return self.sm
 
 

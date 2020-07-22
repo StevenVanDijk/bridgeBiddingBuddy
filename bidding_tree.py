@@ -27,7 +27,7 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
     thirththighest_series = colors[1]
     secondhighest_series = colors[2]
 
-    if current_bidding[0] == 'pass' and current_bidding[1] == 'pass' and current_bidding[2] == 'pass':
+    if len(current_bidding) >= 3 and current_bidding[0] == 'pass' and current_bidding[1] == 'pass' and current_bidding[2] == 'pass':
         if points < 12:
             return ('pass', 'rondpass')
 

@@ -178,7 +178,7 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
             elif secondhighest_series >= 4:  
                     bid2 = '1' + secondhighest_series
                     if biddingIsAllowed(current_bidding, bid2):
-                        (return bid2, 'tussenbieden')
+                        return (bid2, 'tussenbieden')
 
             else:
                 return ('1SA', 'answering_partnerSa')
@@ -223,12 +223,12 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
                 bid = '1' + highest_series
 
                 if biddingIsAllowed(current_bidding, bid):
-                    (return bid, 'tussenbieden')
+                    return (bid, 'tussenbieden')
 
                 elif secondhighest_series >= 5:  
                     bid2 = '1' + secondhighest_series
                     if biddingIsAllowed(current_bidding, bid2):
-                        (return bid2, 'tussenbieden')
+                        return (bid2, 'tussenbieden')
 
             else:
                 return ('pass', 'normal_pass')

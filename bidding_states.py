@@ -278,6 +278,14 @@ def is1x_pass_4x_pass_same(current_bidding):
                     return True 
     return False
 
+def is2SA_openingPa(current_bidding):
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 2:
+        if current_bidding[0] == '2SA' and current_bidding[1] == 'pass':
+            return True
+    return False
+
+
 
 
 

@@ -1,5 +1,14 @@
 def uitleg_nl(state):
     uitleg = ''
+
+    if state == 'rondpass':
+        uitleg = '''
+        U, en uw tegenstanders, mogen pas openen met 12 punten, er zitten in totaal 40 punten in het spel.
+        Dat betekend dat het mogelijk is dat niemand 12 punten heeft, wat betekend dat het mogelijk is dat niemand opent.
+        Als dat het geval is spreken we van een rondpass.
+        In het geval van een rondpass, is er geen contract, wat betekend dat er niet gespeeld kan worden.
+        '''
+
     if state == '1SA_opening':
         uitleg = '''
         Als uw puntenaantal ligt tussen 15 en 17 denkt u altijd als eerst aan een SA-opening.
@@ -43,7 +52,7 @@ def uitleg_nl(state):
         Echter, met de hoge kleuren, ♥ en ♠, mag u pas openen met een vijfkaart.
         '''
 
-    if state == '1CS_opening':
+    if state == '1Cs_opening':
         uitleg = '''
         Om te openen heeft u minimaal 12 punten nodig.
         Daarna moet u vastellen in welke kleur u gaat openen, 
@@ -138,14 +147,98 @@ def uitleg_nl(state):
         als u een vierkaart of meer heeft in een van de hoge kleuren moet u dat aan uw partner laten weten.
         '''
 
-    if state == 'answer_to_jacoby_nocolors':
+    if state == 'answer_to_stayman_nocolors':
         uitleg = '''
         Uw partner bied Stayman, hiermee vraagt hij of u een hoge kleur heeft, 
         als u een vierkaart of meer heeft in een van de hoge kleuren moet u dat aan uw partner laten weten.
         In dit geval is dat niet zo, ook dat wilt u uw partner laten weten, hier is het bod 2♦ voor.
         U zegt nu dat u geen vierkaart of meer in een van de hoge kleuren heeft.
         '''
+
+    if state == 'OpStayman':
+        uitleg = '''
+        Uw tegenstanders bieden Stayman en zijn op zoek naar het juiste contract voor wat ze kunnen spelen,
+        de kans dat u en uw partner een contract gaan maken is dan erg klein, 
+        dat betekent niet dat u geen informatie aan uw partner kunt geven.
+        Uw tegenstander heeft Stayman geboden, daarmee geeft hij geen klaveren aan, dus dit is een ideaal moment om er veilig een doubletje 
+        tussen te doen, aangezien de 1SA-openaar nooit gaat passen, en het doublet dus geen waarde heeft.
+        Dus als u een goede kaart klaveren hebt is dit de ideale situatie om dat aan uw partner te laten weten, door te doubleren.
+        '''
+
+    if state == 'OpStaymanPass':
+        uitleg = '''
+        Uw tegenstanders bieden stayman en zijn op zoek naar het juiste contract voor wat ze kunnen spelen,
+        de kans dat u en uw partner een contract gaan maken is dan erg klein, 
+        dat betekent niet dat u geen informatie aan uw partner kunt geven.
+        Uw tegenstander heeft Stayman geboden, daarmee geeft hij geen klaveren aan, dus dit is een ideaal moment om er veilig een doubletje 
+        tussen te doen, aangezien de 1SA-openaar nooit gaat passen, en het doublet dus geen waarde heeft.
+        Dus als u een goede kaart klaveren hebt is dit de ideale situatie om dat aan uw partner te laten weten, door te doubleren.
+        Echter als u nu doubleerd is de kans groot dat uw partner terugkomt met klaveren als dat niet gewenst is moet u ook niet doubleren.
+        Dus als u geen lange klaverkaart heeft, of niet genoeg honeurs is het soms beter gewoon te passen.
+        '''
+    
+    if state == 'OpJacoby':
+        uitleg = '''
+        Uw tegenstanders bieden Jacoby en zijn op zoek naar het juiste contract voor wat ze kunnen spelen,
+        de kans dat u en uw partner een contract gaan maken is dan erg klein, 
+        dat betekent niet dat u geen informatie aan uw partner kunt geven.
+        Uw tegenstander heeft Jacoby geboden, daarmee geeft hij niet de geboden kleur aan, 
+        dus dit is een ideaal moment om er veilig een doubletje tussen te doen, 
+        aangezien de 1SA-openaar nooit gaat passen, en het doublet dus geen waarde heeft.
+        Dus als u een goede kaart in de geboden kleur heeft is dit de ideale situatie om dat aan uw partner te laten weten, 
+        door te doubleren.
+        '''
+
+    if state == 'AnswerJacoby':
+        uitleg = '''
+        Uw partner weet dat uw laagste kaart een tweekaart is, en dat u 15-17 punten heeft.
+        Samen 8 kaarten heet een fit (met een fit kun je in die kleur spelen), dus min2 + 5 is bijna een fit.
+        Als jullie een (bijna) fit hebben kunnen jullie beter in die kleur spelen dan het risico van SA te nemen,
+        vandaar is Jacoby bedacht, en vandaar kan uw partner dit ook al bieden vanaf 0 punten,
+        met de voorwaarde van een vijfkaart in een van de hoge kleuren, ♥ en ♠.
+        Omdat u liever heeft dat de tegenstanders de minste punten zien, en dus de minste mineurs, heeft u het liefst dat de 1SA openaar speelt,
+        daar heeft meneer Jacoby iets op bedacht, als uw partner, de kleur onder de kleur die eigenlijk wilt bieden bied,
+        kan u daarna de kleur boven de kleur van uw patner bieden, en is het spel in uw hand, die van de openaar.
+        '''
+
+    if state == 'NXMs':
+        uitleg = '''
+        Soms bied een tegenstander tussen en ontneemt u daarmee de kans te bieden wat u wilde bieden,
+        daar is het negatief doublet voor bedacht, als de tegenstander een bod doet waardoor u niet meer uw bod kunt doen,
+        omdat het bod wat u wilde doen onder het bod van de tegenstander ligt, heeft u de mogelijkheid te doubleren,
+        wat betekent dat u het bod wilde doen wat nu niet meer kan. 
+        Wegens deze conventie is er nog een mogelijkheid bedacht, in welke u nu zit.
+        Als u zowel harten en schoppen bevat krijgt u in dit geval de kans te doubleren waardoor uw partner weet dat u en een 4krt ♥ en ♠ heeft
+        '''
+
+    if state == 'NXHs':
+        uitleg = '''
+        Soms bied een tegenstander tussen en ontneemt u daarmee de kans te bieden wat u wilde bieden,
+        daar is het negatief doublet voor bedacht, als de tegenstander een bod doet waardoor u niet meer uw bod kunt doen,
+        omdat het bod wat u wilde doen onder het bod van de tegenstander ligt, heeft u de mogelijkheid te doubleren,
+        wat betekent dat u het bod wilde doen wat nu niet meer kan, in dit geval 1♥
+        '''
+
+    if state == '2Cs-2x':
+        uitleg = '''
+        Uw partner biedt manchforcing, wat betekend dat geen van jullie mag passen totdat jullie de manch hebben bereikt.
+        Uw partner kan of 23+ punten hebben met een sansverdeling, of een lange kaart.
+        In elk geval heeft uw partner 8 vaste slagen.
+        U wilt uw partner laten weten dat u wat heeft, en dat doet u door uw langste kleur te bieden.
+        '''
+
+    if state == '2Cs-2Ds':
+        uitleg = '''
+        Uw partner biedt manchforcing, wat betekend dat geen van jullie mag passen totdat jullie de manch hebben bereikt.
+        Uw partner kan of 23+ punten hebben met een sansverdeling, of een lange kaart.
+        In elk geval heeft uw partner 8 vaste slagen.
+        Omdat uw partner manchforcing biedt kunt u niet passen, zelfs niet met 0 punten,
+        maar met 0 punten wilt u uw partner de ruimte geven, zijn / haar kaart te beschrijven.
+        Daarom is er het relay-bod bedacht, het zegt gewoon, partner ik heb niets interresants, wat heeft u?
+        '''
+
         
+    
     return uitleg
     
         

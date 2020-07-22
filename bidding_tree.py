@@ -139,7 +139,7 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
             if schoppen >= 4:
                 return ('X', 'NXMs')
             else:
-                return 'pass'
+                return ('pass', 'normal_pass')
 
     if isNX_hs(current_bidding):
         if harten >= 4:
@@ -151,76 +151,89 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
             if highest_series >= 5:
                 return ('2' + color_hs, '2Cs-2x')
             if points > 10:
-                return '2SA'
+                return ('2SA', '2Cs-2SA')
         else:
             return ('2♦', '2Cs-2Ds')
 
     if is2Cs_pass_2Ds_pass(current_bidding):
         if points >= 22:
-            return '2SA'
+            return ('2SA', '2Cs-2Ds-2SA')
+        elif color_hs == '♥' or color_hs == '♠':
+            return ('2' + color_hs, '2Cs-2Ds-2x')
         else:
-            return '2' + color_hs
+            return ('3' + color_hs, '2Cs-2Ds-2x')
 
     if is2Cs_pass_2Hs_pass(current_bidding):
         if color_hs == '♠':
-            pass
+            return ('2♠', '2Cs-2Hs')
+        else:
+            return ('3' + color_hs, '2Cs-2Hs')
 
     if isAnswerPa(current_bidding):
         if points > 5:
             bid = '1' + color_hs
             if biddingIsAllowed(current_bidding, bid):
-                return '1' + color_hs
+                return ('1' + color_hs, 'answering_partnerClr')
+
+            elif secondhighest_series >= 4:  
+                    bid2 = '1' + secondhighest_series
+                    if biddingIsAllowed(current_bidding, bid2):
+                        (return bid2, 'tussenbieden')
+
             else:
-                return '1SA'
+                return ('1SA', 'answering_partnerSa')
+        else:
+            return ('pass', 'nomale_pass')
 
     if is1x_pass_1x_pass(current_bidding):
         if points <= 14:
-            return '1SA'
-        else: 
-            return '2' + secondhighest_series
+            return ('1SA', 'answering_partner_min')
+        
+        elif highest_series >= 6:
+            return ('2' + color_hs, '6krt_herhalen')
+
+        elif secondhighest_series >= 4: 
+            return ('2' + secondhighest_series, 'answerLevel2')
 
     if is1x_pass_1SA_pass(current_bidding):
         if points < 14:
-            return 'pass'
-        return '2' + secondhighest_series
+            return ('pass', 'normal_pass')
+        return ('2' + secondhighest_series, 'answerLevel2')
 
     if is1x_pass_2x_pass_same(current_bidding):
         if points < 14:
-            return 'pass'
+            return ('pass', 'fitFoundedNoPoints')
         elif points > 14 and points < 18:
-            return '2' + color_hs
+            return ('3' + color_hs, 'fitFoundedInvite')
         else:
-            return '4' + color_hs
+            return ('4' + color_hs, 'fitFoundedManch')
 
     if is1x_pass_3x_pass_same(current_bidding):
         if points <= 13:
-            return 'pass'
+            return ('pass', 'fitFoundedNoPoints')
         if points > 14:
-            return '4' + color_hs 
+            return ('4' + color_hs, 'answerInvite') 
 
     if is1x_pass_4x_pass_same(current_bidding):
-        return 'pass'   
+        return ('pass', 'normal_pass')   
 
     if is1x(current_bidding):
-        if points > 4:
-            bid = '1' + highest_series
+        if points > 8:
+            if highest_series >= 5:
+                bid = '1' + highest_series
 
-            if biddingIsAllowed(current_bidding, bid):
-                return bid
+                if biddingIsAllowed(current_bidding, bid):
+                    (return bid, 'tussenbieden')
 
-            elif secondhighest_series >= 4:  
-                bid2 = '1' + secondhighest_series
-                if biddingIsAllowed(current_bidding, bid2):
-                    return bid2
+                elif secondhighest_series >= 5:  
+                    bid2 = '1' + secondhighest_series
+                    if biddingIsAllowed(current_bidding, bid2):
+                        (return bid2, 'tussenbieden')
 
             else:
-                return '1SA'
-
-
-                
-            
+                return ('pass', 'normal_pass')
         
 
 
-    return "i'm sorry, BidBud doesn't know this yet, but he keeps learning!, i reccomend pass"            
+    return ("pass", 'unknown')            
 

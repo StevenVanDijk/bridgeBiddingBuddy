@@ -110,6 +110,19 @@ def uitleg_nl(state):
         kan daarna uw partner verplicht de kleur bieden die u bedoelde, en is het spel in de hand van de openaar.
         '''
 
+    if state == 'jacoby-2sa':
+        uitleg = '''
+        Uw partner bied 2SA, dit betekend 20-22 punten en een evenwichtige hand.
+        U weet ook dat uw partners laagste kaart een tweekaart is.
+        Samen 8 kaarten heet een fit (met een fit kun je in die kleur spelen), dus min2 + 5 is bijna een fit.
+        Als jullie een (bijna) fit hebben kunnen jullie beter in die kleur spelen dan het risico van SA te nemen,
+        vandaar is Jacoby bedacht, en vandaar kunt u dit ook al bieden vanaf 0 punten,
+        met de voorwaarde van een vijfkaart in een van de hoge kleuren, ♥ en ♠.
+        Omdat u liever heeft dat de tegenstanders de minste punten zien, en dus de minste mineurs, heeft u het liefst dat de 2SA openaar speelt,
+        daar heeft meneer Jacoby iets op bedacht, als u, met deze hand, de kleur onder de kleur die eigenlijk wilt bieden bied,
+        kan daarna uw partner verplicht de kleur bieden die u bedoelde, en is het spel in de hand van de openaar.
+        '''
+
     if state == 'stayman':
         uitleg = '''
         Uw partner bied 1SA, dit betekend 15-17 punten en een evenwichte hand.
@@ -237,7 +250,93 @@ def uitleg_nl(state):
         Daarom is er het relay-bod bedacht, het zegt gewoon, partner ik heb niets interresants, wat heeft u?
         '''
 
+    if state == '2Cs-2SA':
+        uitleg = '''
+        Uw partner biedt manchforcing, wat betekend dat geen van jullie mag passen totdat jullie de manch hebben bereikt.
+        Uw partner kan of 23+ punten hebben met een sansverdeling, of een lange kaart.
+        In elk geval heeft uw partner 8 vaste slagen.
+        Omdat uw partner manchforcing biedt kunt u niet passen, zelfs niet met 0 punten,
+        maar als u heel veel punten heeft, wilt u dat uw partner zeker laten weten.
+        Daar is het 2SA bod voor bedacht hierna, het betekend dat u 10 punten of meer heeft.
+        '''
+
+    if state == '2Cs-2Ds-2SA':
+        uitleg = '''
+        Uw partner heeft aangegeven niet veel te hebben, en heeft het aan u overgelaten te vertellen wat u heeft.
+        Met 2SA geeft u aan dat u op punten heeft gebonden en niet op een hele lange kaart,
+        uw partner weet nu dus dat u 23+ punten heeft en een plausibele sansverdeling
+        '''
+
+    if state == '2Cs-2Ds-2x':
+        uitleg = '''
+        Uw partner heeft aangegeven niet veel te hebben, en heeft het aan u overgelaten te vertellen wat u heeft.
+        Dus als u een lange kaart heeft moet u dat zeker laten weten
+        '''
+
+    if state == '2Cs-2Hs':
+        uitleg = '''
+        Uw partner heeft harten, nu is het aan u om te laten weten wat u heeft, 
+        dan kunnen jullie later vaststellen in welk contract jullie horen te zitten
+        '''
+
+    if state == 'normal_pass':
+        uitleg =  '''
+        Soms heeft u gewoon niet genoeg punten, en niet een bijzonder genoege kaart om te bieden, dan moet u gewoon passen
+        '''
+
+    if state == 'answering_partnerClr':
+        uitleg = '''
+        Uw partner heeft een opening, 12 punten, en nu gaan jullie onderzoeken in welk contract jullie de beste kunnen score halen,
+        dat gebeurd door de uitwisseling van informatie, dus dat is wat u doet, u verteld uw partner in welke kleur u, 
+        met de informatie ter uw beschikking op dat moment, het beste uitkomt.
+        '''
+
+    if state == 'answering_partnerSa':
+        uitleg = '''
+        Uw partner heeft een opening, 12 punten, en nu gaan jullie onderzoeken in welk contract jullie de beste score kunnen halen,
+        Maar er zijn ook een set regels waar u aan moet voldoen, anders raakt uw partner in de war.
+        Een van die regels is dat als u op 1-niveau een nieuwe kleur biedt u 6+ punten beloofd, en op 2-niveau 10+ punten. 
+        Een andere regel is dat u niet mag passen op uw partners opening met meer dan 6 punten.
+        En nog een andere is dat u als u antwoord op uw partner minimaal een vierkaar 
+        Maar soms kunt u dus niets bieden, omdat u dan of niet voldoet aan de punten regel of de vierkaart regel.
+        Dan zit u vast, dan is er nog maar een optie en dat is 1SA bieden, waarmee u aangeeft dat u minimaal bent en niets kunt bieden.
+        '''
         
+    if state == 'answering_partner_min':
+        uitleg = '''
+        Uw partner heeft aangegeven een kleur te hebben maar niet dezelfde kleur als u.
+        U wilt niet meer punten, en kaartwaarde aangeven dan u heeft dus soms is de enige optie, 1SA te bieden.
+        Daarmee geeft 12-14 punten aan en niet overwaarde ergens in, kortom een minimale hand.
+        '''
+
+    if state == '6krt_herhalen':
+        uitleg = '''
+        Door op een niveau te openen beloofd u, in het geval van ♣ en ♦, een vierkaart, in het geval van ♥ en ♠ een vijfkaart.
+        Als u een 6 kaart heeft dan weet uw partner dat nog niet en is dat dus belangrijke informatie om te bepalen welk contract jullie gaan spelen.
+        Daarom kunt u die kleur herbieden.
+        '''
+
+    if state == 'answerLevel2':
+        uitleg = '''
+        Soms heeft u meer dan een goede kaart.
+        U laat vanzelfsprekend eerst de beste kaart horen maar het kan van belang zijn voor uw partner om meer informatie te hebben.
+        Zoals of u een tweede kaart hebt, of te wel een kaart die minder goed is dan de kaart die als eerst heeft laten weten maar wel van belang is.        
+        '''
+
+    if state == 'fitFoundedNoPoints':
+        uitleg = '''
+        U heeft uw fit gevonden wat betekend dat de volgende vraag is of jullie voldoende punten hebben om naar de manch te gaan.
+        Om de manch te spelen heeft u ruwweg 25 punten nodig, en als u die niet heeft is het ook niet nodig om hoger te gaan en is er dus wijsheid in passen.
+        '''
+
+    if state == 'fitFoundedInvite':
+        uitleg = '''
+        U heeft uw fit gevonden wat betekend dat de volgende vraag is of jullie voldoende punten hebben om naar de manch te gaan.
+        Om de manch te spelen heeft u ruwweg 25 punten nodig.
+        Uw partner beloofd met zijn bod op 2-niveau 6-9, als u tussen de 14 en 18 punten heeft is er nog kans op de manch.
+        Maar de manch is niet gegarandeerd, dus moet u eerst aan uw partner vragen of hij / zij genoeg heeft om naar de manch te gaan.
+        Dat doet u met een bid op 3-niveau, een invite.
+        '''
     
     return uitleg
     

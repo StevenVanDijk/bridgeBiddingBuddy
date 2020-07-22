@@ -99,3 +99,14 @@ def buildNumericInput(callback, size_hint=None):
     )
     widget.bind(text=callback)
     return widget
+
+def buildText(text, size_hint=None):
+    widget = buildLabel(text, size_hint)
+    widget.multiline = True
+    widget.padding = [20, 20]
+    widget.valign = 'top'
+    widget.halign = 'left'
+    def setTextSize(instance, value):
+        widget.text_size = (value, None)
+    widget.bind(width=setTextSize)
+    return widget

@@ -1,7 +1,7 @@
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen
-from uibuilders import buildButton, buildLabel, ButtonKind
+from uibuilders import buildButton, buildLabel, ButtonKind, buildText
 from mediator import Mediator
 
 class AdviceScreen(Screen):
@@ -17,8 +17,10 @@ class AdviceScreen(Screen):
         self.reset()
 
     def build(self):
-        self.rootLayout.add_widget(buildLabel(self.mediator.advice))
-        self.rootLayout.add_widget(buildButton('Close', lambda i: self.mediator.closeAdvice()))
+        (bid, explanation) = self.mediator.advice
+        self.rootLayout.add_widget(buildLabel(bid, size_hint=(1.0, 0.1)))
+        self.rootLayout.add_widget(buildText(explanation, size_hint=(1.0, 0.8)))
+        self.rootLayout.add_widget(buildButton('Close', lambda i: self.mediator.closeAdvice(), size_hint=(1.0, 0.1)))
 
     def reset(self):
         self.rootLayout.clear_widgets()

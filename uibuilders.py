@@ -54,6 +54,7 @@ def buildButton(txt, callback, size_hint=None):
     (col, bcol) = getColor(txt)
     widget = Button(color=col, text=txt, size_hint=widgetSizeHint, font_name=defaultFont,
                     background_normal='', background_color=bcol, padding=(10, 10))
+    # widget = MDRectangleFlatButton(text=txt, size_hint=widgetSizeHint, font_name=defaultFont, padding=(10, 10) )
     widget.bind(on_press=callback)
     return widget
 

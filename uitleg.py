@@ -72,6 +72,7 @@ def uitleg_nl(state):
         Dit heet preemtif bieden, bieden met een lange kaart in plaats van met punten, om te slagen heeft u wel een punten minimum van 6.
         Door hoog te bieden met weinig punten neemt u biedruimte weg voor uw tegenstanders, vandaar pesten dus.
         Met een 6 kaart bied u op 2-niveau, hoe langer de kaart hoe hoger u mag bieden en hoe vervelender u mag zijn voor de tegenstanders.
+        Onthoud ook dat preemtief bieden gedefineerd wordt door de sprong, dus als uw tegenstander, of partner al geboden heeft is preemtief bieden mogelijk.
         '''
 
     if state == 'preemtif3':
@@ -80,6 +81,7 @@ def uitleg_nl(state):
         Dan mag u uw tegenstanders een beetje pesten door hun bieding te saboteren.
         Dit heet preemtif bieden, bieden met een lange kaart in plaats van met punten, om te slagen heeft u wel een punten minimum van 6.
         Door hoog te bieden met weinig punten neemt u biedruimte weg voor uw tegenstanders, vandaar pesten dus.
+        Onthoud ook dat preemtief bieden gedefineerd wordt door de sprong, dus als uw tegenstander, of partner al geboden heeft is preemtief bieden mogelijk.
         Met een 7 kaart bied u op 3-niveau, hoe langer de kaart hoe hoger u mag bieden en hoe vervelender u mag zijn voor de tegenstanders.
         '''
 
@@ -89,6 +91,7 @@ def uitleg_nl(state):
         Dan mag u uw tegenstanders een beetje pesten door hun bieding te saboteren.
         Dit heet preemtif bieden, bieden met een lange kaart in plaats van met punten, om te slagen heeft u wel een punten minimum van 6.
         Door hoog te bieden met weinig punten neemt u biedruimte weg voor uw tegenstanders, vandaar pesten dus.
+        Onthoud ook dat preemtief bieden gedefineerd wordt door de sprong, dus als uw tegenstander, of partner al geboden heeft is preemtief bieden mogelijk.
         Met een 8 kaart bied u op 4-niveau, hoe langer de kaart hoe hoger u mag bieden en hoe vervelender u mag zijn voor de tegenstanders.
         '''
 
@@ -318,7 +321,7 @@ def uitleg_nl(state):
 
     if state == 'answerLevel2':
         uitleg = '''
-        Soms heeft u meer dan een goede kaart.
+        Soms heeft u meer dan een goede kleur.
         U laat vanzelfsprekend eerst de beste kaart horen maar het kan van belang zijn voor uw partner om meer informatie te hebben.
         Zoals of u een tweede kaart hebt, of te wel een kaart die minder goed is dan de kaart die als eerst heeft laten weten maar wel van belang is.        
         '''
@@ -337,6 +340,124 @@ def uitleg_nl(state):
         Maar de manch is niet gegarandeerd, dus moet u eerst aan uw partner vragen of hij / zij genoeg heeft om naar de manch te gaan.
         Dat doet u met een bid op 3-niveau, een invite.
         '''
+
+    if state == 'fitFoundedInviteU2':
+        uitleg = '''
+        De ideale manch is 4 in de hoge kleuren wat betekend dat als u een fit heeft gevonden in de hoge kleuren u daar op handeld.
+        Dus als u weet dat uw partner een vijfkaart hoog heeft, doordat hij dat heeft geopend, en u heeft een driekaart of meer in die kleur weet u dat als er een potentiele manch in zit dat in die kleur gaat zijn.
+        Dus als u nog een vijfkaart in een andere kleur heeft is dat minder belangrijk dan uw partner laten weten dat jullie een fit hebben in de hoge kleuren.
+        Ok, u heeft uw fit gevonden wat betekend dat de volgende vraag is of jullie voldoende punten hebben om naar de manch te gaan.
+        Om de manch te spelen heeft u ruwweg 25 punten nodig.
+        U heeft 6-9 punten, als uw partner meer dan 18 punten heeft is er nog kans op de manch.
+        Maar de manch is niet gegarandeerd, dus moet u eerst aan uw partner vragen of hij / zij genoeg heeft om naar de manch te gaan.
+        Dat doet u met een bid op 2-niveau, een invite.
+        '''
+
+    if state == 'fitFoundedInviteU3':
+        uitleg = '''
+        De ideale manch is 4 in de hoge kleuren wat betekend dat als u een fit heeft gevonden in de hoge kleuren u daar op handeld.
+        Dus als u weet dat uw partner een vijfkaart hoog heeft, doordat hij dat heeft geopend, en u heeft een driekaart of meer in die kleur weet u dat als er een potentiele manch in zit dat in die kleur gaat zijn.
+        Dus als u nog een vijfkaart in een andere kleur heeft is dat minder belangrijk dan uw partner laten weten dat jullie een fit hebben in de hoge kleuren.
+        Ok, u heeft uw fit gevonden wat betekend dat de volgende vraag is of jullie voldoende punten hebben om naar de manch te gaan.
+        Om de manch te spelen heeft u ruwweg 25 punten nodig.
+        U heeft 10/11 punten, als uw partner 14/15 punten heeft is er nog kans op de manch.
+        Maar de manch is niet gegarandeerd, dus moet u eerst aan uw partner vragen of hij / zij genoeg heeft om naar de manch te gaan.
+        Dat doet u met een bid op 3-niveau, een invite.
+        '''
+
+    if state == 'fitFoundedManchU':
+        uitleg = '''
+        De ideale manch is 4 in de hoge kleuren wat betekend dat als u een fit heeft gevonden in de hoge kleuren u daar op handeld.
+        Dus als u weet dat uw partner een vijfkaart hoog heeft, doordat hij dat heeft geopend, en u heeft een driekaart of meer in die kleur weet u dat als er een potentiele manch in zit dat in die kleur gaat zijn.
+        Dus als u nog een vijfkaart in een andere kleur heeft is dat minder belangrijk dan uw partner laten weten dat jullie een fit hebben in de hoge kleuren.
+        Ok, u heeft uw fit gevonden wat betekend dat de volgende vraag is of jullie voldoende punten hebben om naar de manch te gaan.
+        Om de manch te spelen heeft u ruwweg 25 punten nodig.
+        U heeft net als uw partner, een opening, dat betekend dat jullie sowieso genoeg punten hebben om naar de manch te gaan.
+        Als u een hoge kleur heeft gevonden waarin jullie de manch kunnen spelen en u weet dat er genoeg punten bij jullie zitten om naar de manch te gaan is het logisch het gewoon te bieden.
+        '''
+
+    if state == 'fitFoundedManch':
+        uitleg = '''
+        U heeft uw fit gevonden wat betekend dat de volgende vraag is of jullie voldoende punten hebben om naar de manch te gaan.
+        Om de manch te spelen heeft u ruwweg 25 punten nodig.
+        Uw partner beloofd met zijn bod op 2-niveau 6-9, dus als u meer dan 18 punten hebt is de manch haast gegarandeerd en is het dus ook logisch die te bieden.
+        '''
+
+    if state == 'answerInvite':
+        uitleg = '''
+        Uw partner weet dat u meer dan 12 punten heeft, en met zijn / haar bod op 3-niveau geeft uw partner aan dat hij / zij 10-11 punten heeft.
+        Uw partner wilt weten of de manch er in zit, en dat is nu aan u om te bepalen.
+        Als u meer dan 14 punten heeft samen met de 10-11 punten van uw partner is dat meestal genoeg voor de manch
+        '''
+
+    if state == 'unknown':
+        uitleg = '''
+        BidBud weet niet alles, dit lijkt iets te zijn wat hij nog niet weet.
+        In de volgende versie hoopt BidBud hier een antwoord op te weten.
+        Probeer met de kennis die u heeft een antwoord te verzinnen op dit biedprobleem, en soms is het beste wat u kunt doen passen.
+        Vriendelijke groeten, BidBud
+        '''
+    
+    if state == 'tussenbieden':
+        uitleg = '''
+        Als de tegenstanders openen betekend dat niet meteen dat u en uw partner helemaal niet meer mee mogen doen.
+        En omdat als uw tegenstanders veel punten hebben, ze toch niet stoppen met bieden, met relatief weinig punten u al veilig bemoeien met de bieding.
+        Dat is een reden om tussen te bieden maar de voornaamste reden is informatie.
+        Het hele biedingproces gaat erom, zoveel mogelijk informatie naar uw partner te krijgen en dit is een perfecte situatie om informatie naar uw partner te krijgen over uw hand.
+        En ookal wordt het niets weet uw partner wel tijdens het spelen waar u sterk in bent.
+        '''
+
+    if state == 'infoX':
+        uitleg = '''
+        Soms heeft u een opening maar is uw tegenstander u voor en weet u niet goed wat u nu moet doen.
+        U heeft veel punten en wilt dat dus op een zo'n effictiefste manier aan uw partner laten weten.
+        Daar is het informatie doublet voor, u doubleert op de opening van de tegenstanders en uw partner weet dat u een opening heeft.
+        '''
+
+    if state == 'answeringJacoby6Crd':
+        uitleg = '''
+        U heeft Jacoby gedaan om uw partner te laten weten dat u een vijfkaart in die kleur heeft, net niet genoeg voor een fit.
+        Maar als u overwaarde heeft, een zeskaart dus, hebben jullie ineens wel een fit in die kleur en kunt u aan nadenken of er een manch in zit.
+        Dus als u meer dan 10 punten heeft en een zeskaart in die hoge kleur is het meestal een goed idee om eerst Jacoby te doen en dan nadat uw partner de transfer heeft beantwoord, de manch te bieden.
+        '''
+
+    if state == 'Jacoby-3SA':
+        uitleg = '''
+        U heeft Jacoby geboden om uw partner te vertellen dat u een vijfkaart in een van de hoge kleuren heeft.
+        Uw partner weet niet hoe sterk u bent, wat uw partner betreft kunt u 0 punten hebben, dus is het misschien een goed idee om uw partner ongelijk te bewijzen.
+        Maar dat is ook een andere goede reden voor waarom Jacoby zo handig is, doordat u precies weet wat uw partner gaat antwoorden kunt u met 20 punten bij wijze van spreken nog Jacoby doen.
+        U krijgt als het ware 2 beurten achter elkaar en dat is een goede kans om uw partner goed te vertellen wat u in uw handen hebt.
+        U weet heel precies wat uw partner heeft en kunt dat goed gebruiken om te bepalen in welk contract jullie gaan zitten, u weet dat uw partner meer dan 15 punten heeft bijvoorbeeld.
+        Als u dus meer dan 10 punten heeft weet u dat er een manch in gaat zitten, u weet ook dat dat of 3SA of 4♥/♠ gaat zijn.
+        Welke het wordt hangt af van of jullie een fit hebben in de hoge kleuren, en dat hangt weer af van of uw partner een tweekaart of meer heeft.
+        Door 3SA te bieden vraagt u aan uw partner welk contract hem beter uitkomt, 3SA of 4 in de hoge kleuren.
+        '''
+
+    if state == 'Jacoby-2SA':
+        uitleg = '''
+        U heeft Jacoby geboden om uw partner te vertellen dat u een vijfkaart in een van de hoge kleuren heeft.
+        Uw partner weet niet hoe sterk u bent, wat uw partner betreft kunt u 0 punten hebben, dus is het misschien een goed idee om uw partner ongelijk te bewijzen.
+        Maar dat is ook een andere goede reden voor waarom Jacoby zo handig is, doordat u precies weet wat uw partner gaat antwoorden kunt u met 20 punten bij wijze van spreken nog Jacoby doen.
+        U krijgt als het ware 2 beurten achter elkaar en dat is een goede kans om uw partner goed te vertellen wat u in uw handen hebt.
+        U weet heel precies wat uw partner heeft en kunt dat goed gebruiken om te bepalen in welk contract jullie gaan zitten, u weet dat uw partner meer dan 15 punten heeft bijvoorbeeld.
+        U weet dus ook dat als er een manch in zit dat 3SA of 4♥/♠ gaat zijn.
+        Met 8/9 punten is het mogelijk dat er nog een manch in zit, wat betekend dat u niet kunt passen, u wilt eerst van uw partner weten of er een manch in zit. 
+        Welke het wordt hangt af van of jullie een fit hebben in de hoge kleuren, en dat hangt weer af van of uw partner een tweekaart of meer heeft.
+        Door 2SA te bieden vraagt u aan uw partner of hij/zij maximaal is of minimaal en welk contract hem beter uitkomt, 3SA of 4 in de hoge kleuren.
+        '''
+
+    if state == 'answeringJacoby5Crd':
+        uitleg = '''
+        U heeft Jacoby gedaan om uw partner te laten weten dat u een vijfkaart in die kleur heeft, net niet genoeg voor een fit.
+        Maar als u overwaarde heeft, een zeskaart dus, hebben jullie ineens wel een fit in die kleur en kunt u aan nadenken of er een manch in zit.
+        Dus als u meer dan 10 punten heeft en een zeskaart in die hoge kleur is het meestal een goed idee om eerst Jacoby te doen en dan nadat uw partner de transfer heeft beantwoord, de manch te bieden.
+        Maar soms heeft u niet meer dan 10 punten en heeft u mogelijke manch waarde en wilt u dat aan uw partner laten weten.
+        U wilt laten weten hoeveel punten u heeft en dat u een zeskaart heeft in die kleur, daarom herhaald u uw langste kleur
+        '''
+    
+    
+
+    
     
     return uitleg
     

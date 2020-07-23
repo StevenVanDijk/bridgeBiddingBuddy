@@ -186,6 +186,7 @@ def isAnswerPa(current_bidding):
             return True
     return False
 
+
 def is1x_pass_1x_pass(current_bidding):
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 4:
@@ -291,6 +292,16 @@ def is1x(current_bidding):
         if current_bidding[0] != 'pass':
             return True
     return False
+
+def isAnsweringJacoby(current_bidding):
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 6:
+        if current_bidding[0] == '1SA':
+            if current_bidding[1] == 'pass' and current_bidding[3] == 'pass' and current_bidding[5] == 'pass':
+                if current_bidding[2] == '2♦' or current_bidding[2] == '2♥':
+                    return True
+    return False
+
 
 
     

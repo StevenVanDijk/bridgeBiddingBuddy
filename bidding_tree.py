@@ -35,13 +35,20 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
     # opening
     if len(current_bidding) == 0:
         if points >= 12:
-            if highest_series <= 5 and lowest_series >= 2:
-                if points >= 15 and points <= 17:
-                    return ('1SA', '1SA_opening')
-                
-                if points >= 20 and points <= 22:
-                    return ('2SA', '2SA_opening')     
-            
+            if points >= 15:
+                if highest_series <= 5 and lowest_series >= 2:
+                    if points >= 15 and points <= 17:
+                        return ('1SA', '1SA_opening')
+                    
+                    elif points >= 20 and points <= 22:
+                        return ('2SA', '2SA_opening')  
+                    
+                    elif points >= 23:
+                        return ('2♣', '2Cs_opening') 
+
+                elif points >= 22 or (points >= 15 and highest_series >= 7):
+                    return ('2♣', '2Cs_opening') 
+                    
             elif points >= 22 or (points >= 15 and highest_series >= 7):
                 return ('2♣', '2Cs_opening')            
 
@@ -98,7 +105,10 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
             return ('2SA', '1SA-2SA')
 
         elif points >= 10:
-            return ('3SA', '1SA-2SA')
+            return ('3SA', '1SA-3SA')
+
+        elif is2SA_openingPa(current_bidding):
+            return ('2SA', 'normal_pass') #maak andere uiteg
 
         else: 
             return ('pass', '1SA-pass')
@@ -132,6 +142,24 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
         if color_hs == '♥':
             if highest_series > 5:
                 return ('X', 'OpJacoby')    
+
+    if isAnsweringJacoby(current_bidding):
+        if points >= 10:    
+            if highest_series >= 6:
+                return ('4' + color_hs, 'answeringJacoby6Crd')
+            
+            if highest_series < 6:
+                return ('3SA', 'Jacoby-3SA')
+        
+        elif points == 8 or points == 9:
+            if highest_series >= 6:
+                return ('3' + color_hs, 'answeringJacoby5Crd')
+
+            else:
+                return ('2SA', 'Jacoby-2SA')
+
+
+    
 
     # Answering -X
     if isNX_Ms(current_bidding):
@@ -169,7 +197,51 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
         else:
             return ('3' + color_hs, '2Cs-2Hs')
 
-    if isAnswerPa(current_bidding):
+    #going to the manch with partner after fit was founded
+    if is1x_pass_2x_pass_same(current_bidding):
+        if points >= 18:
+            return ('4' + color_hs, 'fitFoundedManch')
+                
+        elif points > 14 and points < 18:
+            return ('3' + color_hs, 'fitFoundedInvite')
+
+        else:
+            return ('pass', 'fitFoundedNoPoints')
+        
+
+    if is1x_pass_3x_pass_same(current_bidding):
+        if points <= 13:
+            return ('pass', 'fitFoundedNoPoints')
+        if points > 14:
+            return ('4' + color_hs, 'answerInvite') 
+
+    if is1x_pass_4x_pass_same(current_bidding):
+        return ('pass', 'normal_pass')   
+
+    if isAnswerPa(current_bidding):   
+
+        if current_bidding[0] == '1♥':
+            if harten >= 3:
+                if points >= 6 and points <= 9:
+                    return ('2♥', 'fitFoundedInviteU2')
+                
+                if points == 10 or points == 11:
+                    return ('3♥', 'fitFoundedInviteU3')
+
+                if points >= 12:
+                    return ('4♥', 'fitFoundedManchU')
+
+        if current_bidding[0] == '1♠':
+            if schoppen >= 3:
+                if points >= 6 and points <= 9:
+                    return ('2♠', 'fitFoundedInviteU2')
+
+                if points == 10 or points == 11:
+                    return ('3♠', 'fitFoundedInviteU3')
+
+                if points >= 12:
+                    return ('4♠', 'fitFoundedManchU')
+
         if points > 5:
             bid = '1' + color_hs
             if biddingIsAllowed(current_bidding, bid):
@@ -178,12 +250,12 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
             elif secondhighest_series >= 4:  
                     bid2 = '1' + secondhighest_series
                     if biddingIsAllowed(current_bidding, bid2):
-                        (return bid2, 'tussenbieden')
+                        return (bid2, 'tussenbieden')
 
             else:
                 return ('1SA', 'answering_partnerSa')
         else:
-            return ('pass', 'nomale_pass')
+            return ('pass', 'normal_pass')
 
     if is1x_pass_1x_pass(current_bidding):
         if points <= 14:
@@ -200,35 +272,38 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
             return ('pass', 'normal_pass')
         return ('2' + secondhighest_series, 'answerLevel2')
 
-    if is1x_pass_2x_pass_same(current_bidding):
-        if points < 14:
-            return ('pass', 'fitFoundedNoPoints')
-        elif points > 14 and points < 18:
-            return ('3' + color_hs, 'fitFoundedInvite')
-        else:
-            return ('4' + color_hs, 'fitFoundedManch')
-
-    if is1x_pass_3x_pass_same(current_bidding):
-        if points <= 13:
-            return ('pass', 'fitFoundedNoPoints')
-        if points > 14:
-            return ('4' + color_hs, 'answerInvite') 
-
-    if is1x_pass_4x_pass_same(current_bidding):
-        return ('pass', 'normal_pass')   
-
     if is1x(current_bidding):
+        if highest_series >= 6:
+            if highest_series == 6:
+                bid = '1' + color_hs
+                if biddingIsAllowed(current_bidding, bid):
+                    return ('2' + color_hs, 'preemtif2')
+                
+            if highest_series == 7: 
+                bid = '2' + color_hs
+                if biddingIsAllowed(current_bidding, bid):
+                    return ('3' + color_hs, 'preemtif3')
+                
+            if highest_series == 8:
+                bid = '3' + color_hs
+                if biddingIsAllowed(current_bidding, bid):
+                    return ('4' + color_hs, 'preemtif4')
+
+
         if points > 8:
-            if highest_series >= 5:
-                bid = '1' + highest_series
+            if points > 12:
+                return ('X', 'infoX')
+
+            elif highest_series >= 5:
+                bid = '1' + color_hs
 
                 if biddingIsAllowed(current_bidding, bid):
-                    (return bid, 'tussenbieden')
+                    return (bid, 'tussenbieden')
 
                 elif secondhighest_series >= 5:  
                     bid2 = '1' + secondhighest_series
                     if biddingIsAllowed(current_bidding, bid2):
-                        (return bid2, 'tussenbieden')
+                        return (bid2, 'tussenbieden')
 
             else:
                 return ('pass', 'normal_pass')

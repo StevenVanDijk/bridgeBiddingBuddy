@@ -305,18 +305,3 @@ def isAnsweringJacoby(current_bidding):
                     return True
     return False
 
-
-
-    
-
-
-
-
-
-
-
-                        
-                    
-
-    
-

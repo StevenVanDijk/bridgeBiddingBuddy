@@ -16,7 +16,7 @@ class BiddingEncoder(json.JSONEncoder):
         # Let the base class default method raise the TypeError
         return json.JSONEncoder.default(self, obj)
 
-def bidToJson(bid: Bidding) -> str:
+def bid2Json(bid: Bidding) -> str:
     return json.dumps(bid, cls=BiddingEncoder, ensure_ascii=False)
 
 def json2Bid(jsonStr: str) -> Bidding:

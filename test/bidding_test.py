@@ -46,3 +46,9 @@ def testRdblnoDbl():
     bidding.current = ['1♣']
     assert not bidding.isAllowed('XX')
 
+def testNoDblOnPartner():
+    bidding = Bidding()
+
+    bidding.current = ['X', 'X', 'pass']
+
+    assert not bidding.isAllowed('X')

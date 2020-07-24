@@ -130,3 +130,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .vscode/settings.json
+
+# extra
+allbids.json
+cov.xml

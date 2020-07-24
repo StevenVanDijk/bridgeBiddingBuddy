@@ -1,5 +1,5 @@
 from bidding import Bidding
-from biddingEncoder import BiddingEncoder, bidToJson, json2Bid
+from biddingEncoder import BiddingEncoder, bid2Json, json2Bid
 from constants import colors
 import json
 
@@ -13,14 +13,14 @@ def testEncodesEmptyBidding():
 
 def testSerializesEmptyBidding():
     a = Bidding()
-    result = bidToJson(a)
+    result = bid2Json(a)
     assert result == '{"__type__": "Bidding", "current": [], "whoStarts": "N", "nrOfPoints": null, "nrOfCards": {}}'
 
 
 def testSerializesBids():
     a = Bidding()
     a.current = ['pass', 'X', '1♣']
-    result = bidToJson(a)
+    result = bid2Json(a)
     assert result == '{"__type__": "Bidding", "current": ["pass", "X", "1♣"], "whoStarts": "N", "nrOfPoints": null, "nrOfCards": {}}'
 
 
@@ -32,7 +32,7 @@ def testSerializeCards():
         a.nrOfCards[color] = i
         i = i + 1
 
-    result = bidToJson(a)
+    result = bid2Json(a)
     assert result == '{"__type__": "Bidding", "current": [], "whoStarts": "N", "nrOfPoints": 21, "nrOfCards": {"♣": 3, "♦": 4, "♥": 5, "♠": 6}}'
 
 def testDeserializeEmptyBidding():

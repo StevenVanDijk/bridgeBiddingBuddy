@@ -3,30 +3,38 @@ __version__ = "0.0.6"
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager
-from screens.biddingScreen import BiddingScreen
-from screens.specificationScreen import SpecificationScreen
-from screens.fileChooserScreen import FileChooserScreen
+
+from mediator import (
+    Mediator, adviceScreen, biddingScreen, fileChooserScreen,
+    specificationScreen)
 from screens.adviceScreen import AdviceScreen
-from mediator import Mediator, biddingScreen, fileChooserScreen, specificationScreen, adviceScreen
+from screens.biddingScreen import BiddingScreen
+from screens.fileChooserScreen import FileChooserScreen
+from screens.specificationScreen import SpecificationScreen
 
 
 class BridgeBiddingBuddy(App):
+    sm = ScreenManager()
+
+    def switchTo(self, name: str):
+        self.sm.current = name
+
     def build(self):
-        sm = ScreenManager()
-        mediator = Mediator(sm)
+        mediator = Mediator(self.switchTo)
         for screen in [
-            BiddingScreen(mediator, name=biddingScreen), 
-            FileChooserScreen(mediator, name=fileChooserScreen), 
-            SpecificationScreen(mediator, name=specificationScreen), 
+            FileChooserScreen(mediator, name=fileChooserScreen),
+            BiddingScreen(mediator, name=biddingScreen),
+            SpecificationScreen(mediator, name=specificationScreen),
             AdviceScreen(mediator, name=adviceScreen)
         ]:
-            sm.add_widget(screen)
-            def createCallback(screen): 
+            self.sm.add_widget(screen)
+
+            def createCallback(screen):
                 def cb(instance):
                     screen.onDisplay()
                 return cb
             screen.bind(on_pre_enter=createCallback(screen))
-        return sm
+        return self.sm
 
 
 if __name__ == '__main__':

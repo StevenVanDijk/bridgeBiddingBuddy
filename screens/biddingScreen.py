@@ -1,13 +1,16 @@
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.stacklayout import StackLayout
-from kivy.uix.screenmanager import Screen
-from uibuilders import buildButton, buildLabel, ButtonKind, buildToggle, buildNumericInput, colors, font_size, smallSize, gap, halfGap
 from kivy.clock import Clock
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.screenmanager import Screen
+from kivy.uix.stacklayout import StackLayout
+
 from bidding import Bidding
-from constants import colors, clubs, spades, hearts, diamonds
-from mediator import Mediator
 from bidding_tree import bids
+from constants import clubs, colors, diamonds, hearts, spades
+from mediator import Mediator
+from uibuilders import (
+    ButtonKind, buildButton, buildLabel, buildNumericInput, buildToggle,
+    colors, font_size, gap, halfGap, smallSize)
 
 
 class BiddingScreen(Screen):
@@ -27,6 +30,8 @@ class BiddingScreen(Screen):
     def onAddBid(self, bid):
         if self.mediator.bidding.isAllowed(bid):
             self.mediator.bidding.addBid(bid)
+            if (self.mediator.bidding.finished()):
+                self.mediator.closeBidding()
         self.updateUI()
 
     def onUndo(self):
@@ -141,40 +146,23 @@ class BiddingScreen(Screen):
         return questions
 
     def buildCurrentBidding(self):
-        layout = BoxLayout(orientation='vertical')
+        currentBidding = GridLayout(cols=4)
 
-        def stop_bidding(container):
-            def clearBidding(instance):
-                self.mediator.bidding.reset()
-                self.updateUI()
+        # create empty boxes to start at correct starting point
+        numEmpty = self.mediator.bidding.playOrder.index(
+            self.mediator.bidding.whoStarts)
+        for i in range(0, numEmpty):
+            currentBidding.add_widget(buildLabel(''))
 
-            container.add_widget(buildButton('next bidding', clearBidding))
+        # create labels for all bids
+        for bid in self.mediator.bidding.current:
+            currentBidding.add_widget(buildLabel(bid))
 
-        def show_bidding(container):
-            currentBidding = GridLayout(cols=4)
+        # create empty boxes to fill out the screen
+        for i in range(0, 32 - len(self.mediator.bidding.current)):
+            currentBidding.add_widget(buildLabel(''))
 
-            # create empty boxes to start at correct starting point
-            numEmpty = self.mediator.bidding.playOrder.index(
-                self.mediator.bidding.whoStarts)
-            for i in range(0, numEmpty):
-                currentBidding.add_widget(buildLabel(''))
-
-            # create labels for all bids
-            for bid in self.mediator.bidding.current:
-                currentBidding.add_widget(buildLabel(bid))
-
-            # create empty boxes to fill out the screen
-            for i in range(0, 32 - len(self.mediator.bidding.current)):
-                currentBidding.add_widget(buildLabel(''))
-
-            container.add_widget(currentBidding)
-
-        if self.mediator.bidding == None or self.mediator.bidding.finished():
-            stop_bidding(layout)
-        else:
-            show_bidding(layout)
-
-        return layout
+        return currentBidding
 
     def buildBidChooser(self):
         bidLayout = BoxLayout(orientation='vertical')

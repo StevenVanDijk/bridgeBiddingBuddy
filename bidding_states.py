@@ -48,11 +48,14 @@ def isStayman(current_bidding):
     return False
 
 
-def is1SA_rightOp(current_bidding):
+def is1SA_NH_Op(current_bidding):
     remove_starting_passes(current_bidding)
-    if len(current_bidding) == 1:
-        if current_bidding[0] == '1SA':
+    if current_bidding[0] == '1SA':    
+        if len(current_bidding) == 1:
             return True
+        if len(current_bidding) == 3:
+            if current_bidding[1] == 'pass' and current_bidding[2] == 'pass':
+                return True
     return False
 
 def isNX_hs(current_bidding):

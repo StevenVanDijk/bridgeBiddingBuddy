@@ -8,7 +8,7 @@ from kivy.uix.scrollview import ScrollView
 
 from bidding import Bidding
 from mediator import Mediator
-from uibuilders import buildButton, buildLabel
+from uibuilders import buildButton, buildIconButton, buildLabel, iconTrashcan
 
 
 class FileChooserScreen(Screen):
@@ -23,33 +23,41 @@ class FileChooserScreen(Screen):
         self.reset()
 
     def build(self):
-        newBidBtn = buildButton(
-            'New bidding', lambda i: self.mediator.editBidding(Bidding()), size_hint=(1.0, 0.1))
+        newBidBtn = buildButton('New bidding', lambda i: self.mediator.editBidding(Bidding()), size_hint=(1.0, 0.1))
 
         encloseLyt = BoxLayout(size_hint=(1.0, 0.85))
-        scrlView = ScrollView(size_hint=(1.0, None), scroll_type=['content',
-                                                                  'bars'], bar_width='10dp')
+        scrlView = ScrollView(size_hint=(1.0, None), scroll_type=['content', 'bars'], bar_width='10dp')
         encloseLyt.bind(size=scrlView.setter('size'))
         listLyt = GridLayout(cols=1, spacing=10, size_hint_y=None)
         listLyt.bind(minimum_height=listLyt.setter('height'))
         keys = self.mediator.storage.keys()
-        for key in reversed(keys): # ensure most recent is at the top
-            def createcallback(key):
+        for key in reversed(keys):  # ensure most recent is at the top
+
+            def createcallbackSelect(key):
                 def cb(instance):
                     self.mediator.loadBidding(key)
+
                 return cb
-            btn = buildButton(key, createcallback(key), size_hint=(1.0, None))
-            newBidBtn.bind(height=btn.setter('height'))
-            listLyt.add_widget(btn)
+
+            def createcallbackDelete(key):
+                def cb(instance):
+                    self.mediator.deleteBidding(key)
+                
+                return cb
+
+            itemLyt = BoxLayout(orientation='horizontal', size_hint=(1.0, None))
+            itemLyt.add_widget(buildButton(key, createcallbackSelect(key), size_hint=(0.9, 1.0)))
+            itemLyt.add_widget(buildIconButton(iconTrashcan, createcallbackDelete(key), size_hint=(0.1, 1.0)))
+            newBidBtn.bind(height=itemLyt.setter('height'))
+            listLyt.add_widget(itemLyt)
 
         scrlView.add_widget(listLyt)
         encloseLyt.add_widget(scrlView)
         self.rootLayout.add_widget(encloseLyt)
-        self.rootLayout.add_widget(BoxLayout(size_hint=(1.0,0.05)))
+        self.rootLayout.add_widget(BoxLayout(size_hint=(1.0, 0.05)))
         self.rootLayout.add_widget(newBidBtn)
 
     def onDisplay(self):
-        pass
         self.reset()
 
     def reset(self):

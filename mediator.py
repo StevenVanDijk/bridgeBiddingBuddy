@@ -15,6 +15,7 @@ biddingScreen = 'biddingScreen'
 fileChooserScreen = 'fileChooserScreen'
 specificationScreen = 'specificationScreen'
 adviceScreen = 'adviceScreen'
+blankScreen = 'blankScreen'
 
 class Mediator():
     switchTo: Callable[[str], None]
@@ -59,3 +60,7 @@ class Mediator():
     def loadBidding(self, key):
         bidding = json2Bid(self.storage.get(key)['bid'])
         self.editBidding(bidding)
+
+    def deleteBidding(self, key):
+        self.storage.delete(key)
+        self.switchTo(fileChooserScreen)

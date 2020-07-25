@@ -1,11 +1,15 @@
-from kivy.uix.label import Label
-from kivy.uix.button import Button
-from kivy.uix.togglebutton import ToggleButton
-from kivy.uix.textinput import TextInput
-from kivy.uix.anchorlayout import AnchorLayout
-from kivy.lang import Builder
-from enum import Enum
 import re
+from enum import Enum
+
+from kivy.lang import Builder
+from kivy.uix.anchorlayout import AnchorLayout
+from kivy.uix.button import Button
+from kivy.uix.image import Image
+from kivy.uix.label import Label
+from kivy.uix.textinput import TextInput
+from kivy.uix.togglebutton import ToggleButton
+from kivy import icon_dir
+
 from constants import colors
 
 font_size = 12
@@ -16,6 +20,8 @@ smallestSize = 20
 gap = 6
 halfGap = 3
 defaultFont = './consola.ttf'
+iconFont = './icofont.ttf'
+iconTrashcan = u'\uEE09'
 
 class ButtonKind(Enum):
     number = 1
@@ -25,7 +31,7 @@ class ButtonKind(Enum):
 
 def getColor(txt):
     textColor = [0, 1, 0, 1]
-    background_color = [30, 130, 76, 1]
+    background_color = [30 / 256, 130 / 256, 76 / 256, 1]
     if '♣' in txt or '♠' in txt:
         textColor = [0, 0, 0, 1]
         background_color = [30 / 256, 130 / 256, 76 / 256, 1]
@@ -49,44 +55,56 @@ def getColor(txt):
     return (textColor, background_color)
 
 
-def buildButton(txt, callback, size_hint=None):
+def buildButton(content, callback, size_hint=None):
     widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
-    (col, bcol) = getColor(txt)
-    widget = Button(color=col, text=txt, size_hint=widgetSizeHint, font_name=defaultFont,
-                    background_normal='', background_color=bcol, padding=(10, 10))
-    # widget = MDRectangleFlatButton(text=txt, size_hint=widgetSizeHint, font_name=defaultFont, padding=(10, 10) )
+    widget = Button(size_hint=widgetSizeHint,
+                    font_name=defaultFont,
+                    padding=(10, 10))
+    if isinstance(content, str):
+        (col, bcol) = getColor(content)
+        widget.text = content
+        widget.color = col
+        widget.background_normal = ''
+        widget.background_color = bcol
+    else:
+        widget.add_widget(content)
     widget.bind(on_press=callback)
+    return widget
+
+
+def buildIconButton(icon, callback, size_hint=None):
+    widget = buildButton(icon, callback, size_hint)
+    widget.font_name = iconFont
     return widget
 
 
 def buildLabel(txt, size_hint=None):
     widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
     (col, bcol) = getColor(txt)
-    return Label(
-        color=col,
-        text=str(txt),
-        size_hint=widgetSizeHint,
-        font_name=defaultFont)
+    return Label(color=col,
+                 text=str(txt),
+                 size_hint=widgetSizeHint,
+                 font_name=defaultFont)
 
 
 def buildToggle(txt, isDown, callback, group=None, size_hint=None):
     widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
     state = 'down' if isDown else 'normal'
     (col, bcol) = getColor(txt)
-    widget = ToggleButton(
-        group=group,
-        state=state,
-        color=col,
-        background_color=bcol,
-        text=txt,
-        size_hint=widgetSizeHint,
-        font_name=defaultFont)
+    widget = ToggleButton(group=group,
+                          state=state,
+                          color=col,
+                          background_color=bcol,
+                          text=txt,
+                          size_hint=widgetSizeHint,
+                          font_name=defaultFont)
     widget.bind(on_press=callback)
     return widget
 
 
 def buildNumericInput(callback, size_hint=None):
     widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
+
     class NumInput(TextInput):
         pat = re.compile('[^0-9]')
 
@@ -95,11 +113,10 @@ def buildNumericInput(callback, size_hint=None):
             s = re.sub(pat, '', substring)
             return super(NumInput, self).insert_text(s, from_undo=from_undo)
 
-    widget = NumInput(
-        size_hint=widgetSizeHint    
-    )
+    widget = NumInput(size_hint=widgetSizeHint)
     widget.bind(text=callback)
     return widget
+
 
 def buildText(text, size_hint=None):
     widget = buildLabel(text, size_hint)
@@ -107,7 +124,9 @@ def buildText(text, size_hint=None):
     widget.padding = [20, 20]
     widget.valign = 'top'
     widget.halign = 'left'
+
     def setTextSize(instance, value):
         widget.text_size = (value, None)
+
     widget.bind(width=setTextSize)
     return widget

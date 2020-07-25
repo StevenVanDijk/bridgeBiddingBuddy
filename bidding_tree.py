@@ -305,6 +305,15 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
         if current_bidding[0] == '1♦':
             if Legal(schoppen, harten, ruiten, klaver) == 'is2Ds':
                 return ('2♦', 'fitFoundedU2Ds')
+            
+            else:
+                if biddingIsAllowed(current_bidding, '1' + color_hs):
+                    return ('1' + color_hs, 'answering_partnerClr')
+                else:
+                    if points >= 10:
+                        return ('2' + color_hs, 'answering_partnerClr')
+                    else:
+                        return ('1SA', 'answering_partnerSa')
 
             if Legal(schoppen, harten, ruiten, klaver) == 'is3Ds':
                 return ('3♦', 'fitFoundedU3Ds')

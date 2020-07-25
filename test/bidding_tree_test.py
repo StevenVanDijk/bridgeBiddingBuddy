@@ -41,7 +41,7 @@ testcases: Tuple[str, List[str], int, int, int, int, int, str, str] = [
     ('ruitenisookmooi', ['pass', 'pass'], 13, 2, 4, 4, 3, '1Ds', 'Normal_4card'),
     ('fitFoundedU2Ds', ['1♦', 'pass'], 8, 2, 4, 5, 2, '2Ds', 'fitFoundedU2Ds'),
     ('2klisookeenantwoord', ['1♣', 'pass'], 8, 3, 3, 2, 5, '2Cs', 'fitFoundedU2Cs'),
-    # ('crash', ['1♠', 'pass'], 8, 2, 3, 4, 4, '???', ''),
+    ('crash', ['1♠', 'pass'], 8, 2, 3, 4, 4, 'pass', 'unknown'),
     ('hoogstekleur', [], 15, 1, 2, 4, 6, '1Cs', 'Normal_5card')
     
     ]

@@ -1,3 +1,6 @@
+from typing import List
+from constants import colors
+
 def biddingIsAllowed(previousBids, bid):
     currentBid = Bidding()
     for b in previousBids:
@@ -6,13 +9,7 @@ def biddingIsAllowed(previousBids, bid):
     
 class Bidding:
     playOrder = ["N", "E", "S", "W"]
-    buttonsDict = {
-        '1♣': 1, '2♣': 4, '3♣': 9, '4♣': 14, '5♣': 19, '6♣': 24, '7♣': 29,
-        '1♦': 2, '2♦': 5, '3♦': 10, '4♦': 15, '5♦': 20, '6♦': 25, '7♦': 30,
-        '1♥': 3, '2♥': 6, '3♥': 11, '4♥': 16, '5♥': 21, '6♥': 26, '7♥': 31,
-        '1♠': 4, '2♠': 7, '3♠': 12, '4♠': 17, '5♠': 22, '6♠': 27, '7♠': 32,
-        '1SA': 5, '2SA': 8, '3SA': 13, '4SA': 18, '5SA': 23, '6SA': 28, '7SA': 33
-    }
+    biddingOrderList : List[str]
 
     current: list
     whoStarts: str
@@ -20,6 +17,12 @@ class Bidding:
     nrOfCards: dict
 
     def __init__(self):
+        suitsAndSA = list(colors)
+        suitsAndSA.append('SA')
+        self.biddingOrderList = []
+        for i in range(1, 8):
+            for j in suitsAndSA:
+                self.biddingOrderList.append(str(i) + j)
         self.reset()
 
     def isSpecial(self, bid):
@@ -32,10 +35,13 @@ class Bidding:
     def setNrOfPoints(self, value):
         self.nrOfPoints = value
 
+    def getBidOrder(self, bid):
+        return self.biddingOrderList.index(bid)
+
     def getLastBidOrder(self):
         previousBids = [elem for elem in self.current if not self.isSpecial(elem)]
         if len(previousBids) > 0:
-            return self.buttonsDict[previousBids.pop()]
+            return self.getBidOrder(previousBids.pop())
         else:
             return -1
 
@@ -62,7 +68,7 @@ class Bidding:
         if bid == 'XX' and self.current[-1] != 'X':
             return False
         if not self.isSpecial(bid):
-            if self.buttonsDict[bid] <= self.getLastBidOrder():
+            if self.getBidOrder(bid) <= self.getLastBidOrder():
                 return False        
         else:
             if bid == 'X' and biddings_passed >= 2:    

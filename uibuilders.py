@@ -22,6 +22,8 @@ halfGap = 3
 defaultFont = './consola.ttf'
 iconFont = './icofont.ttf'
 iconTrashcan = u'\uEE09'
+iconPencil = u'\uEBF6'
+
 
 class ButtonKind(Enum):
     number = 1
@@ -115,6 +117,15 @@ def buildNumericInput(callback, size_hint=None):
 
     widget = NumInput(size_hint=widgetSizeHint)
     widget.bind(text=callback)
+
+    return widget
+
+
+def buildTextInput(callback, size_hint=None):
+    widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
+    widget = TextInput(size_hint=widgetSizeHint, multiline=False)
+    widget.bind(on_text_validate=callback)
+
     return widget
 
 

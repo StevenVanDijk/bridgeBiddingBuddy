@@ -143,7 +143,8 @@ def is2Cs_open(current_bidding):
 
     if len(current_bidding) == 1:
         if current_bidding[0] == '2♣':
-            return True
+            if current_bidding[1] == 'pass'
+                return True
     return False
 
 def is2Cs_pass_2Ds_pass(current_bidding):
@@ -246,6 +247,7 @@ def is1x_pass_4x_pass(current_bidding):
     return False
 
     
+
 def is1x_pass_1SA_pass(current_bidding):
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 4:
@@ -253,6 +255,26 @@ def is1x_pass_1SA_pass(current_bidding):
             if current_bidding[1] == 'pass' and current_bidding[3] == 'pass':
                 if current_bidding[2] == '1SA':
                     return True
+    return False
+
+def is1x_pass_1SA_pass_3SA_p(current_bidding):
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 6:
+        if levelofbid(current_bidding[0]) == '1':
+            if current_bidding[1] == 'pass' and current_bidding[3] == 'pass' and current_bidding[5] == 'pass':
+                if current_bidding[2] == '1SA':
+                    if current_bidding[4] == '3SA':
+                        return True
+    return False    
+
+def is1x_pass_1SA_pass_2SA_p(current_bidding):
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 4:
+        if levelofbid(current_bidding[0]) == '1':
+            if current_bidding[1] == 'pass' and current_bidding[3] == 'pass' and current_bidding[5] == 'pass':
+                if current_bidding[2] == '1SA':
+                    if current_bidding[4] == '2SA':
+                        return True
     return False
 
 def is1x_pass_2x_pass_same(current_bidding):
@@ -305,3 +327,10 @@ def isAnsweringJacoby(current_bidding):
                     return True
     return False
 
+def isPotentielRondPass(current_bidding):
+    if len(current_bidding) >= 3:
+        if current_bidding[0] == 'pass':
+            if current_bidding[1] == 'pass':
+                if current_bidding[2] == 'pass':
+                    return True
+    return False

@@ -30,12 +30,13 @@
 # print(blub)
 # print(highest_series)
 
-from bidding_states import similar        
-color_hs =  '♦'
+bumba = False
+bumbalu = False
 
-
-if not similar(color_hs, '2♥') == 0.6666666666666666:
-    print('hoi')
+if bumba:
+    print('grrr')
 else:
-    print('doer')
+    if bumbalu: print('jippie')
+    else: print('joepiejajeej')
+
 

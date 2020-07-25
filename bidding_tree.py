@@ -33,17 +33,27 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
                 else:
                     color_hs = highest_series5
 
+    numtried = 0
+    highest_series5 = 'None'
     for color in colors:
-        if color > highest_series and color != color_hs:
-            secondhighest_series = color        
-            if color == colors[3]: 
-                color_shs = '♣'
-            if color == colors[2]: 
-                color_shs = '♦'
-            if color == colors[1]: 
-                color_shs = '♥'
-            if color == colors[0]: 
-                color_shs = '♠'
+        numtried += 1
+        if color >= highest_series: 
+            if color != color_hs:
+                secondhighest_series = color        
+                if numtried == 4: 
+                    color_shs = '♣'
+                if numtried == 3: 
+                    color_shs = '♦'
+                if numtried == 2: 
+                    color_shs = '♥'
+                if numtried == 1: 
+                    color_shs = '♠'
+
+                if secondhighest_series == 5:
+                    if highest_series5 == 'None':
+                        highest_series5 = color_shs
+                    else:
+                        color_shs = highest_series5
 
     colors.sort()
     lowest_series = colors[0]
@@ -307,13 +317,13 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
             elif secondhighest_series >= 4:  
                     bid2 = '1' + color_shs
                     if biddingIsAllowed(current_bidding, bid2):
-                        return (bid2, 'answering_partnerClr')
+                        return ('1' + color_shs, 'answering_partnerClr')
 
             elif points >= 10:
                 if not biddingIsAllowed(current_bidding, bid):
                     bid3 = '2' + color_hs
                     if biddingIsAllowed(current_bidding, bid3):
-                        return (bid3, 'answering_partnerClr')
+                        return ('2' + color_hs, 'answering_partnerClr')
                     else:
                         return ('2SA', 'answering_partnerSa')
 

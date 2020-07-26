@@ -53,6 +53,9 @@ class Bidding:
                 return True
         return False
 
+    def needsSpecification(self):
+        return self.nrOfPoints == None or not all([color in self.nrOfCards for color in colors])
+
     def isAllowed(self, bid):
         biddings_passed = len(self.current)
         if bid == 'X' and biddings_passed < 1:

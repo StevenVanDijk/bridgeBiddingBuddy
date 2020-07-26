@@ -12,7 +12,6 @@ from screens.blankScreen import BlankScreen
 from screens.fileChooserScreen import FileChooserScreen
 from screens.specificationScreen import SpecificationScreen
 
-
 class BridgeBiddingBuddy(App):
     sm = ScreenManager()
 

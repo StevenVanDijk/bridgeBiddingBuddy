@@ -1,5 +1,4 @@
 from kivy.core.window import Window
-from kivy.storage.jsonstore import JsonStore
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
@@ -32,7 +31,7 @@ class FileChooserScreen(Screen):
         encloseLyt.bind(size=scrlView.setter('size'))
         listLyt = GridLayout(cols=1, spacing=10, size_hint_y=None)
         listLyt.bind(minimum_height=listLyt.setter('height'))
-        keys = self.mediator.storage.keys()
+        keys = self.mediator.getBiddingKeys()
         for key in reversed(keys):  # ensure most recent is at the top
 
             def createCallbackSelect(key):

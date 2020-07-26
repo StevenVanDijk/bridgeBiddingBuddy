@@ -143,7 +143,7 @@ def is2Cs_open(current_bidding):
 
     if len(current_bidding) == 1:
         if current_bidding[0] == '2♣':
-            if current_bidding[1] == 'pass'
+            if current_bidding[1] == 'pass':
                 return True
     return False
 

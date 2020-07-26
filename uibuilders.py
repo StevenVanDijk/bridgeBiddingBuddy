@@ -1,6 +1,7 @@
 import re
 from enum import Enum
 
+from kivy import icon_dir
 from kivy.lang import Builder
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.button import Button
@@ -8,9 +9,10 @@ from kivy.uix.image import Image
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.togglebutton import ToggleButton
-from kivy import icon_dir
+from kivy.uix.spinner import Spinner
 
 from constants import colors
+from mediator import Mediator
 
 font_size = 12
 bigSize = 160
@@ -140,4 +142,14 @@ def buildText(text, size_hint=None):
         widget.text_size = (value, None)
 
     widget.bind(width=setTextSize)
+    return widget
+
+def buildMenu(mediator: Mediator, size_hint=None):
+    menuDict = { 'Your hand': lambda: mediator.showSpecification(), 
+                 'Open bidding': lambda: mediator.showBiddingChooser() }
+    widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
+    widget = Spinner(text='Menu', size_hint=widgetSizeHint)
+    widget.values = list(menuDict.keys())
+    widget.bind(text=lambda i, v: menuDict[v]())
+
     return widget

@@ -91,3 +91,57 @@ class Bidding:
         self.whoStarts = 'N'
         self.nrOfPoints = None
         self.nrOfCards = {}
+
+    def contract(self):
+        current = list(self.current)
+        contract = ''
+        dealer = self.whoStarts
+        
+        def Leader(dealer, current):
+            count_bids = len(current)
+            rest = count_bids % 4
+            leader = ''
+
+            if rest == 0:
+                leader = dealer
+
+            else:
+                if dealer == 'O':
+                    rest -= 1
+                if dealer == 'Z':
+                    rest -= 2
+                if dealer == 'W':
+                    rest -= 3
+
+                if rest == 0:
+                    leader = 'N'
+                if rest == 1:
+                    leader = 'O'
+                if rest == 2:
+                    leader = 'Z'
+                if rest == 3:
+                    leader = 'W'
+
+            return leader
+
+        leader = Leader(dealer, current)
+
+        def remove_last_passes(current):
+            count_pass = 0
+            done = False
+            while not done:
+                if len(current) >= 1:
+                    if current[-1] == 'pass':
+                        current.remove('pass')
+                        count_pass += 1
+                    else:
+                        done = True
+                else: 
+                    done = True
+            return current
+
+
+        remove_last_passes(current)
+        contract = current[-1]
+
+        return (contract, leader)

@@ -9,6 +9,17 @@ def uitleg_nl(state):
         In het geval van een rondpass, is er geen contract, wat betekend dat er niet gespeeld kan worden.
         '''
 
+    if state == 'regelVanTwintig':
+        uitleg = '''
+        Soms heeft u net niet genoeg om te openen maar is uw hand zo mooi dat u denkt, 
+        maar potverdorie hier moet toch wel iets mee te doen zijn?
+        Als u zo'n hand heeft kunt u kijken of uw hand voldoet aan de regel van 20.
+        De regel luid: als uw punten + de lengte van uw twee langste kaarten samen 20 is, mag u openen.
+        Deze regel is erop gebaseerd dat de lengte in uw kaarten het gebrek aan punten goed maken.
+        Onthoud dat deze regel heel strikt is, met minder dan 20 punten kunt u niet openen, zelfs niet met 19.
+        En u mag geen punten bijtellen voor een singleton of doubleton of renonce, die punten worden automatisch meegeteld doordat het gebrek in die kleur ergens anders weer erbij moet komen.
+        '''
+
     if state == '1SA_opening':
         uitleg = '''
         Als uw puntenaantal ligt tussen 15 en 17 denkt u altijd als eerst aan een SA-opening.

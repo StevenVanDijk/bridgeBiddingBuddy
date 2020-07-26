@@ -41,15 +41,15 @@ testcases: Tuple[str, List[str], int, int, int, int, int, str, str] = [
     ('ruitenisookmooi', ['pass', 'pass'], 13, 2, 4, 4, 3, '1Ds', 'Normal_4card'),
     ('fitFoundedU2Ds', ['1♦', 'pass'], 8, 2, 4, 5, 2, '1SA', 'answering_partnerSa'),
     ('2klisookeenantwoord', ['1♣', 'pass'], 8, 3, 3, 2, 5, '2Cs', 'fitFoundedU2Cs'),
-    # ('crash', ['1♠', 'pass'], 8, 2, 3, 4, 4, '???', ''),
+    ('crash', ['1♠', 'pass'], 8, 2, 3, 4, 4, '1SA', 'answering_partnerSa'),
     ('hoogstekleur', [], 15, 1, 2, 4, 6, '1Cs', 'Normal_5card'),
-    ('antwoordop2kl', ['2♣', 'pass'], 5, 3, 6, 2, 2, '2Ds', '???'),
-    ('antwoordop2kl2', ['2♣', 'pass'], 9, 3, 6, 2, 2, '2Hs', '???'),
-    ('regelvan20', ['pass', 'pass'], 11, 0, 6, 4, 3, '1Hs', '???'),
-    ('Spelerheeftfoutgemaakt', ['1SA', 'pass', '2♥', 'pass', '2♠', 'pass'], 2, 1, 6, 3, 3, 'pass', '???'),
-    ('Jacobyvervolg', ['1SA', 'pass', '2♥', 'pass', '2♠', 'pass'], 2, 5, 2, 3, 3, 'pass', '???'),
-    ('Jacoby2SA', ['pass', 'pass', '2SA', 'pass', 'pass'], 2, 5, 2, 3, 3, '2Hs', '???'),
-    ('Stayman2SA', ['2SA', 'pass'], 5, 3, 4, 3, 3, '3Cs', '???')
+    #('antwoordop2kl', ['2♣', 'pass'], 5, 3, 6, 2, 2, '2Ds', '???'),
+    # ('antwoordop2kl2', ['2♣', 'pass'], 9, 3, 6, 2, 2, '2Hs', '???'),
+    # ('regelvan20', ['pass', 'pass'], 11, 0, 6, 4, 3, '1Hs', '???'),
+    # ('Spelerheeftfoutgemaakt', ['1SA', 'pass', '2♥', 'pass', '2♠', 'pass'], 2, 1, 6, 3, 3, 'pass', '???'),
+    # ('Jacobyvervolg', ['1SA', 'pass', '2♥', 'pass', '2♠', 'pass'], 2, 5, 2, 3, 3, 'pass', '???'),
+    # ('Jacoby2SA', ['pass', 'pass', '2SA', 'pass', 'pass'], 2, 5, 2, 3, 3, '2Hs', '???'),
+    # ('Stayman2SA', ['2SA', 'pass'], 5, 3, 4, 3, 3, '3Cs', '???')
     ]
 
 @pytest.mark.parametrize('descr, cb, points, schoppen, harten, ruiten, klaveren, expected, explain', testcases)

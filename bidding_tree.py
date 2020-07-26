@@ -58,7 +58,7 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
     colors.sort()
     lowest_series = colors[0]
     thirththighest_series = colors[1]
-    secondhighest_series = colors[2]  
+    secondhighest_series = colors[2] 
 
     sansverdeling = False
     if highest_series <= 5 and lowest_series >= 2:
@@ -86,10 +86,14 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
                 if points >= 10 and points <= 11:
                     return 'is3Ds'    
 
-    if isPotentielRondPass(current_bidding) and points < 11: return ('pass', 'rondpass')
+    if isPotentielRondPass(current_bidding) and points <= 11: return ('pass', 'rondpass')
     remove_starting_passes(current_bidding)
     # opening
+
     if len(current_bidding) == 0:
+        if points <= 11 and (points + highest_series + secondhighest_series >= 20):
+            return ('1' + color_hs, 'regelVanTwintig')
+            
         if points >= 12:
             if points >= 15:
                 if highest_series <= 5 and lowest_series >= 2:
@@ -447,8 +451,6 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
     if is1x(current_bidding):
         if points >= 12 and not similar(current_bidding[0], color_hs) == 0.6666666666666666:
             return ('X', 'infoX')
-        else:
-            return ('pass', 'normal_pass')
 
         if highest_series >= 6:
             if highest_series == 6:

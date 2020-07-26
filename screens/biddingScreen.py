@@ -4,7 +4,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import Screen
 from kivy.uix.stacklayout import StackLayout
 
-from bidding import Bidding
+from bidding import Bidding, playOrder
 from bidding_tree import bids
 from constants import clubs, colors, diamonds, hearts, spades
 from mediator import Mediator
@@ -65,7 +65,7 @@ class BiddingScreen(Screen):
 
         # create buttons for suits
         if self.mediator.bidding != None:
-            for elem in self.mediator.bidding.playOrder:
+            for elem in playOrder:
                 suits.add_widget(buildToggle(
                     elem, elem == self.mediator.bidding.whoStarts, createCallback(elem), 'whoStarts'))
 
@@ -76,8 +76,7 @@ class BiddingScreen(Screen):
         currentBidding = GridLayout(cols=4)
 
         # create empty boxes to start at correct starting point
-        numEmpty = self.mediator.bidding.playOrder.index(
-            self.mediator.bidding.whoStarts)
+        numEmpty = playOrder.index(self.mediator.bidding.whoStarts)
         for i in range(0, numEmpty):
             currentBidding.add_widget(buildLabel(''))
 

@@ -328,7 +328,7 @@ def isAnsweringJacoby(current_bidding):
     return False
 
 def isPotentielRondPass(current_bidding):
-    if len(current_bidding) >= 3:
+    if len(current_bidding) == 3:
         if current_bidding[0] == 'pass':
             if current_bidding[1] == 'pass':
                 if current_bidding[2] == 'pass':

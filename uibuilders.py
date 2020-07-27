@@ -12,6 +12,7 @@ from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.spinner import Spinner
+from kivy.core.text import LabelBase
 
 from constants import colors
 from mediator import Mediator
@@ -28,12 +29,13 @@ iconFont = './icofont.ttf'
 iconTrashcan = u'\uEE09'
 iconPencil = u'\uEBF6'
 
-Builder.load_string(
-'''
+kv = '''
 <Widget>:
-    font_size: fontSize
+    font_size: 'fontSizesp'
     font_name: './consola.ttf'
-'''.replace('fontSize', str(fontSize)))
+'''.replace('fontSize', str(fontSize))
+
+Builder.load_string(kv)
 
 class ButtonKind(Enum):
     number = 1
@@ -149,7 +151,8 @@ def buildNumericInput(text, callback, size_hint=None):
     plusBtn = buildButton('+', plusCallback)
     minBtn = buildButton('-', minCallback)
     
-    widget = NumInput(text=text, multiline=False, size_hint=(1.0, None), height=fontSize * 2)
+    widget = NumInput(text=text, multiline=False, size_hint=(1.0, None))
+    widget.height = str(fontSize + widget.padding[0] * 2) + 'sp'
     widget.bind(text=callback)
     widget.halign = 'center'
 

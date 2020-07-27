@@ -58,7 +58,7 @@ class SpecificationScreen(Screen):
             return nrOfPoints
 
         questions = BoxLayout(orientation='vertical')
-        questions.add_widget(buildLabel("Please enter some information about your own hand.", size_hint=(1.0, 0.1)))
+        questions.add_widget(buildLabel("Please enter some information\nabout your own hand.", size_hint=(1.0, 0.1)))
 
         gridLyt = GridLayout(cols=2)
         gridLyt.add_widget(buildLabel('Points'))

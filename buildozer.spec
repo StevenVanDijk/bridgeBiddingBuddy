@@ -23,7 +23,7 @@ source.include_exts = py,png,jpg,kv,atlas,ttf
 #source.exclude_exts = spec, xml, json
 
 # (list) List of directory to exclude (let empty to not exclude anything)
-source.exclude_dirs = tests, bin, rules, .buildozer, .vscode, .pytest_cache, __pycache__
+source.exclude_dirs = test, bin, rules, .buildozer, .vscode, .pytest_cache, __pycache__
 
 # (list) List of exclusions using pattern matching
 #source.exclude_patterns = license,images/*/*.jpg
@@ -47,10 +47,10 @@ requirements = python3,kivy==2.0.0rc3
 #garden_requirements =
 
 # (str) Presplash of the application
-presplash.filename = %(source.dir)s/imgs/bidbud.png
+presplash.filename = %(source.dir)s/imgs/BidBud.png
 
 # (str) Icon of the application
-icon.filename = %(source.dir)s/imgs/bidbud.png
+icon.filename = %(source.dir)s/imgs/BidBud.png
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = portrait

@@ -35,9 +35,9 @@ class SpecificationScreen(Screen):
 
                     return cb
 
-                nrOfCards = buildNumericInput(createCallback(color))
-                nrOfCards.text = str(
+                initialValue = str(
                     self.mediator.bidding.nrOfCards[color]) if color in self.mediator.bidding.nrOfCards else ""
+                nrOfCards = buildNumericInput(initialValue, createCallback(color))
                 result.append(nrOfCards)
 
             return result
@@ -52,8 +52,8 @@ class SpecificationScreen(Screen):
 
                 return cb
 
-            nrOfPoints = buildNumericInput(createCallback())
-            nrOfPoints.text = str(self.mediator.bidding.nrOfPoints) if self.mediator.bidding.nrOfPoints != None else ''
+            initialValue = str(self.mediator.bidding.nrOfPoints) if self.mediator.bidding.nrOfPoints != None else ''
+            nrOfPoints = buildNumericInput(initialValue, createCallback())
 
             return nrOfPoints
 
@@ -61,7 +61,7 @@ class SpecificationScreen(Screen):
         questions.add_widget(buildLabel("Please enter some information about your own hand.", size_hint=(1.0, 0.1)))
 
         gridLyt = GridLayout(cols=2)
-        gridLyt.add_widget(buildLabel('Pts'))
+        gridLyt.add_widget(buildLabel('Points'))
         gridLyt.add_widget(buildInputNumberOfPoints())
         for w in buildNumberInSuit():
             gridLyt.add_widget(w)
@@ -71,7 +71,7 @@ class SpecificationScreen(Screen):
         return questions
 
     def build(self):
-        self.rootLayout.add_widget(buildMenu(self.mediator, size_hint=(0.1, 0.1)))
+        self.rootLayout.add_widget(buildMenu(self.mediator, size_hint=(0.2, 0.1)))
         self.rootLayout.add_widget(self.buildQuestions())
         self.rootLayout.add_widget(
             buildButton('Done', lambda i: self.mediator.closeSpecification(), size_hint=(1.0, 0.1)))

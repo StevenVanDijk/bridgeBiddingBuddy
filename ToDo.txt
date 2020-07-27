@@ -1,9 +1,0 @@
-BridgeBiddingBuddy:
-    Styling:
-        Kleuren *
-        Borders --> Wacht tot [(Re)Doublet] {*} is
-        Witte ruimte fixen *
-    (Re)Doublet:
-        Redoublet gedraagt als Doublet *
-        Redoublet mag meerdere keren achter elkaar gespeelt worden *
---------------------------------------------------------------------------

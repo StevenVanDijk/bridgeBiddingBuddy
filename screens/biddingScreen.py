@@ -10,7 +10,7 @@ from constants import clubs, colors, diamonds, hearts, spades
 from mediator import Mediator
 from uibuilders import (
     ButtonKind, buildButton, buildLabel, buildNumericInput, buildToggle, buildMenu,
-    colors, font_size, gap, halfGap, smallSize)
+    colors, gap, halfGap, smallSize)
 
 
 class BiddingScreen(Screen):
@@ -56,7 +56,7 @@ class BiddingScreen(Screen):
         topButtons = BoxLayout(orientation='horizontal')
 
         topButtons.add_widget(buildMenu(self.mediator, size_hint=(0.2, 1.0)))
-        topButtons.add_widget(buildButton('Undo', lambda ins: self.onUndo()))
+        topButtons.add_widget(buildButton('Undo', lambda ins: self.onUndo(), size_hint=(0.8, 1.0)))
         headers.add_widget(topButtons)
         suits = GridLayout(cols=4, spacing=[gap, 0], padding=[0, gap])
 

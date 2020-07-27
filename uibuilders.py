@@ -1,9 +1,11 @@
 import re
 from enum import Enum
 
+from kivy.uix.widget import Widget
 from kivy import icon_dir
 from kivy.lang import Builder
-from kivy.uix.anchorlayout import AnchorLayout
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 from kivy.uix.image import Image
 from kivy.uix.label import Label
@@ -14,7 +16,7 @@ from kivy.uix.spinner import Spinner
 from constants import colors
 from mediator import Mediator
 
-font_size = 12
+fontSize = 20
 bigSize = 160
 normalSize = 80
 smallSize = 40
@@ -26,6 +28,12 @@ iconFont = './icofont.ttf'
 iconTrashcan = u'\uEE09'
 iconPencil = u'\uEBF6'
 
+Builder.load_string(
+'''
+<Widget>:
+    font_size: fontSize
+    font_name: './consola.ttf'
+'''.replace('fontSize', str(fontSize)))
 
 class ButtonKind(Enum):
     number = 1
@@ -106,21 +114,50 @@ def buildToggle(txt, isDown, callback, group=None, size_hint=None):
     return widget
 
 
-def buildNumericInput(callback, size_hint=None):
+def buildNumericInput(text, callback, size_hint=None):
     widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
+
+    leftLyt = GridLayout(cols=1, size_hint=widgetSizeHint, padding=[gap]) # contains the numeric input
 
     class NumInput(TextInput):
         pat = re.compile('[^0-9]')
+
+        def __init__(self, **kwargs):
+                super().__init__(**kwargs)
 
         def insert_text(self, substring, from_undo=False):
             pat = self.pat
             s = re.sub(pat, '', substring)
             return super(NumInput, self).insert_text(s, from_undo=from_undo)
 
-    widget = NumInput(size_hint=widgetSizeHint)
-    widget.bind(text=callback)
+    def plusCallback(i):
+        s = widget.text
+        if s.isdigit():
+            widget.text = str(int(s) + 1)
+        else:
+            widget.text = str(0)
 
-    return widget
+    def minCallback(i):
+        s = widget.text
+        if s.isdigit():
+            val = int(s)
+            if val > 0:
+                widget.text = str(val - 1)
+        else:
+            widget.text = str(0)
+
+    plusBtn = buildButton('+', plusCallback)
+    minBtn = buildButton('-', minCallback)
+    
+    widget = NumInput(text=text, multiline=False, size_hint=(1.0, None), height=fontSize * 2)
+    widget.bind(text=callback)
+    widget.halign = 'center'
+
+    leftLyt.add_widget(plusBtn)    
+    leftLyt.add_widget(widget)
+    leftLyt.add_widget(minBtn)
+
+    return leftLyt
 
 
 def buildTextInput(callback, size_hint=None):

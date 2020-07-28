@@ -7,13 +7,8 @@ def biddingIsAllowed(previousBids, bid):
         currentBid.addBid(b)
     return currentBid.isAllowed(bid)
     
-north = 'N'
-east = 'E'
-south = 'S'
-west = 'W'
-playOrder = [north, east, south, west]
-
 class Bidding:
+    playOrder = ["N", "E", "S", "W"]
     biddingOrderList : List[str]
 
     current: list
@@ -29,9 +24,6 @@ class Bidding:
             for j in suitsAndSA:
                 self.biddingOrderList.append(str(i) + j)
         self.reset()
-
-    def getNextPlayOrder(self, currentPlay: str):
-        return playOrder[(playOrder.index(currentPlay) + 1) % len(playOrder)]
 
     def isSpecial(self, bid):
         return bid == 'pass' or bid == 'X' or bid == 'XX'
@@ -60,9 +52,6 @@ class Bidding:
             if self.current[-1] == 'pass' and self.current[-2] == 'pass' and self.current[-3] == 'pass':
                 return True
         return False
-
-    def needsSpecification(self):
-        return self.nrOfPoints == None or not all([color in self.nrOfCards for color in colors])
 
     def isAllowed(self, bid):
         biddings_passed = len(self.current)
@@ -99,85 +88,44 @@ class Bidding:
 
     def reset(self):
         self.current = []
-        self.whoStarts = north
+        self.whoStarts = 'N'
         self.nrOfPoints = None
         self.nrOfCards = {}
 
-    def getColor(self, bid):
-        if len(bid) == 2 and bid[0].isdigit():
-            return bid[1]
-        return None
-
-    def getLeader(self):
-        leader = self.whoStarts
-        currentPlayer = self.whoStarts
-        firstToPlayColorNZ = {}
-        firstToPlayColorOW = {}
-        lastColor = None
-        lastPlayer = None
-        for bid in self.current:
-            if (not self.isSpecial(bid)):
-                lastColor = self.getColor(bid)
-                lastPlayer = currentPlayer
-
-                if currentPlayer == north or currentPlayer == south:
-                    if not lastColor in firstToPlayColorNZ:
-                        firstToPlayColorNZ[lastColor] = currentPlayer
-                    
-                if currentPlayer == east or currentPlayer == west:
-                    if not lastColor in firstToPlayColorOW:
-                        firstToPlayColorOW[lastColor] = currentPlayer
-            currentPlayer = self.getNextPlayOrder(currentPlayer)
-
-        if lastPlayer in [north, south]:
-            return firstToPlayColorNZ[lastColor]
-        
-        if lastPlayer in [east, west]:
-            return firstToPlayColorOW[lastColor]
-
-        raise NotImplementedError()
-
-    def contract(self):
-        current = list(self.current)
+    def contract(self, current):
+        setWhoStarts()
         contract = ''
         dealer = self.whoStarts
         
-        def Leader(dealer, current):
+        def leader(dealer, current):
             count_bids = len(current)
             rest = count_bids % 4
-            leader = ''
+
+            if dealer == 'O':
+                rest += 1
+            if dealer == 'Z':
+                rest += 2
+            if dealer == 'W':
+                rest += 3
 
             if rest == 0:
-                leader = dealer
-
-            else:
-                if dealer == 'O':
-                    rest -= 1
-                if dealer == 'Z':
-                    rest -= 2
-                if dealer == 'W':
-                    rest -= 3
-
-                if rest == 0:
-                    leader = 'N'
-                if rest == 1:
-                    leader = 'O'
-                if rest == 2:
-                    leader = 'Z'
-                if rest == 3:
-                    leader = 'W'
+                leader = 'N'
+            if rest == 1:
+                leader = 'O'
+            if rest == 2:
+                leader = 'Z'
+            if rest == 3:
+                leader = 'W'
 
             return leader
-
-        leader = Leader(dealer, current)
 
         def remove_last_passes(current):
             count_pass = 0
             done = False
             while not done:
-                if len(current) >= 1:
-                    if current[-1] == 'pass':
-                        current.remove('pass')
+                if len(current_bidding) >= 1:
+                    if current_bidding[-1] == 'pass':
+                        current_bidding.remove('pass')
                         count_pass += 1
                     else:
                         done = True
@@ -185,8 +133,8 @@ class Bidding:
                     done = True
             return current
 
-
         remove_last_passes(current)
-        contract = current[-1]
+        if current[-1] != 'X' or 'XX':
+            contract = current[-1]
 
-        return (contract, leader)
+        return contract

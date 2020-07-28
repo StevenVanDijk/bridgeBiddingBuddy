@@ -331,7 +331,7 @@ def isPotentielRondPass(current_bidding):
                     return True
     return False
 
-def isAfterJacoby(current_bidding):
+def isAfterJacoby(current_bidding): # You bidded Jacoby, and partner responded
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 6:
         if current_bidding[0] == '1SA':
@@ -344,7 +344,7 @@ def isAfterJacoby(current_bidding):
                         return True
     return False
 
-def isAfterJacobyInviteSA(current_bidding):
+def isAfterJacobyInviteSA(current_bidding): #Your partner bidded Jacoby and invited to the manch, SA
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 6:
         if current_bidding[0] == '1SA':
@@ -362,7 +362,7 @@ def isAfterJacobyInviteSA(current_bidding):
                                 return True
     return False
 
-def isAfterJacobyInviteClrHs(current_bidding):
+def isAfterJacobyInviteClrHs(current_bidding): #Your partner bidded Jacoby and invited to the manch, ♥
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 6:
         if current_bidding[0] == '1SA':
@@ -380,7 +380,7 @@ def isAfterJacobyInviteClrHs(current_bidding):
                                 return False
     return False
 
-def isAfterJacobyInviteClrSs(current_bidding):
+def isAfterJacobyInviteClrSs(current_bidding): #Your partner bidded Jacoby and invited to the manch, ♠
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 6:
         if current_bidding[0] == '1SA':
@@ -398,7 +398,7 @@ def isAfterJacobyInviteClrSs(current_bidding):
                                 return True
     return False
 
-def isStayman2SAHs(current_bidding):
+def isStayman2SAHs(current_bidding): # Partner bidded Stayman and after that 3SA, you bidded 3♥
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 8:
         if current_bidding[0] == '1SA':
@@ -411,7 +411,7 @@ def isStayman2SAHs(current_bidding):
     return False
 
 
-def isStayman2SASs(current_bidding):
+def isStayman2SASs(current_bidding): # Partner bidded Stayman and after that 3SA, you bidded 2♠
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 8:
         if current_bidding[0] == '1SA':
@@ -423,7 +423,7 @@ def isStayman2SASs(current_bidding):
                                 return True
     return False
 
-def isStayman2SA(current_bidding):
+def isStayman2SA(current_bidding): # Partner bidded Stayman and after that 2SA
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 8:
         if current_bidding[0] == '1SA':
@@ -435,7 +435,7 @@ def isStayman2SA(current_bidding):
                                 return True
     return False
 
-def isStayman3SAHs(current_bidding):
+def isStayman3SAHs(current_bidding): # Partner bidded Stayman and after that 3SA, you bidded 3♥
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 8:
         if current_bidding[0] == '1SA':
@@ -447,7 +447,7 @@ def isStayman3SAHs(current_bidding):
                                 return True
     return False
 
-def isStayman3SASs(current_bidding):
+def isStayman3SASs(current_bidding): # Partner bidded Stayman and after that 3SA, you bidded 3♠
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 8:
         if current_bidding[0] == '1SA':
@@ -459,7 +459,7 @@ def isStayman3SASs(current_bidding):
                                 return True
     return False
 
-def isStayman3SA(current_bidding):
+def isStayman3SA(current_bidding): # Partner bidded Stayman and after that 3SA
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 8:
         if current_bidding[0] == '1SA':
@@ -472,7 +472,7 @@ def isStayman3SA(current_bidding):
     return False
 
 
-def isInfoXPaNoIn(current_bidding):
+def isInfoXPaNoIn(current_bidding): # Information Xdoublet of Partner No Interference
     if isNX_Ms(current_bidding) or isNX_Ms(current_bidding): return False
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 3:
@@ -482,7 +482,7 @@ def isInfoXPaNoIn(current_bidding):
                     return True
     return False
 
-def isInfoXPaIn(current_bidding):
+def isInfoXPaIn(current_bidding): # Information Xdoublet of Partner, Interfered
     if isNX_Ms(current_bidding) or isNX_Ms(current_bidding): return False
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 3:
@@ -492,4 +492,41 @@ def isInfoXPaIn(current_bidding):
                     return True
     return False
 
+def OpInL1(current_bidding): # Oppenents Interference Level1
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 2:
+        if current_bidding[0] != 'pass'
+            if current_bidding[1] != 'pass' and levelofbid(current_bidding[1]) == '1':
+                return True
+    return False
 
+def OpInL1PaP(current_bidding):  # Oppenents Interference Level1 Partner Pass
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 4:
+        if current_bidding[0] != 'pass':
+            if current_bidding[1] != 'pass' and current_bidding[3] == 'pass':
+                if current_bidding[2] == 'pass': return True 
+            if current_bidding[1] == 'pass' and current_bidding[3] != 'pass':
+                if current_bidding[2] == 'pass': return True
+    return False
+
+def OpinL2M(current_bidding):  # Oppenents Interference Level2 or More
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 2:
+        if current_bidding[0] != 'pass' and levelofbid(current_bidding[0]) == '1':
+            if current_bidding[1] != 'pass' and levelofbid(current_bidding[1]) != '1':
+                return True
+    return False
+
+def OpInL2MPaP(current_bidding):  # Oppenents Interference Level1 or More Partner Pass
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 4:
+        if current_bidding[0] != 'pass' and levelofbid(current_bidding[0]) == '1':
+            if current_bidding[1] != 'pass' and current_bidding[3] == 'pass':
+                if levelofbid(current_bidding[1]) != '1':
+                    if current_bidding[2] == 'pass': return True 
+            if current_bidding[1] == 'pass' and current_bidding[3] != 'pass':
+                if levelofbid(current_bidding[3]) != '1':
+                    if current_bidding[2] == 'pass': return True
+    return False
+   

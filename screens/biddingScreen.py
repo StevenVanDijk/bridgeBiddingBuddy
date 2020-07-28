@@ -27,10 +27,8 @@ class BiddingScreen(Screen):
         self.build()
 
     def onAddBid(self, bid):
-        if self.mediator.bidding.isAllowed(bid):
+        if self.mediator.bidding.isAllowed(bid) and not self.mediator.bidding.finished():
             self.mediator.bidding.addBid(bid)
-            if (self.mediator.bidding.finished()):
-                self.mediator.closeBidding()
         self.updateUI()
 
     def onUndo(self):
@@ -139,10 +137,13 @@ class BiddingScreen(Screen):
 
         currentBidding = self.buildCurrentBidding()
 
-        bottomLayout = BoxLayout(
-            orientation='vertical', size_hint=(1.0, 0.3))
-        bottomLayout.add_widget(self.buildBidChooser())
+        if (not self.mediator.bidding.finished()):
+            bottom = BoxLayout(
+                orientation='vertical', size_hint=(1.0, 0.3))
+            bottom.add_widget(self.buildBidChooser())
+        else:
+            bottom = buildButton('Klaar', lambda i: self.mediator.closeBidding(), size_hint=(1.0, 0.1))
 
         self.rootLayout.add_widget(topLayout)
         self.rootLayout.add_widget(currentBidding)
-        self.rootLayout.add_widget(bottomLayout)
+        self.rootLayout.add_widget(bottom)

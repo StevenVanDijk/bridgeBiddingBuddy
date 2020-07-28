@@ -1,19 +1,20 @@
 import re
 from enum import Enum
 
-from kivy.uix.widget import Widget
 from kivy import icon_dir
-from kivy.lang import Builder
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.button import Button
-from kivy.uix.image import Image
-from kivy.uix.label import Label
-from kivy.uix.textinput import TextInput
-from kivy.uix.togglebutton import ToggleButton
-from kivy.uix.spinner import Spinner
 from kivy.core.text import LabelBase
 from kivy.core.window import Window
+from kivy.lang import Builder
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.button import Button
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.image import Image
+from kivy.uix.label import Label
+from kivy.uix.scrollview import ScrollView
+from kivy.uix.spinner import Spinner
+from kivy.uix.textinput import TextInput
+from kivy.uix.togglebutton import ToggleButton
+from kivy.uix.widget import Widget
 
 from constants import colors
 from mediator import Mediator
@@ -175,17 +176,24 @@ def buildTextInput(callback, size_hint=None):
 
 
 def buildText(text, size_hint=None):
-    widget = buildLabel(text, size_hint)
-    widget.multiline = True
-    widget.padding = [20, 20]
-    widget.valign = 'top'
-    widget.halign = 'left'
-    widget.markup = True
+    widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
+    widget = ScrollView(size_hint=widgetSizeHint)
+    
+    txtView = buildLabel(text, size_hint=(1.0, None))
+    txtView.multiline = True
+    txtView.padding = [20, 20]
+    txtView.valign = 'top'
+    txtView.halign = 'left'
+    txtView.markup = True
 
     def setTextSize(instance, value):
-        widget.text_size = (value, None)
+        txtView.text_size = (value, None)
 
-    widget.bind(width=setTextSize)
+    txtView.bind(width=setTextSize)
+    txtView.bind(texture_size=lambda i, v: setattr(txtView, 'size', v))
+    
+    widget.add_widget(txtView)
+
     return widget
 
 def buildMenu(mediator: Mediator, size_hint=None):

@@ -1,5 +1,5 @@
 import pytest
-from bidding  import Bidding
+from bidding  import Bidding, north, south, east, west
     
 def testLeaderN():
     bidding = Bidding()
@@ -25,8 +25,8 @@ def testLeaderO():
 def testLeaderW():
     bidding = Bidding()
     bidding.current = ['1♥', 'pass', '1SA', 'pass', '2♦', 'pass', 'pass', '2♥', 'pass', 'pass', '3♣', 'pass', 'pass', 'pass']
-    bidding.whoStarts = 'O'
+    bidding.whoStarts = east
 
-    assert bidding.contract() == ('3♣', 'W')
+    assert bidding.getLeader() == west
 
 

@@ -1,15 +1,13 @@
 from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import Screen
 from kivy.uix.scrollview import ScrollView
-from kivy.uix.widget import Widget
 
 from bidding import Bidding
 from mediator import Mediator
 from uibuilders import (buildButton, buildIconButton, buildLabel,
-                        buildTextInput, iconPencil, iconTrashcan)
+                        buildTextInput, gap, halfGap, iconPencil, iconTrashcan)
 
 
 class FileChooserScreen(Screen):
@@ -47,21 +45,29 @@ class FileChooserScreen(Screen):
                 return cb
 
             def createCallbackEdit(key):
-                def cb(instance: Widget):
-                    dad = instance.parent  # BoxLayout
+                def cb(instance):
+                    dad = instance.parent.parent  # GridLayout -> BoxLayout
                     dad.clear_widgets()
-                    def setNameCallback(instance: Widget):
+
+                    def setNameCallback(instance):
                         self.mediator.changeBiddingName(key, instance.text)
-                        
-                    dad.add_widget(buildTextInput(setNameCallback))
+
+                    input = buildTextInput(setNameCallback, size_hint=(0.9, 1.0))
+                    input.text = key
+                    dad.add_widget(input)
+                    dad.add_widget(buildButton('Klaar', lambda i: setNameCallback(input), size_hint=(0.1, 1.0)))
 
                 return cb
 
             itemLyt = BoxLayout(orientation='horizontal', size_hint=(1.0, None))
             itemLyt.add_widget(buildButton(key, createCallbackSelect(key), size_hint=(0.8, 1.0)))
-            itemLyt.add_widget(buildIconButton(iconPencil, createCallbackEdit(key), size_hint=(0.1, 1.0)))
-            itemLyt.add_widget(buildIconButton(iconTrashcan, createCallbackDelete(key), size_hint=(0.1, 1.0)))
+            btns = GridLayout(rows=1, spacing=[gap, 0], padding=[gap, 0], size_hint=(0.2, 1.0))
+            btns.add_widget(buildIconButton(iconPencil, createCallbackEdit(key)))
+            btns.add_widget(buildIconButton(iconTrashcan, createCallbackDelete(key)))
+
             newBidBtn.bind(height=itemLyt.setter('height'))
+
+            itemLyt.add_widget(btns)
             listLyt.add_widget(itemLyt)
 
         scrlView.add_widget(listLyt)

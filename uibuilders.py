@@ -16,6 +16,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.widget import Widget
 
+
 from constants import colors
 from mediator import Mediator
 
@@ -39,6 +40,7 @@ kv = '''
 
 Builder.load_string(kv)
 
+
 class ButtonKind(Enum):
     number = 1
     color = 2
@@ -48,6 +50,10 @@ class ButtonKind(Enum):
 def getColor(txt):
     textColor = [1, 1, 1, 1]
     background_color = [30 / 256, 130 / 256, 76 / 256, 1]
+    if txt == iconTrashcan:
+        textColor = [1, 0, 0, 1]
+    if txt == iconPencil:
+        textColor = [0, 0, 0, 1]
     if len(txt) <= 2 and ('♣' in txt or '♠' in txt):
         textColor = [0, 0, 0, 1]
         background_color = [30 / 256, 130 / 256, 76 / 256, 1]
@@ -74,9 +80,7 @@ def getColor(txt):
 
 def buildButton(content, callback, size_hint=None):
     widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
-    widget = Button(size_hint=widgetSizeHint,
-                    font_name=defaultFont,
-                    padding=(10, 10))
+    widget = Button(size_hint=widgetSizeHint, padding=(10, 10))
     if isinstance(content, str):
         (col, bcol) = getColor(content)
         widget.text = content
@@ -100,8 +104,7 @@ def buildLabel(txt, size_hint=None):
     (col, bcol) = getColor(txt)
     return Label(color=col,
                  text=str(txt),
-                 size_hint=widgetSizeHint,
-                 font_name=defaultFont)
+                 size_hint=widgetSizeHint)
 
 
 def buildToggle(txt, isDown, callback, group=None, size_hint=None):
@@ -111,11 +114,10 @@ def buildToggle(txt, isDown, callback, group=None, size_hint=None):
     widget = ToggleButton(group=group,
                           state=state,
                           color=col,
-                          background_normal = '',
+                          background_normal='',
                           background_color=bcol,
                           text=txt,
-                          size_hint=widgetSizeHint,
-                          font_name=defaultFont)
+                          size_hint=widgetSizeHint)
     widget.bind(on_press=callback)
     return widget
 
@@ -123,13 +125,14 @@ def buildToggle(txt, isDown, callback, group=None, size_hint=None):
 def buildNumericInput(text, callback, size_hint=None):
     widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
 
-    leftLyt = GridLayout(cols=1, size_hint=widgetSizeHint, padding=[gap]) # contains the numeric input
+    leftLyt = GridLayout(cols=1, size_hint=widgetSizeHint,
+                         padding=[gap])  # contains the numeric input
 
     class NumInput(TextInput):
         pat = re.compile('[^0-9]')
 
         def __init__(self, **kwargs):
-                super().__init__(**kwargs)
+            super().__init__(**kwargs)
 
         def insert_text(self, substring, from_undo=False):
             pat = self.pat
@@ -154,22 +157,21 @@ def buildNumericInput(text, callback, size_hint=None):
 
     plusBtn = buildButton('+', plusCallback)
     minBtn = buildButton('-', minCallback)
-    
-    widget = NumInput(text=text, multiline=False, size_hint=(1.0, None))
+
+    widget = NumInput(text=text, input_type='number', multiline=False, size_hint=(1.0, None))
     widget.height = str(fontSize + widget.padding[0] * 2) + 'sp'
     widget.bind(text=callback)
     widget.halign = 'center'
 
-    leftLyt.add_widget(plusBtn)    
+    leftLyt.add_widget(plusBtn)
     leftLyt.add_widget(widget)
     leftLyt.add_widget(minBtn)
 
     return leftLyt
 
-
 def buildTextInput(callback, size_hint=None):
     widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
-    widget = TextInput(size_hint=widgetSizeHint, multiline=False)
+    widget = TextInput(size_hint=widgetSizeHint)
     widget.bind(on_text_validate=callback)
 
     return widget
@@ -178,7 +180,7 @@ def buildTextInput(callback, size_hint=None):
 def buildText(text, size_hint=None):
     widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
     widget = ScrollView(size_hint=widgetSizeHint)
-    
+
     txtView = buildLabel(text, size_hint=(1.0, None))
     txtView.multiline = True
     txtView.padding = [20, 20]
@@ -191,26 +193,30 @@ def buildText(text, size_hint=None):
 
     txtView.bind(width=setTextSize)
     txtView.bind(texture_size=lambda i, v: setattr(txtView, 'size', v))
-    
+
     widget.add_widget(txtView)
 
     return widget
 
+
 def buildMenu(mediator: Mediator, size_hint=None):
-    menuDict = { 'Your hand': lambda: mediator.showSpecification(), 
-                 'Biddings': lambda: mediator.showBiddingChooser(),
-                 'About BidBud': lambda: mediator.showCredits() }
+    menuDict = {
+        'Your hand': lambda: mediator.showSpecification(),
+        'Biddings': lambda: mediator.showBiddingChooser(),
+        'About BidBud': lambda: mediator.showCredits()
+    }
     widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
     widget = Spinner(text='Menu', size_hint=widgetSizeHint)
     widget.values = list(menuDict.keys())
     widget.bind(text=lambda i, v: menuDict[v]())
-    
+
     def resizeMenu(i, isOpen):
         if isOpen:
             widget.size_hint_x = None
             widget.width = Window.width / 2
         else:
             widget.size_hint = widgetSizeHint
+
     widget.bind(is_open=resizeMenu)
 
     return widget

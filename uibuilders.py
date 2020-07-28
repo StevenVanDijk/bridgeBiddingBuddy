@@ -13,6 +13,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.spinner import Spinner
 from kivy.core.text import LabelBase
+from kivy.core.window import Window
 
 from constants import colors
 from mediator import Mediator
@@ -44,27 +45,28 @@ class ButtonKind(Enum):
 
 
 def getColor(txt):
-    textColor = [0, 1, 0, 1]
+    textColor = [1, 1, 1, 1]
     background_color = [30 / 256, 130 / 256, 76 / 256, 1]
-    if '♣' in txt or '♠' in txt:
+    if len(txt) <= 2 and ('♣' in txt or '♠' in txt):
         textColor = [0, 0, 0, 1]
         background_color = [30 / 256, 130 / 256, 76 / 256, 1]
-    if '♦' in txt or '♥' in txt:
+    if len(txt) <= 2 and ('♦' in txt or '♥' in txt):
         textColor = [1, 0, 0, 1]
         background_color = [30 / 256, 130 / 256, 76 / 256, 1]
-    if 'SA' in txt or 'pass' in txt:
+    if len(txt) <= 4 and ('SA' in txt or 'pass' in txt):
         background_color = [30 / 256, 130 / 256, 76 / 256, 1]
     if 'X' == txt:
         background_color = [1, 0, 0, 1]
-    if 'XX' in txt:
+    if 'XX' == txt:
         background_color = [0, 0, 1, 1]
-    if '?' in txt:
+    if '?' == txt:
+        textColor = [0, 0, 0, 1]
         background_color = [1, 1, 0, 1]
-    if '1' in txt or '2' in txt or '3' in txt or '4' in txt or '5' in txt or '6' in txt or '7' in txt:
+    if '1' == txt or '2' == txt or '3' == txt or '4' == txt or '5' == txt or '6' == txt or '7' == txt:
         background_color = [30 / 256, 130 / 256, 76 / 256, 1]
-    if 'N' in txt or 'W' in txt or 'E' in txt or 'S' in txt:
+    if 'N' == txt or 'W' == txt or 'E' == txt or 'S' == txt:
         background_color = [30 / 256, 130 / 256, 76 / 256, 1]
-    if 'Undo' in txt:
+    if 'Undo' == txt:
         background_color = [30 / 256, 130 / 256, 76 / 256, 1]
     return (textColor, background_color)
 
@@ -108,6 +110,7 @@ def buildToggle(txt, isDown, callback, group=None, size_hint=None):
     widget = ToggleButton(group=group,
                           state=state,
                           color=col,
+                          background_normal = '',
                           background_color=bcol,
                           text=txt,
                           size_hint=widgetSizeHint,
@@ -177,6 +180,7 @@ def buildText(text, size_hint=None):
     widget.padding = [20, 20]
     widget.valign = 'top'
     widget.halign = 'left'
+    widget.markup = True
 
     def setTextSize(instance, value):
         widget.text_size = (value, None)
@@ -186,10 +190,19 @@ def buildText(text, size_hint=None):
 
 def buildMenu(mediator: Mediator, size_hint=None):
     menuDict = { 'Your hand': lambda: mediator.showSpecification(), 
-                 'Open bidding': lambda: mediator.showBiddingChooser() }
+                 'Biddings': lambda: mediator.showBiddingChooser(),
+                 'About BidBud': lambda: mediator.showCredits() }
     widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
     widget = Spinner(text='Menu', size_hint=widgetSizeHint)
     widget.values = list(menuDict.keys())
     widget.bind(text=lambda i, v: menuDict[v]())
+    
+    def resizeMenu(i, isOpen):
+        if isOpen:
+            widget.size_hint_x = None
+            widget.width = Window.width / 2
+        else:
+            widget.size_hint = widgetSizeHint
+    widget.bind(is_open=resizeMenu)
 
     return widget

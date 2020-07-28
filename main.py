@@ -2,15 +2,16 @@ __version__ = "0.0.8"
 
 from kivy.app import App
 from kivy.core.window import Window
-from kivy.uix.screenmanager import ScreenManager, NoTransition, CardTransition
+from kivy.uix.screenmanager import ScreenManager, NoTransition, CardTransition, FallOutTransition
 
-from mediator import (Mediator, adviceScreen, biddingScreen, blankScreen,
+from mediator import (Mediator, adviceScreen, biddingScreen, blankScreen, creditsScreen,
                       fileChooserScreen, specificationScreen)
 from screens.adviceScreen import AdviceScreen
 from screens.biddingScreen import BiddingScreen
 from screens.blankScreen import BlankScreen
 from screens.fileChooserScreen import FileChooserScreen
 from screens.specificationScreen import SpecificationScreen
+from screens.creditsScreen import CreditsScreen
 
 class BridgeBiddingBuddy(App):
     sm = ScreenManager()
@@ -20,7 +21,7 @@ class BridgeBiddingBuddy(App):
             self.sm.transition = NoTransition()
             self.sm.current = blankScreen
         self.sm.current = name
-        self.sm.transition = CardTransition()
+        self.sm.transition = FallOutTransition()
 
     def build(self):
         mediator = Mediator(self.switchTo)
@@ -29,6 +30,7 @@ class BridgeBiddingBuddy(App):
                 BiddingScreen(mediator, name=biddingScreen),
                 SpecificationScreen(mediator, name=specificationScreen),
                 AdviceScreen(mediator, name=adviceScreen),
+                CreditsScreen(mediator, name=creditsScreen),
                 BlankScreen(mediator, name=blankScreen)
         ]:
             self.sm.add_widget(screen)

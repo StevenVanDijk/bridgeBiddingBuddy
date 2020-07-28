@@ -14,6 +14,7 @@ biddingScreen = 'biddingScreen'
 fileChooserScreen = 'fileChooserScreen'
 specificationScreen = 'specificationScreen'
 adviceScreen = 'adviceScreen'
+creditsScreen = 'creditsScreen'
 blankScreen = 'blankScreen'
 
 
@@ -87,3 +88,6 @@ class Mediator():
 
     def showBiddingChooser(self):
         self.__switchTo(fileChooserScreen)
+    
+    def showCredits(self):
+        self.__switchTo(creditsScreen)

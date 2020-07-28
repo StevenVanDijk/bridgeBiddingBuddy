@@ -96,6 +96,7 @@ def buildButton(content, callback, size_hint=None):
 def buildIconButton(icon, callback, size_hint=None):
     widget = buildButton(icon, callback, size_hint)
     widget.font_name = iconFont
+    widget.multiline = True
     return widget
 
 

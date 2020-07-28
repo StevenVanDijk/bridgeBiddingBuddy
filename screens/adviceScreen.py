@@ -20,7 +20,7 @@ class AdviceScreen(Screen):
         (bid, explanation) = self.mediator.advice
         self.rootLayout.add_widget(buildLabel(bid, size_hint=(1.0, 0.1)))
         self.rootLayout.add_widget(buildText(explanation, size_hint=(1.0, 0.8)))
-        self.rootLayout.add_widget(buildButton('Close', lambda i: self.mediator.closeAdvice(), size_hint=(1.0, 0.1)))
+        self.rootLayout.add_widget(buildButton('Klaar', lambda i: self.mediator.closeAdvice(), size_hint=(1.0, 0.1)))
 
     def reset(self):
         self.rootLayout.clear_widgets()

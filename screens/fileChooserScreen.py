@@ -22,7 +22,7 @@ class FileChooserScreen(Screen):
         self.reset()
 
     def build(self):
-        newBidBtn = buildButton('New bidding', lambda i: self.mediator.editBidding(Bidding()), size_hint=(1.0, 0.1))
+        newBidBtn = buildButton('Nieuwe bieding', lambda i: self.mediator.editBidding(Bidding()), size_hint=(1.0, 0.1))
 
         encloseLyt = BoxLayout(size_hint=(1.0, 0.85))
         scrlView = ScrollView(size_hint=(1.0, None), scroll_type=['content', 'bars'], bar_width='10dp')

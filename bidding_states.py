@@ -406,7 +406,7 @@ def isStayman2SAHs(current_bidding):
                 if current_bidding[5] == 'pass' and current_bidding[7] == 'pass':
                     if current_bidding[2] == '2♣':
                         if current_bidding[4] == '2♥':
-                            if current_bidding[6] == '2SA'
+                            if current_bidding[6] == '2SA':
                                 return True
     return False
 
@@ -419,7 +419,19 @@ def isStayman2SASs(current_bidding):
                 if current_bidding[5] == 'pass' and current_bidding[7] == 'pass':
                     if current_bidding[2] == '2♣':
                         if current_bidding[4] == '2♠':
-                            if current_bidding[6] == '2SA'
+                            if current_bidding[6] == '2SA':
+                                return True
+    return False
+
+def isStayman2SA(current_bidding):
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 8:
+        if current_bidding[0] == '1SA':
+            if current_bidding[1] == 'pass' and current_bidding[3] == 'pass':
+                if current_bidding[5] == 'pass' and current_bidding[7] == 'pass':
+                    if current_bidding[2] == '2♣':
+                        if currrent_bidding[4] == '2♥' or current_bidding[4] == '2♠':
+                            if current_bidding[6] == '2SA':
                                 return True
     return False
 
@@ -431,7 +443,7 @@ def isStayman3SAHs(current_bidding):
                 if current_bidding[5] == 'pass' and current_bidding[7] == 'pass':
                     if current_bidding[2] == '2♣':
                         if current_bidding[4] == '2♥':
-                            if current_bidding[6] == '3SA'
+                            if current_bidding[6] == '3SA':
                                 return True
     return False
 
@@ -443,11 +455,41 @@ def isStayman3SASs(current_bidding):
                 if current_bidding[5] == 'pass' and current_bidding[7] == 'pass':
                     if current_bidding[2] == '2♣':
                         if current_bidding[4] == '2♠':
-                            if current_bidding[6] == '3SA'
+                            if current_bidding[6] == '3SA':
+                                return True
+    return False
+
+def isStayman3SA(current_bidding):
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 8:
+        if current_bidding[0] == '1SA':
+            if current_bidding[1] == 'pass' and current_bidding[3] == 'pass':
+                if current_bidding[5] == 'pass' and current_bidding[7] == 'pass':
+                    if current_bidding[2] == '2♣':
+                        if current_bidding[4] == '2♥' or current_bidding[4] == '2♠':
+                            if current_bidding[6] == '3SA':
                                 return True
     return False
 
 
+def isInfoXPaNoIn(current_bidding):
+    if isNX_Ms(current_bidding) or isNX_Ms(current_bidding): return False
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 3:
+        if current_bidding[0] != 'pass':
+            if current_bidding[1] == 'X':
+                if current_bidding[2] == 'pass' or current_bidding[2] == 'XX':
+                    return True
+    return False
 
+def isInfoXPaIn(current_bidding):
+    if isNX_Ms(current_bidding) or isNX_Ms(current_bidding): return False
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 3:
+        if current_bidding[0] != 'pass':
+            if current_bidding[1] == 'X':
+                if current_bidding[2] != 'pass' and current_bidding[2] != 'XX':
+                    return True
+    return False
 
 

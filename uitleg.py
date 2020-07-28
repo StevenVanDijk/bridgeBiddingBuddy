@@ -1,5 +1,6 @@
 def uitleg_nl(state):
     uitleg = ''
+
     if state == 'rondpass':
         uitleg = '''
         U, en uw tegenstanders, mogen pas openen met 12 punten, er zitten in totaal 40 punten in het spel.
@@ -221,6 +222,42 @@ def uitleg_nl(state):
         Dus als u geen lange klaverkaart heeft, of niet genoeg honeurs is het soms beter gewoon te passen.
         '''
     
+    if state == 'StaymanPa2SAminMulti':
+        uitleg = '''
+        U heeft zowel een vierkaart harten als een vierkaart schoppen.
+        Met Stayman vroeg uw partner naar uw hoge kleuren, waarop u antwoorde 2♥, omdat u uw partner wilde laten weten dat u mogelijk ook nog een schoppen kaart kon hebben.
+        Dus nu uw partner met 2SA aangeeft dat hij / zij geen harten heeft, en dus schoppen, weet u dat jullie een fit hebben in de schoppen.
+        En doordat uw partner 2SA heeft geboden weet u dat uw partner 8/9 punten heeft en dus net niet genoeg voor de manch.
+        Uw partner vraagt nu aan u of u genoeg heeft om naar de manch te gaan, maar omdat u maar 15 punten heeft is dat net niet genoeg voor de manch.
+        Dus u bied 3♠.
+        '''
+
+    if state == 'StaymanPa2SAmaxMulti':
+        uitleg = '''
+        U heeft zowel een vierkaart harten als een vierkaart schoppen.
+        Met Stayman vroeg uw partner naar uw hoge kleuren, waarop u antwoorde 2♥, omdat u uw partner wilde laten weten dat u mogelijk ook nog een schoppen kaart kon hebben.
+        Dus nu uw partner met 2SA aangeeft dat hij / zij geen harten heeft, en dus schoppen, weet u dat jullie een fit hebben in de schoppen.
+        En doordat uw partner 2SA heeft geboden weet u dat uw partner 8/9 punten heeft en dus net niet genoeg voor de manch.
+        Uw partner vraagt nu aan u of u genoeg heeft om naar de manch te gaan, u heeft net genoeg punten om de manch te halen.
+        Dus u bied 4♠.
+        '''
+    
+    if state == 'StaymanPa2SA':
+        uitleg = '''
+        Uw partner verteld u dat hij / zij een andere vierkaart dan u heeft, want met 2♣ beloofde uw partner een vierkaart hoog, maar ontkent uw vierkaart.
+        Wat betekend dat uw partner de ander heeft. Met 2SA verteld uw partner nog iets, namelijk dat hij / zij 8/9 punten bezit.
+        En vraagt aan u of u genoeg punten heeft om de manch te halen. Daarom bied u de manch met een maximale hand en passt u met een minimale.
+        '''
+
+    if state == 'StaymanPa3SAMulti':
+        uitleg = '''
+        U heeft zowel een vierkaart harten als een vierkaart schoppen.
+        Met Stayman vroeg uw partner naar uw hoge kleuren, waarop u antwoorde 2♥, omdat u uw partner wilde laten weten dat u mogelijk ook nog een schoppen kaart kon hebben.
+        Dus nu uw partner met 3SA aangeeft dat hij / zij geen harten heeft, en dus schoppen, weet u dat jullie een fit hebben. 
+        En doordat uw partner 3SA heeft geboden weet u ook dat de manch erin zit.
+        Dus u bied 4♠.
+        '''
+
     if state == 'OpJacoby':
         uitleg = '''
         Uw tegenstanders bieden Jacoby en zijn op zoek naar het juiste contract voor wat ze kunnen spelen,
@@ -240,9 +277,68 @@ def uitleg_nl(state):
         Als jullie een (bijna) fit hebben kunnen jullie beter in die kleur spelen dan het risico van SA te nemen,
         vandaar is Jacoby bedacht, en vandaar kan uw partner dit ook al bieden vanaf 0 punten,
         met de voorwaarde van een vijfkaart in een van de hoge kleuren, ♥ en ♠.
-        Omdat u liever heeft dat de tegenstanders de minste punten zien, en dus de minste mineurs, heeft u het liefst dat de 1SA openaar speelt,
+        Omdat u liever heeft dat de tegenstanders de minste punten zien, en dus de minste mineurs, 
+        heeft u het liefst dat de 1SA openaar speelt,
         daar heeft meneer Jacoby iets op bedacht, als uw partner, de kleur onder de kleur die eigenlijk wilt bieden bied,
         kan u daarna de kleur boven de kleur van uw patner bieden, en is het spel in uw hand, die van de openaar.
+        '''
+
+    if state == 'AfterTransferPass':
+        uitleg = '''
+        Toen u Jacoby bood deed u dat met de intentie om uw partner uw langste kleur te laten weten.
+        Als u dat gedaan heeft en niets meer te vertellen heeft aan uw partner kunt u gerust passen.
+        '''
+
+    if state == 'AfterTransder2SA':
+        uitleg = '''
+        Toen u Jacoby bood deed u dat met de intentie om uw partner uw langste kleur te laten weten.
+        Maar u heeft 8/9 punten, wat betekend dat er mogelijk nog een manch in zit!
+        En als er mogelijk nog een manch in zit mag u dat niet laten varen, 
+        dus moet u aan uw partner "overleggen" of hij denkt dat er een manch in zit.
+        Dat doet u door 2Sa te bieden.
+        '''
+
+    if state == 'AfterTransfer3SA':
+        uitleg = '''
+        U partner bood als eerste 1SA, dat betekend dat hij / zij 15-17 punten heeft. 
+        U wilde aan uw partner laten weten dat u een vijfkaart had, wat een goed iets is maar nu moet u ook laten weten hoeveel punten u heeft.
+        U heeft 10 punten, en uw partner minimaal 15. 
+        10 + 15 = 25
+        25 punten is genoeg voor de manch, nu is nog de vraag of u liever een manch in 3SA heeft of in uw kleur.
+        Uw partner weet dat u een vijfkaart heeft in die kleur dus het heeft geen zin die kleur nog een keer te bieden.
+        Daarom kunt u 3SA bieden, als uw partner wel een driekaart in uw kleur heeft en jullie dus een fit hebben, 
+        bied uw partner wel de manch in die kleur.
+        Heeft uw partner dit niet, dan passt uw partner wel.
+        '''
+
+    if state == 'AfterTransferManchinClr':
+        uitleg = '''
+        Uw partner opende 1SA, wat betekend dat uw partner 15-17 punten heeft, 
+        maar het betekend ook dat uw partners laagste kleur 2 kaarten bevat.
+        Dus als u een zeskaart heeft, heeft u altijd fit, nu heeft u eerst netjes Jacoby geboden om aan te geven dat u een vijfkaart heeft.
+        Maar u heeft geen vijfkaart, u heeft een zeskaart, en uw partner weet dat nog niet.
+        Uw partner heeft ook 15 punten, wat betekend dat als u meer dan 10 punten heeft, jullie samen 25 punten hebben.
+        En 25 is genoeg voor de manch.
+        Dus jullie hebben een fit om een kleur in te spelen, en jullie hebben genoeg punten om de manch te spelen.
+        Dan kunt u dus gewoon de manch bieden.
+        '''
+
+    if state == 'AfterTransferInviteinClr':
+        uitleg = '''
+        Uw partner opende 1SA, wat betekend dat uw partner 15-17 punten heeft, 
+        maar het betekend ook dat uw partners laagste kleur 2 kaarten bevat.
+        Dus als u een zeskaart heeft, heeft u altijd fit, nu heeft u eerst netjes Jacoby geboden om aan te geven dat u een vijfkaart heeft.
+        Maar u heeft geen vijfkaart, u heeft een zeskaart, en uw partner weet dat nog niet.
+        U heeft 8/9 punten wat betekend dat jullie mogelijk een manch kunnen doen,
+        en u wilt een invite geven om de manch te doen aangezien uw partner weet of jullie de manch gaan doen.
+        Dus bied u op 3-niveau uw eigen kleur.
+        '''
+
+    if state == 'AfterInviteClr':
+        uitleg = '''
+        Uw partner geeft aan dat hij een zeskaart heeft en net niet genoeg punten om de manch te halen.
+        U heeft aangegeven 15-17 punten te halen, dat betekend dat er een marge tussen zit. 
+        Dus uw partner vraagt nu om, als u sterk bent er de manch van de maken en als u zwak bent te passen.
         '''
 
     if state == 'NXMs':
@@ -252,7 +348,8 @@ def uitleg_nl(state):
         omdat het bod wat u wilde doen onder het bod van de tegenstander ligt, heeft u de mogelijkheid te doubleren,
         wat betekent dat u het bod wilde doen wat nu niet meer kan. 
         Wegens deze conventie is er nog een mogelijkheid bedacht, in welke u nu zit.
-        Als u zowel harten en schoppen bevat krijgt u in dit geval de kans te doubleren waardoor uw partner weet dat u en een 4krt ♥ en ♠ heeft
+        Als u zowel harten en schoppen bevat krijgt u in dit geval de kans te doubleren 
+        waardoor uw partner weet dat u en een 4krt ♥ en ♠ heeft
         '''
 
     if state == 'NXHs':
@@ -500,7 +597,7 @@ def uitleg_nl(state):
         uitleg = '''
         Er is iets gebeurd wat BidBud niet helemaal snapt, of voorzien had.
         Dit kan liggen aan een gebrek aan BidBuds kennis of er is iets niet helemaal goed gegaan in de bieding.
-        Als het ligt aan BidBuds kennis hoopt hij bij de volgende versie u wel van dienst te zijn.
+        Als het ligt aan BidBuds kennis hoopt hij bij de volgende verzie u wel van dienst te zijn.
         '''
     
     if state == 'tussenbieden':

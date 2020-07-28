@@ -286,8 +286,7 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
             if schoppen >= 4: return ('4♠', 'StaymanPa3SAMulti')
             else: return ('pass', 'normal_pass')
 
-        if isStayman3SASs(current_bidding): return ('pass', 'normal_pass')
-       
+        if isStayman3SASs(current_bidding): return ('pass', 'nomal_pass')
 
     # Answering -X
     if isNX_Ms(current_bidding):
@@ -344,6 +343,17 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
             return ('2♠', '2Cs-2Hs')
         else:
             return ('3' + color_hs, '2Cs-2Hs')
+
+    if isInfoXPaNoIn(current_bidding): 
+        if color_hs in current_bidding[0] and color_hs >= 6: return ('pass', 'infoPass')
+        if biddingIsAllowed(current_bidding, '1' + color_hs): return ('1' + color_hs, 'infoXreply')
+        else: return ('1SA', 'infoXreply')
+
+    if isInfoXPaIn(current_bidding):
+        if color_hs >= 5: 
+            if biddingIsAllowed(current_bidding, '1' + color_hs): return ('1' + color_hs, 'infoXreplyIn')
+            else: return ('pass', 'normal_pass')
+
 
     #going to the manch with partner after fit was founded
     if is1x_pass_2x_pass_same(current_bidding):

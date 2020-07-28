@@ -495,7 +495,7 @@ def isInfoXPaIn(current_bidding): # Information Xdoublet of Partner, Interfered
 def OpInL1(current_bidding): # Oppenents Interference Level1
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 2:
-        if current_bidding[0] != 'pass'
+        if current_bidding[0] != 'pass':
             if current_bidding[1] != 'pass' and levelofbid(current_bidding[1]) == '1':
                 return True
     return False

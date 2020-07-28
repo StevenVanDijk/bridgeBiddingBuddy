@@ -136,12 +136,7 @@ def isOpJacobyHs(current_bidding):
 
 def is2Cs_open(current_bidding):
     remove_starting_passes(current_bidding)
-    if len(current_bidding) >= 3:
-        if current_bidding[1] == 'pass':
-            if current_bidding[2] != 'pass':
-                return False
-
-    if len(current_bidding) == 1:
+    if len(current_bidding) == 2:
         if current_bidding[0] == '2♣':
             if current_bidding[1] == 'pass':
                 return True
@@ -307,8 +302,9 @@ def is1x_pass_4x_pass_same(current_bidding):
 def is2SA_openingPa(current_bidding):
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 2:
-        if current_bidding[0] == '2SA' and current_bidding[1] == 'pass':
-            return True
+        if current_bidding[0] == '2SA':
+            if current_bidding[1] == 'pass':
+                return True
     return False
 
 def is1x(current_bidding):
@@ -328,9 +324,130 @@ def isAnsweringJacoby(current_bidding):
     return False
 
 def isPotentielRondPass(current_bidding):
-    if len(current_bidding) == 3:
+    if len(current_bidding) >= 3:
         if current_bidding[0] == 'pass':
             if current_bidding[1] == 'pass':
                 if current_bidding[2] == 'pass':
                     return True
     return False
+
+def isAfterJacoby(current_bidding):
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 6:
+        if current_bidding[0] == '1SA':
+            if current_bidding[1] == 'pass' and current_bidding[3] == 'pass' and current_bidding[5] == 'pass':
+                if current_bidding[2] == '2♦':
+                    if current_bidding[4] == '2♥':
+                        return True
+                if current_bidding[2] == '2♥':
+                    if current_bidding[4] == '2♠':
+                        return True
+    return False
+
+def isAfterJacobyInviteSA(current_bidding):
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 6:
+        if current_bidding[0] == '1SA':
+            if current_bidding[1] == 'pass' and current_bidding[3] == 'pass':
+                if current_bidding[5] == 'pass' and current_bidding[7] == 'pass':
+                    
+                    if current_bidding[2] == '2♦':
+                        if current_bidding[4] == '2♥':
+                            if current_bidding[6] == '2SA':
+                                return True
+                            
+                    if current_bidding[2] == '2♥':
+                        if current_bidding[4] == '2♠':
+                            if current_bidding[6] == '2SA':
+                                return True
+    return False
+
+def isAfterJacobyInviteClrHs(current_bidding):
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 6:
+        if current_bidding[0] == '1SA':
+            if current_bidding[1] == 'pass' and current_bidding[3] == 'pass':
+                if current_bidding[5] == 'pass' and current_bidding[7] == 'pass':
+                    
+                    if current_bidding[2] == '2♦':
+                        if current_bidding[4] == '2♥':
+                            if current_bidding[6] == '3♥':
+                                return True
+                            
+                    if current_bidding[2] == '2♥':
+                        if current_bidding[4] == '2♠':
+                            if current_bidding[6] == '3♠':
+                                return False
+    return False
+
+def isAfterJacobyInviteClrSs(current_bidding):
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 6:
+        if current_bidding[0] == '1SA':
+            if current_bidding[1] == 'pass' and current_bidding[3] == 'pass':
+                if current_bidding[5] == 'pass' and current_bidding[7] == 'pass':
+                    
+                    if current_bidding[2] == '2♦':
+                        if current_bidding[4] == '2♥':
+                            if current_bidding[6] == '3♥':
+                                return False
+                            
+                    if current_bidding[2] == '2♥':
+                        if current_bidding[4] == '2♠':
+                            if current_bidding[6] == '3♠':
+                                return True
+    return False
+
+def isStayman2SAHs(current_bidding):
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 8:
+        if current_bidding[0] == '1SA':
+            if current_bidding[1] == 'pass' and current_bidding[3] == 'pass':
+                if current_bidding[5] == 'pass' and current_bidding[7] == 'pass':
+                    if current_bidding[2] == '2♣':
+                        if current_bidding[4] == '2♥':
+                            if current_bidding[6] == '2SA'
+                                return True
+    return False
+
+
+def isStayman2SASs(current_bidding):
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 8:
+        if current_bidding[0] == '1SA':
+            if current_bidding[1] == 'pass' and current_bidding[3] == 'pass':
+                if current_bidding[5] == 'pass' and current_bidding[7] == 'pass':
+                    if current_bidding[2] == '2♣':
+                        if current_bidding[4] == '2♠':
+                            if current_bidding[6] == '2SA'
+                                return True
+    return False
+
+def isStayman3SAHs(current_bidding):
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 8:
+        if current_bidding[0] == '1SA':
+            if current_bidding[1] == 'pass' and current_bidding[3] == 'pass':
+                if current_bidding[5] == 'pass' and current_bidding[7] == 'pass':
+                    if current_bidding[2] == '2♣':
+                        if current_bidding[4] == '2♥':
+                            if current_bidding[6] == '3SA'
+                                return True
+    return False
+
+def isStayman3SASs(current_bidding):
+    remove_starting_passes(current_bidding)
+    if len(current_bidding) == 8:
+        if current_bidding[0] == '1SA':
+            if current_bidding[1] == 'pass' and current_bidding[3] == 'pass':
+                if current_bidding[5] == 'pass' and current_bidding[7] == 'pass':
+                    if current_bidding[2] == '2♣':
+                        if current_bidding[4] == '2♠':
+                            if current_bidding[6] == '3SA'
+                                return True
+    return False
+
+
+
+
+

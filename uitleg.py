@@ -1,6 +1,5 @@
 def uitleg_nl(state):
     uitleg = ''
-
     if state == 'rondpass':
         uitleg = '''
         U, en uw tegenstanders, mogen pas openen met 12 punten, er zitten in totaal 40 punten in het spel.
@@ -9,24 +8,22 @@ def uitleg_nl(state):
         In het geval van een rondpass, is er geen contract, wat betekend dat er niet gespeeld kan worden.
         '''
 
-    if state == 'regelVanTwintig':
-        uitleg = '''
-        Soms heeft u net niet genoeg om te openen maar is uw hand zo mooi dat u denkt, 
-        maar potverdorie hier moet toch wel iets mee te doen zijn?
-        Als u zo'n hand heeft kunt u kijken of uw hand voldoet aan de regel van 20.
-        De regel luid: als uw punten + de lengte van uw twee langste kaarten samen 20 is, mag u openen.
-        Deze regel is erop gebaseerd dat de lengte in uw kaarten het gebrek aan punten goed maken.
-        Onthoud dat deze regel heel strikt is, met minder dan 20 punten kunt u niet openen, zelfs niet met 19.
-        En u mag geen punten bijtellen voor een singleton of doubleton of renonce, die punten worden automatisch meegeteld doordat het gebrek in die kleur ergens anders weer erbij moet komen.
-        '''
-
     if state == '1SA_opening':
         uitleg = '''
         Als uw puntenaantal ligt tussen 15 en 17 denkt u altijd als eerst aan een SA-opening.
         Dit staat voor sans a tout, zonder troef.
         Als u heeft vastgesteld dat uw puntenaantal goed is kunt u kijken of u een sans-verdeling heeft.
         Een sansverdeling is een verdeling waarin geen kleur meer dan 5 kaarten bevat, en geen minder dan 2.
-        Als dit het geval is betekent dat dat u 1SA kunt openen
+        Als dit het geval is betekent dat dat u 1SA kunt openen.
+        '''
+
+    if state == '1SA_opening-NT':
+        uitleg = '''
+        Als uw puntenaantal ligt tussen 15 en 17 denkt u altijd als eerst aan een SA-opening.
+        Dit staat voor sans a tout, zonder troef.
+        Als u heeft vastgesteld dat uw puntenaantal goed is kunt u kijken of u een sans-verdeling heeft.
+        Een sansverdeling is een verdeling waarin geen kleur meer dan 5 kaarten bevat, en geen minder dan 2.
+        Als dit het geval is betekent dat dat u 1SA kunt openen, 
         '''
 
     if state == '2SA_opening':
@@ -51,8 +48,10 @@ def uitleg_nl(state):
         Om te openen heeft u minimaal 12 punten nodig.
         Daarna moet u vastellen in welke kleur u gaat openen, 
         uw eerste keus is altijd de kleur waarin de meeste kaarten zitten.
-        Met 2 vijfkaarten opent u de hoogste, met 2 vierkaarten de laagste.
+        Met 2 vijfkaarten opent u de hoogste, met 2 vierkaarten de laagste, en uiteraard als u een zeskaart heeft gaat dat boven uw vijkaart en vierkaart.
+        Zels als de zeskaart een lage kleur is en de vijfkaart of vierkaart een hoge.
         '''
+
 
     if state == 'Normal_4card':
         uitleg = '''
@@ -146,6 +145,15 @@ def uitleg_nl(state):
         U biedt 2♣ om aan uw partner te vragen of hij een vierkaart in een van de hoge kleuren heeft.
         '''
 
+    if state == 'stayman-2sa':
+        uitleg = '''
+        Uw partner bied 2SA, dit betekend 20-22 punten en een evenwichte hand.
+        Het liefst speelt u in een hoge kleur, ♥ en ♠. 
+        Dus als u een vierkaart in een van de hoge kleur heeft is dit het onderzoeken waard, 
+        Met 5 punten halen jullie al de manch dus er zijn niet veel punten nodig om dit te onderzoeken.
+        U biedt 3♣ om aan uw partner te vragen of hij een vierkaart in een van de hoge kleuren heeft.
+        '''
+
     if state == '1SA-2SA':
         uitleg = '''
         Uw partner bied 1SA, dit betekend 15-17 punten en een evenwichte hand.
@@ -182,6 +190,16 @@ def uitleg_nl(state):
         U zegt nu dat u geen vierkaart of meer in een van de hoge kleuren heeft.
         '''
 
+    if state == 'answer_to_stayman_multicolor':
+        uitleg = '''
+        Uw partner bied Stayman, hiermee vraagt hij of u een hoge kleur heeft, 
+        als u een vierkaart of meer heeft in een van de hoge kleuren moet u dat aan uw partner laten weten.
+        Maar wat nu als u in beide kleuren  4 of maar kaarten heeft?
+        Dan biedt u 2♥, daarna bied uw partner of 2SA, 3SA, 3♥ of 4♥.
+        Als uw partner SA bied ontkent ze harten, maar door Stayman te bieden beloofde hij / zij minstens een vierkaart in een van de hoge kleuren.
+        Wat betekend dat, in het geval van een SA bod, u weet dat jullie fit in de schoppen zit, en dan kunt u dan schoppen bieden over uw partners SA.
+        '''
+
     if state == 'OpStayman':
         uitleg = '''
         Uw tegenstanders bieden Stayman en zijn op zoek naar het juiste contract voor wat ze kunnen spelen,
@@ -197,8 +215,7 @@ def uitleg_nl(state):
         Uw tegenstanders bieden stayman en zijn op zoek naar het juiste contract voor wat ze kunnen spelen,
         de kans dat u en uw partner een contract gaan maken is dan erg klein, 
         dat betekent niet dat u geen informatie aan uw partner kunt geven.
-        Uw tegenstander heeft Stayman geboden, daarmee geeft hij geen klaveren aan, dus dit is een ideaal moment om er veilig een doubletje 
-        tussen te doen, aangezien de 1SA-openaar nooit gaat passen, en het doublet dus geen waarde heeft.
+        Uw tegenstander heeft Stayman geboden, daarmee geeft hij geen klaveren aan, dus dit is een ideaal moment om er veilig een doubletje tussen te doen, aangezien de 1SA-openaar nooit gaat passen, en het doublet dus geen waarde heeft.
         Dus als u een goede kaart klaveren hebt is dit de ideale situatie om dat aan uw partner te laten weten, door te doubleren.
         Echter als u nu doubleerd is de kans groot dat uw partner terugkomt met klaveren als dat niet gewenst is moet u ook niet doubleren.
         Dus als u geen lange klaverkaart heeft, of niet genoeg honeurs is het soms beter gewoon te passen.
@@ -244,6 +261,40 @@ def uitleg_nl(state):
         daar is het negatief doublet voor bedacht, als de tegenstander een bod doet waardoor u niet meer uw bod kunt doen,
         omdat het bod wat u wilde doen onder het bod van de tegenstander ligt, heeft u de mogelijkheid te doubleren,
         wat betekent dat u het bod wilde doen wat nu niet meer kan, in dit geval 1♥
+        '''
+
+    if state == 'NXSs4':
+        uitleg = '''
+        Soms bied een tegenstander tussen en ontneemt u daarmee de kans te bieden wat u wilde bieden,
+        daar is het negatief doublet voor bedacht, als de tegenstander een bod doet waardoor u niet meer uw bod kunt doen,
+        omdat het bod wat u wilde doen onder het bod van de tegenstander ligt, heeft u de mogelijkheid te doubleren,
+        wat betekent dat u het bod wilde doen wat nu niet meer kan, maar doordat die regel bestaat is er nog een regel bedacht.
+        Als het biedverloop zo gaat:
+
+        N    O    Z    W
+        1♣/♦ P    1♥  ???
+
+        Voldoet het biedverloop aan de regels voor een negatief doublet, dus kunt u hier een negatief doublet doen maar u kunt ook gewoon uw kleur bieden.
+        Dus is er bedacht dat als in deze specifieke situatie doubleerd, u precies een vierkaart aan geeft, als u 1♠ biedt, geeft u een vijfkaart aan.
+        Maar soms heeft u een vijfkaart schoppen maar niet genoeg punten om een normaal antwoord te doen op uw partner, dat is de enige situatie waarin u ook mag doubleren in dit geval.
+        In dit geval mag u dus doubleren
+        '''
+
+    if state == 'NXSs5+':
+        uitleg = '''
+        Soms bied een tegenstander tussen en ontneemt u daarmee de kans te bieden wat u wilde bieden,
+        daar is het negatief doublet voor bedacht, als de tegenstander een bod doet waardoor u niet meer uw bod kunt doen,
+        omdat het bod wat u wilde doen onder het bod van de tegenstander ligt, heeft u de mogelijkheid te doubleren,
+        wat betekent dat u het bod wilde doen wat nu niet meer kan, maar doordat die regel bestaat is er nog een regel bedacht.
+        Als het biedverloop zo gaat:
+
+        N    O    Z    W
+        1♣/♦ P    1♥  ???
+
+        Voldoet het biedverloop aan de regels voor een negatief doublet, dus kunt u hier een negatief doublet doen maar u kunt ook gewoon uw kleur bieden.
+        Dus is er bedacht dat als in deze specifieke situatie doubleerd, u precies een vierkaart aan geeft, als u 1♠ biedt, geeft u een vijfkaart aan.
+        Doordat u nu op een normale plek antwoord heeft u wel een normaal aantal punten nodig, 6+.
+        In dit geval bied u dus 1♠
         '''
 
     if state == '2Cs-2x':
@@ -311,7 +362,7 @@ def uitleg_nl(state):
         Maar er zijn ook een set regels waar u aan moet voldoen, anders raakt uw partner in de war.
         Een van die regels is dat als u op 1-niveau een nieuwe kleur biedt u 6+ punten beloofd, en op 2-niveau 10+ punten. 
         Een andere regel is dat u niet mag passen op uw partners opening met meer dan 6 punten.
-        En nog een andere is dat u als u antwoord op uw partner minimaal een vierkaar 
+        Nog een andere regel is dat u op 1-niveau op uw partner antwoord, uw partner verwacht dat u een vierkaar heeft.
         Maar soms kunt u dus niets bieden, omdat u dan of niet voldoet aan de punten regel of de vierkaart regel.
         Dan zit u vast, dan is er nog maar een optie en dat is 1SA bieden, waarmee u aangeeft dat u minimaal bent en niets kunt bieden.
         '''
@@ -335,6 +386,13 @@ def uitleg_nl(state):
         Soms heeft u meer dan een goede kleur.
         U laat vanzelfsprekend eerst de beste kaart horen maar het kan van belang zijn voor uw partner om meer informatie te hebben.
         Zoals of u een tweede kaart hebt, of te wel een kaart die minder goed is dan de kaart die als eerst heeft laten weten maar wel van belang is.        
+        '''
+    
+    if state == 'answerPaLevel2':
+        uitleg = '''
+        Uw tegenstanders doen vervelend bij tussenbieden wat betekend dat u uw partner niet meer op 1-niveau kan vertellen wat uw beste kleur is.
+        Maar dat betekend niet dat u dat helemaal niet meer kunt doen.
+        Met 10 punten of meer mag u namelijk gewoon uw beste kleur op 2-niveau bieden.
         '''
 
     if state == 'fitFoundedNoPoints':
@@ -387,6 +445,43 @@ def uitleg_nl(state):
         Als u een hoge kleur heeft gevonden waarin jullie de manch kunnen spelen en u weet dat er genoeg punten bij jullie zitten om naar de manch te gaan is het logisch het gewoon te bieden.
         '''
 
+    if state == 'fitFoundedU2Cs':
+        uitleg = '''
+        De ideale manch is 4 in de hoge kleuren, maar soms zit dat er niet in en moeten jullie op zoek naar een andere optie, bijvoorbeeld sans of de lage kleuren.
+        Als uw partner 1♣ opent betekend dat dat hij of een erg gebalanceerde kaart heeft, of klaveren. 
+        Idealiter verteld u eerst uw hoge kleuren maar soms is dat gewoon geen optie dus kunt u als u een vijfkaart heeft of een vierkaart met in de rest van de kleuren een driekaart uw partners klaveren steunen.
+        '''
+
+    if state == 'fitFoundedU3Cs':
+        uitleg = '''
+        Uw partner beloofd met een 1♣ opening minimaal een tweekaart klaveren, als u een zeskaart heeft betekend dat een fit in de klaveren.
+        Onthoud wel, een fit in de klaveren is veel minder waard dan een fit in de hoge kleuren. 
+        Als uw partner een vijfkaart in een van de hoge kleuren had gehad, had hij / zij die geboden dus dat is niet aan de orde.
+        Dat betekend ook dat als u niet een vierkaart in een van de hoge kleuren heeft u die niet hoeft te bieden en ook geen aandacht meer hoeft te geven aan die kleuren.
+        Dus kunt u veilig klaveren bieden, door 3♣ te bieden in plaats van 2, geeft u aan dat jullie manch waarde bezitten en een fit in de klaveren.
+        Het is dan aan uw partner om te kiezen tussen 3SA en 5♣.
+        '''
+
+    if state == 'fitFoundedU2Ds':
+        uitleg = '''
+        Als u niets te vertellen heeft in de hoge kleuren, dus een vierkaart of zelfs vijfkaart, kunt u net zo goed vertellen wat u wel heeft. 
+        Bijvoorbeeld een vierkaart, of vijfkaart, in partners eerstgeboden kleur. 
+        Maar u bent niet super sterk, dat is ook informatie voor uw partner. Daarom bied u voorzichtig 2♦.
+        '''
+
+    if state == 'fitFoundedU3Ds':
+        uitleg = '''
+        Als u niets te vertellen heeft in de hoge kleuren, dus een vierkaart of zelfs vijfkaart, kunt u net zo goed vertellen wat u wel heeft. 
+        Bijvoorbeeld een vierkaart, of vijfkaart, in partners eerstgeboden kleur. 
+
+        Uw partner beloofd met een 1♦ opening minimaal een vierkaart klaveren, als u een vierkaart heeft betekend dat een fit in de ruiten.
+        Onthoud wel, een fit in de lage kleuren is veel minder waard dan een fit in de hoge kleuren. 
+        Als uw partner een vijfkaart in een van de hoge kleuren had gehad, had hij / zij die geboden dus dat is niet aan de orde.
+        Dat betekend ook dat als u niet een vierkaart in een van de hoge kleuren heeft u die niet hoeft te bieden en ook geen aandacht meer hoeft te geven aan die kleuren.
+        Dus kunt u veilig klaveren bieden, door 3♣ te bieden in plaats van 2, geeft u aan dat jullie manch waarde bezitten en een fit in de klaveren.
+        Het is dan aan uw partner om te kiezen tussen 3SA en 5♦.
+        '''
+
     if state == 'fitFoundedManch':
         uitleg = '''
         U heeft uw fit gevonden wat betekend dat de volgende vraag is of jullie voldoende punten hebben om naar de manch te gaan.
@@ -403,10 +498,9 @@ def uitleg_nl(state):
 
     if state == 'unknown':
         uitleg = '''
-        BidBud weet niet alles, dit lijkt iets te zijn wat hij nog niet weet.
-        In de volgende versie hoopt BidBud hier een antwoord op te weten.
-        Probeer met de kennis die u heeft een antwoord te verzinnen op dit biedprobleem, en soms is het beste wat u kunt doen passen.
-        Vriendelijke groeten, BidBud
+        Er is iets gebeurd wat BidBud niet helemaal snapt, of voorzien had.
+        Dit kan liggen aan een gebrek aan BidBuds kennis of er is iets niet helemaal goed gegaan in de bieding.
+        Als het ligt aan BidBuds kennis hoopt hij bij de volgende versie u wel van dienst te zijn.
         '''
     
     if state == 'tussenbieden':
@@ -465,15 +559,43 @@ def uitleg_nl(state):
         Maar soms heeft u niet meer dan 10 punten en heeft u mogelijke manch waarde en wilt u dat aan uw partner laten weten.
         U wilt laten weten hoeveel punten u heeft en dat u een zeskaart heeft in die kleur, daarom herhaald u uw langste kleur
         '''
-    
-    
 
+    if state == 'X-1SA-tussenbieden':
+        uitleg = '''
+        Met uw hand wilde u 1SA openen en nu doet uw tegenstander dat, dat is vervelend, en dus moet u een oplossing bedenken.
+        U weet dat uw tegenstanders 15+ punten hebben en u weet ook dat u 15 punten heeft, u weet dus ook dat u in het tegenspel erg dwars kan zitten aangezien de snits enzo allemaal bij u zitten.
+        Daarom kunt u doubleren, dat verteld uw partner dat u sterk bent en als de partner van de tegenstander niets bied zit u ook nog eens in een fijn contract.
+        '''
+
+    if state == 'Clr-1SA-tussenbieden':
+        uitleg = '''
+        U heeft een lange kaart en wilt uw partner dat graag laten weten, maar uw tegenstanders hebben al 1SA geopend, dat is erg vervelend want nu kunt u helemaal niets meer op 1-niveau openen. 
+        Maar omdat uw tegenstanders 1SA hebben geopend weet u ook dat ze niet zomaar een contract op gaan geven, dus kunt u best wel roekeloos bieden.
+        Vandaar dat u al met 10 punten en een zeskaart mag tussenbieden na 1SA.
+        '''
     
-    
+    if state == '3SAtoWeak1SA':
+        uitleg = '''
+        Uw partner geeft met een 1SA antwoord aan eigenlijk niets te kunnen bieden en dus zwak te zijn.
+        Uw partner heeft daarom ook 6-9 punten en geen vierkaart in een van de kleuren die hij / zij nog mogelijk had kunnen bieden.
+        Nu is het aan u om te bedenken in welk contract jullie kunnen eindigen.
+        U heeft een uitermate sterke hand dus u wilt niet in 1SA eindigen, maar u heeft ook niet een overweldigende kleur die u kunt spelen.
+        Dus sans is de goede 'kleur' nu is altijd de volgende vraag, manch?
+        U heeft meer dan 19 punten, uw partner 6-9, 19 + 6 = 25, dat zijn genoeg punten om de manch te halen dus het is alleen maar logisch die dan ook te bieden.
+        '''
+
+    if state == '2SAtoWeak1SA':
+        uitleg = '''
+        Uw partner geeft met een 1SA antwoord aan eigenlijk niets te kunnen bieden en dus zwak te zijn.
+        Uw partner heeft daarom ook 6-9 punten en geen vierkaart in een van de kleuren die hij / zij nog mogelijk had kunnen bieden.
+        Nu is het aan u om te bedenken in welk contract jullie kunnen eindigen.
+        U heeft een uitermate sterke hand dus u wilt niet in 1SA eindigen, maar u heeft ook niet een overweldigende kleur die u kunt spelen.
+        Dus sans is de goede 'kleur' nu is altijd de volgende vraag, manch?
+        U heeft 16-18 punten, 6 + 16 = 22, 9 + 16 = 25, oftewel misschien zit er manch in, misschien niet.
+        En degene die weet of er manch in zit is uw partner, die weet namelijk hoeveel punten hij precies heeft, en door het gewoon lief aan uw partner te vragen kunt u erachter komen wat het precies is.
+        Dat lief vragen doet u met 2SA.
+        '''
+
+
     return uitleg
     
-        
-
-
-
-        

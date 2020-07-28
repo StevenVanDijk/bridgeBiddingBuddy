@@ -61,8 +61,7 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
     secondhighest_series = colors[2] 
 
     sansverdeling = False
-    if highest_series <= 5 and lowest_series >= 2:
-        sansverdeling = True     
+    if highest_series <= 5 and lowest_series >= 2: sansverdeling = True     
 
     def Legal(schoppen, harten, ruiten, klaver):
         if klaver >= 5:
@@ -86,14 +85,16 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
                 if points >= 10 and points <= 11:
                     return 'is3Ds'    
 
-    if isPotentielRondPass(current_bidding) and points <= 11: return ('pass', 'rondpass')
+    if not points <= 11 and (points + highest_series + secondhighest_series >= 20):
+        if isPotentielRondPass(current_bidding) and points <= 11: return ('pass', 'rondpass')
+
     remove_starting_passes(current_bidding)
     # opening
 
     if len(current_bidding) == 0:
         if points <= 11 and (points + highest_series + secondhighest_series >= 20):
             return ('1' + color_hs, 'regelVanTwintig')
-            
+
         if points >= 12:
             if points >= 15:
                 if highest_series <= 5 and lowest_series >= 2:
@@ -152,19 +153,23 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
             # Jacoby
             if highest_series >= 5:
                 if color_hs == '♥':
-                    if is1SA_Pa:    
+                    if is1SA_Pa(current_bidding):    
                         return ('2♦', 'jacoby')
-                    if is2SA_openingPa:
+                    if is2SA_openingPa(current_bidding):
                         return ('3♦', 'jacoby-2sa')
                 if color_hs == '♠':
-                    if is1SA_Pa:
+                    if is1SA_Pa(current_bidding):
                         return ('2♥', 'jacoby')
-                    if is2SA_openingPa:
+                    if is2SA_openingPa(current_bidding):
                         return ('3♥', 'jacoby-2sa')
             # Stayman
             if points >= 8:   
                 if highest_series == 4:
                     return ('2♣', 'stayman')
+
+            if points >= 5:
+                if highest_series == 4:
+                    return ('3♣', 'stayman-2sa')
         
         elif points == 8 or points == 9:
             return ('2SA', '1SA-2SA')
@@ -239,6 +244,50 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
                 return ('2SA', 'Jacoby-2SA')
         else:
             return ('pass', 'normal_pass')
+
+    if isAfterJacoby(current_bidding):
+        if highest_series >= 6:
+            if points >= 10:
+                return ('4' + color_hs, 'AfterTransferManchinClr')
+            else:
+                return ('3' + color_hs, 'AfterTransferInviteinClr')
+        else:
+            if points >= 7:
+                return ('pass', 'AfterTransferPass')
+            if points == 8 or points == 9:
+                return ('2SA', 'AfterTransfer2SA')
+            if poinst >= 10:
+                return ('3SA', 'AfterTransfer3SA')
+
+    if isAfterJacobyInviteClrHs(current_bidding) or isAfterJacobyInviteClrSs(current_bidding):
+        if points >= 16:
+            if isAfterJacobyInviteClrHs(current_bidding):   
+                return ('4♥', 'AfterInviteClr')
+            if isAfterJacobyInviteClrSs(current_bidding):
+                return ('4♠', 'AfterInviteClr')
+
+        if points <= 15:
+            return ('pass', 'AfterInviteClr')
+
+    if isStayman2SA(current_bidding) or isStayman3SA(current_bidding):
+        if isStayman2SAHs(current_bidding): 
+            if schoppen >= 4:
+                if points == 15: return ('3♠', 'StaymanPa2SAminMulti')
+                if points >= 16: return ('4♠', 'StaymanPa2SAmaxMulti')
+            else:
+                if points == 15: return ('pass', 'StaymanPa2SA')
+                if points >= 16: return ('pass', 'StaymanPa2SA')
+
+        if isStayman2SASs:
+            if points == 15: return ('pass', 'StaymanPa2SA')
+            if points >= 16: return ('pass', 'StaymanPa2SA')
+        
+        if isStayman3SAHs(current_bidding):
+            if schoppen >= 4: return ('4♠', 'StaymanPa3SAMulti')
+            else: return ('pass', 'normal_pass')
+
+        if isStayman3SASs(current_bidding): return ('pass', 'normal_pass')
+       
 
     # Answering -X
     if isNX_Ms(current_bidding):
@@ -355,45 +404,8 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
                     if points >= 10:
                         return ('2' + color_hs, 'answering_partnerClr')
                     else:
-                        return ('1SA', 'answering_partnerSa')
-
-
-
-        if current_bidding[0] == '1♣':
-            if Legal(schoppen, harten, ruiten, klaver) == 'is2Cs':
-                return ('2♣', 'fitFoundedU2Cs')
-
-            if Legal(schoppen, harten, ruiten, klaver) == 'is3Cs':
-                return ('3♣', 'fitFoundedU3Cs')
-
-            else:
-                if biddingIsAllowed(current_bidding, '1' + color_hs):
-                    return ('1' + color_hs, 'answering_partnerClr')
-                else:
-                    if points >= 10:
-                        return ('2' + color_hs, 'answering_partnerClr')
-                    else:
-                        return ('1SA', 'answering_partnerSa')
-
-        if current_bidding[0] == '1♦':
-            if Legal(schoppen, harten, ruiten, klaver) == 'is2Ds':
-                return ('2♦', 'fitFoundedU2Ds')
+                        return ('1SA', 'answering_partnerSa')          
             
-            if Legal(schoppen, harten, ruiten, klaver) == 'is3Ds':
-                return ('3♦', 'fitFoundedU3Ds')
-
-            else:
-                if biddingIsAllowed(current_bidding, '1' + color_hs):
-                    return ('1' + color_hs, 'answering_partnerClr')
-                else:
-                    if points >= 10:
-                        return ('2' + color_hs, 'answering_partnerClr')
-                    else:
-                        return ('1SA', 'answering_partnerSa')
-
-            
-            
-
         if points > 5:
             bid = '1' + color_hs
             if biddingIsAllowed(current_bidding, bid):
@@ -412,8 +424,41 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
                     else:
                         return ('2SA', 'answering_partnerSa')
 
+            elif current_bidding[0] == '1♣':
+                if Legal(schoppen, harten, ruiten, klaver) == 'is2Cs':
+                    return ('2♣', 'fitFoundedU2Cs')
+
+                if Legal(schoppen, harten, ruiten, klaver) == 'is3Cs':
+                    return ('3♣', 'fitFoundedU3Cs')
+
+                else:
+                    if biddingIsAllowed(current_bidding, '1' + color_hs):
+                        return ('1' + color_hs, 'answering_partnerClr')
+                    else:
+                        if points >= 10:
+                            return ('2' + color_hs, 'answering_partnerClr')
+                        else:
+                            return ('1SA', 'answering_partnerSa')
+
+            if current_bidding[0] == '1♦':
+                if Legal(schoppen, harten, ruiten, klaver) == 'is2Ds':
+                    return ('2♦', 'fitFoundedU2Ds')
+                
+                if Legal(schoppen, harten, ruiten, klaver) == 'is3Ds':
+                    return ('3♦', 'fitFoundedU3Ds')
+
+                else:
+                    if biddingIsAllowed(current_bidding, '1' + color_hs):
+                        return ('1' + color_hs, 'answering_partnerClr')
+                    else:
+                        if points >= 10:
+                            return ('2' + color_hs, 'answering_partnerClr')
+                        else:
+                            return ('1SA', 'answering_partnerSa')
+
             else:
                 return ('1SA', 'answering_partnerSa')
+
         else:
             return ('pass', 'normal_pass')
         

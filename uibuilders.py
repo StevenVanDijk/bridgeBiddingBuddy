@@ -89,6 +89,9 @@ def buildButton(content, callback, size_hint=None):
         widget.background_color = bcol
     else:
         widget.add_widget(content)
+        widget.bind(width=lambda i, value: setattr(content, 'width', value))
+        widget.bind(height=lambda i, value: setattr(content, 'height', value))
+        widget.bind(pos=lambda i, value: setattr(content, 'pos', value))
     widget.bind(on_press=callback)
     return widget
 

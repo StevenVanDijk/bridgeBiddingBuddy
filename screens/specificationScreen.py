@@ -3,7 +3,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import Screen
 
 from mediator import Mediator
-from uibuilders import ButtonKind, buildButton, buildLabel, buildMenu, buildNumericInput
+from uibuilders import ButtonKind, buildButton, buildLabel, buildMenu, buildNumericInput, buildText
 
 from constants import colors
 
@@ -25,43 +25,47 @@ class SpecificationScreen(Screen):
             for color in colors:
                 result.append(buildLabel(color))
 
-                def createCallback(color):
+                def createSetterCallback(color):
                     def cb(instance, value):
-                        if value.isdigit():
-                            newValue = int(value)
-                            if not color in self.mediator.bidding.nrOfCards or newValue != self.mediator.bidding.nrOfCards[
-                                    color]:
-                                self.mediator.bidding.nrOfCards[color] = newValue
+                        if not color in self.mediator.bidding.nrOfCards or value != self.mediator.bidding.nrOfCards[
+                                color]:
+                            self.mediator.bidding.nrOfCards[color] = value
+
+                    return cb
+
+                def createValidationCallback(color):
+                    def cb(instance, value):
+                        newNrOfCards = dict(self.mediator.bidding.nrOfCards)
+                        newNrOfCards[color] = value
+                        return value >= 0 and sum(newNrOfCards.values()) <= 13
 
                     return cb
 
                 initialValue = str(
                     self.mediator.bidding.nrOfCards[color]) if color in self.mediator.bidding.nrOfCards else ""
-                nrOfCards = buildNumericInput(initialValue, createCallback(color))
+                nrOfCards = buildNumericInput(initialValue, createSetterCallback(color), createValidationCallback(color))
                 result.append(nrOfCards)
 
             return result
 
         def buildInputNumberOfPoints():
-            def createCallback():
-                def cb(instance, value):
-                    if (value != ''):
-                        nrOfPoints = int(value)
-                        if nrOfPoints != self.mediator.bidding.nrOfPoints:
-                            self.mediator.bidding.setNrOfPoints(nrOfPoints)
-
-                return cb
+            def setterCallback(instance, value):
+                if value != self.mediator.bidding.nrOfPoints:
+                    self.mediator.bidding.setNrOfPoints(value)
+            
+            def validationCallback(instance, value):
+                return value >= 0 and value <= 37
 
             initialValue = str(self.mediator.bidding.nrOfPoints) if self.mediator.bidding.nrOfPoints != None else ''
-            nrOfPoints = buildNumericInput(initialValue, createCallback())
+            nrOfPoints = buildNumericInput(initialValue, setterCallback, validationCallback)
 
             return nrOfPoints
 
         questions = BoxLayout(orientation='vertical')
-        questions.add_widget(buildLabel("Please enter some information\nabout your own hand.", size_hint=(1.0, 0.1)))
+        questions.add_widget(buildText("Geef informatie over uw kaarten op", size_hint=(1.0, None)))
 
         gridLyt = GridLayout(cols=2)
-        gridLyt.add_widget(buildLabel('Points'))
+        gridLyt.add_widget(buildLabel('Punten'))
         gridLyt.add_widget(buildInputNumberOfPoints())
         for w in buildNumberInSuit():
             gridLyt.add_widget(w)
@@ -74,7 +78,7 @@ class SpecificationScreen(Screen):
         self.rootLayout.add_widget(buildMenu(self.mediator, size_hint=(0.2, 0.1)))
         self.rootLayout.add_widget(self.buildQuestions())
         self.rootLayout.add_widget(
-            buildButton('Done', lambda i: self.mediator.closeSpecification(), size_hint=(1.0, 0.1)))
+            buildButton('Klaar', lambda i: self.mediator.closeSpecification(), size_hint=(1.0, 0.1)))
 
     def onDisplay(self):
         self.reset()

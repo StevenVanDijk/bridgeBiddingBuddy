@@ -92,49 +92,41 @@ class Bidding:
         self.nrOfPoints = None
         self.nrOfCards = {}
 
-    def contract(self, current):
-        setWhoStarts()
-        contract = ''
-        dealer = self.whoStarts
+    def getColor(self, bid):
+        if len(bid) == 2 and bid[0].isdigit():
+            return bid[1]
+        return None
+
+    def getLeader(self):
+        leader = self.whoStarts
+        currentPlayer = self.whoStarts
+        firstToPlayColorNZ = {}
+        firstToPlayColorOW = {}
+        lastColor = None
+        lastPlayer = None
+        for bid in self.current:
+            if (not self.isSpecial(bid)):
+                lastColor = self.getColor(bid)
+                lastPlayer = currentPlayer
+
+                if currentPlayer == north or currentPlayer == south:
+                    if not lastColor in firstToPlayColorNZ:
+                        firstToPlayColorNZ[lastColor] = currentPlayer
+                    
+                if currentPlayer == east or currentPlayer == west:
+                    if not lastColor in firstToPlayColorOW:
+                        firstToPlayColorOW[lastColor] = currentPlayer
+            currentPlayer = self.getNextPlayOrder(currentPlayer)
+
+        if lastPlayer in [north, south]:
+            return firstToPlayColorNZ[lastColor]
         
-        def leader(dealer, current):
-            count_bids = len(current)
-            rest = count_bids % 4
+        if lastPlayer in [east, west]:
+            return firstToPlayColorOW[lastColor]
 
-            if dealer == 'O':
-                rest += 1
-            if dealer == 'Z':
-                rest += 2
-            if dealer == 'W':
-                rest += 3
+        raise NotImplementedError()
 
-            if rest == 0:
-                leader = 'N'
-            if rest == 1:
-                leader = 'O'
-            if rest == 2:
-                leader = 'Z'
-            if rest == 3:
-                leader = 'W'
-
-            return leader
-
-        def remove_last_passes(current):
-            count_pass = 0
-            done = False
-            while not done:
-                if len(current_bidding) >= 1:
-                    if current_bidding[-1] == 'pass':
-                        current_bidding.remove('pass')
-                        count_pass += 1
-                    else:
-                        done = True
-                else: 
-                    done = True
-            return current
-
-        remove_last_passes(current)
-        if current[-1] != 'X' or 'XX':
-            contract = current[-1]
-
-        return contract
+    def contract(self):
+        normalBids = [ bid for bid in self.current if not self.isSpecial(bid) ]
+        contract = None if len(normalBids) == 0 else normalBids[-1]
+        return (contract, self.getLeader())

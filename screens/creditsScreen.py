@@ -32,7 +32,7 @@ Bridge Bidding Buddy (BidBud) is gemaakt door de volgende mensen:
 BidBud is geschreven in [ref=https://www.python.org]Python[/ref] en maakt gebruik van [ref=https://kivy.org]Kivy[/ref].
 ''', size_hint=(1.0, 0.8)))
         self.rootLayout.add_widget(
-            buildButton('Done', lambda i: self.mediator.closeSpecification(), size_hint=(1.0, 0.1)))
+            buildButton('Klaar', lambda i: self.mediator.closeSpecification(), size_hint=(1.0, 0.1)))
 
     def onDisplay(self):
         self.reset()

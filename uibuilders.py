@@ -96,6 +96,7 @@ def buildButton(content, callback, size_hint=None):
 def buildIconButton(icon, callback, size_hint=None):
     widget = buildButton(icon, callback, size_hint)
     widget.font_name = iconFont
+    widget.multiline = True
     return widget
 
 
@@ -122,7 +123,7 @@ def buildToggle(txt, isDown, callback, group=None, size_hint=None):
     return widget
 
 
-def buildNumericInput(text, callback, size_hint=None):
+def buildNumericInput(text, setterCallback, validationCallback, size_hint=None):
     widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
 
     leftLyt = GridLayout(cols=1, size_hint=widgetSizeHint,
@@ -137,30 +138,42 @@ def buildNumericInput(text, callback, size_hint=None):
         def insert_text(self, substring, from_undo=False):
             pat = self.pat
             s = re.sub(pat, '', substring)
-            return super(NumInput, self).insert_text(s, from_undo=from_undo)
+            newText = self.text + s
+            val = 0 if newText  == '' else int(newText)
+            if validationCallback(self, val):
+                return super(NumInput, self).insert_text(s, from_undo=from_undo)
+
+    widget = NumInput(text=text, input_type='number', multiline=False, size_hint=(1.0, None))
+    widget.height = str(fontSize + widget.padding[0] * 2) + 'sp'
 
     def plusCallback(i):
         s = widget.text
         if s.isdigit():
-            widget.text = str(int(s) + 1)
+            val = 0 if s  == '' else int(s)
+            newVal = val + 1
+            if validationCallback(widget, newVal):
+                widget.text = str(newVal)
         else:
             widget.text = str(0)
 
     def minCallback(i):
         s = widget.text
         if s.isdigit():
-            val = int(s)
-            if val > 0:
-                widget.text = str(val - 1)
+            val = 0 if s  == '' else int(s)
+            newVal = val - 1
+            if validationCallback(widget, newVal):
+                widget.text = str(newVal)
         else:
             widget.text = str(0)
 
     plusBtn = buildButton('+', plusCallback)
     minBtn = buildButton('-', minCallback)
 
-    widget = NumInput(text=text, input_type='number', multiline=False, size_hint=(1.0, None))
-    widget.height = str(fontSize + widget.padding[0] * 2) + 'sp'
-    widget.bind(text=callback)
+    def _setterCallback(instance, value):
+        intVal = 0 if value == '' else int(value)
+        setterCallback(instance, intVal)
+
+    widget.bind(text=_setterCallback)
     widget.halign = 'center'
 
     leftLyt.add_widget(plusBtn)
@@ -201,9 +214,9 @@ def buildText(text, size_hint=None):
 
 def buildMenu(mediator: Mediator, size_hint=None):
     menuDict = {
-        'Your hand': lambda: mediator.showSpecification(),
-        'Biddings': lambda: mediator.showBiddingChooser(),
-        'About BidBud': lambda: mediator.showCredits()
+        'Jouw hand': lambda: mediator.showSpecification(),
+        'Biedingen': lambda: mediator.showBiddingChooser(),
+        'Over BidBud': lambda: mediator.showCredits()
     }
     widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
     widget = Spinner(text='Menu', size_hint=widgetSizeHint)

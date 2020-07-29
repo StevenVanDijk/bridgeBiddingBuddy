@@ -10,6 +10,8 @@ from constants import clubs, diamonds, hearts, spades, colors
 from uitleg import uitleg_nl
 from datetime import datetime
 
+from uuid import uuid4
+
 biddingScreen = 'biddingScreen'
 fileChooserScreen = 'fileChooserScreen'
 specificationScreen = 'specificationScreen'
@@ -30,7 +32,8 @@ class Mediator():
         self.__switchTo = switchTo
 
     def getBiddingKeys(self):
-        return self.__storage.keys()
+        keys = self.__storage.keys()
+        return [ (key, self.__storage.get(key)["name"], self.__storage.get(key)["contract"]) for key in keys ]
 
     def setBidding(self, bidding: Bidding):
         self.bidding = bidding
@@ -60,9 +63,11 @@ class Mediator():
             self.__switchTo(biddingScreen)
 
     def closeBidding(self):
-        key = "Bidding at " + datetime.now().strftime("%c")
+        key = uuid4().hex
+        name = "Bidding at " + datetime.now().strftime("%c")
         value = bid2Json(self.bidding)
-        self.__storage.put(key, bid=value)
+        (contract, leader) = self.bidding.contract()
+        self.__storage.put(key, name=name, bid=value, contract=contract + " (" + leader + ")" )
         self.__switchTo(fileChooserScreen)
 
     def loadBidding(self, key):
@@ -74,9 +79,7 @@ class Mediator():
         self.__switchTo(fileChooserScreen)
 
     def changeBiddingName(self, key, value):
-        if (not self.__storage.exists(value)):
-            self.__storage.put(value, bid=self.__storage.get(key)['bid'])
-            self.__storage.delete(key)
+        self.__storage.put(key, bid=self.__storage.get(key)['bid'], contract=self.__storage.get(key)['contract'], name=value)
         self.__switchTo(fileChooserScreen)
 
     def showSpecification(self):

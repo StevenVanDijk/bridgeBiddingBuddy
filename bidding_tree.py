@@ -331,7 +331,7 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
             return ('2♦', '2Cs-2Ds')
 
     if is2Cs_pass_2Ds_pass(current_bidding):
-        if points >= 22:
+        if points >= 22 and sansverdeling:
             return ('2SA', '2Cs-2Ds-2SA')
         elif color_hs == '♥' or color_hs == '♠':
             return ('2' + color_hs, '2Cs-2Ds-2x')
@@ -355,25 +355,25 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
             else: return ('pass', 'normal_pass')
     # tegenstanders bieden tussen
 
-    if OpInL1(current_bidding):
+    if isOpInL1(current_bidding):
         if points >= 6: 
             if biddingIsAllowed('1' + color_hs): return ('1' + color_hs, 'OpTussenbiedenRe')
             else: 
                 if points >= 10: return ('2' + color_hs, 'OpTussenbiedenRe')
                 else: return ('1SA', 'OpTussenbiedenRe')
     
-    if OpinL1PaP(current_bidding):
+    if isOpInL1PaP(current_bidding):
         if highest_series >= 6: return ('2' + color_hs, '6krt_herhalen')
         if points >= 15: 
             if biddingIsAllowed(current_bidding, '1' + color_shs): return ('1' + color_shs)
             else: return ('pass', 'normal_pass')
 
-    if OpinL2M(current_bidding):
+    if isOpinL2M(current_bidding):
         if color_hs in current_bidding[0] and highest_series >= 5:
             if biddingIsAllowed(current_bidding, '2' + color_hs): return ('2' + color_hs, 'OpBiedenPreemt')
             if points >= 10 and biddingIsAllowed(current_bidding, '3' + color_hs): return ('3' + color_hs, 'OpBiedenPreemt')
     
-    if OpInL2MPaP(current_bidding):
+    if isOpInL2MPaP(current_bidding):
         return ('pass', 'theybeatyou!,dealwithit')
 
     #going to the manch with partner after fit was founded

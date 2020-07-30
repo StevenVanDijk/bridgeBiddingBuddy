@@ -144,38 +144,34 @@ def is2Cs_open(current_bidding):
 
 def is2Cs_pass_2Ds_pass(current_bidding):
     remove_starting_passes(current_bidding)
-    if len(current_bidding) > 4:
-        if current_bidding[0] == '2♣':
-            if current_bidding[1] == 'pass':
-                if current_bidding[2] == '2♦':
-                    return True
+    if len(current_bidding) == 4:
+        if current_bidding[0] == '2♣' and current_bidding[2] == '2♦':
+            if current_bidding[1]  == 'pass' and current_bidding[3] == 'pass':
+                return True
     return False
 
 def is2Cs_pass_2Hs_pass(current_bidding):
     remove_starting_passes(current_bidding)
-    if len(current_bidding) > 4:
-        if current_bidding[0] == '2♣':
-            if current_bidding[1] == 'pass':
-                if current_bidding[2] == '2♥':
-                    return True
+    if len(current_bidding) == 4:
+        if current_bidding[0] == '2♣' and current_bidding[2] == '2♥':
+            if current_bidding[1] == 'pass' and current_bidding[3] == 'pass':
+                return True
     return False
 
 def is2Cs_pass_2Ss_pass(current_bidding):
     remove_starting_passes(current_bidding)
     if len(current_bidding) > 4:
-        if current_bidding[0] == '2♣':
-            if current_bidding[1] == 'pass':
-                if current_bidding[2] == '2♠':
-                    return True
+        if current_bidding[0] == '2♣' and current_bidding[2] == '2♠':
+            if current_bidding[1] == 'pass' and current_bidding[3] == 'pass':
+                return True
     return False
 
 def is2Cs_pass_2SA_pass(current_bidding):
     remove_starting_passes(current_bidding)
-    if len(current_bidding) > 4:
-        if current_bidding[0] == '2♣':
-            if current_bidding[1] == 'pass':
-                if current_bidding[2] == '2SA':
-                    return True
+    if len(current_bidding) == 4:
+        if current_bidding[0] == '2♣' and current_bidding[2] == '2SA':
+            if current_bidding[1] == 'pass' and current_bidding[3] == 'pass':
+                return True
     return False
 
 def isAnswerPa(current_bidding):
@@ -492,7 +488,7 @@ def isInfoXPaIn(current_bidding): # Information Xdoublet of Partner, Interfered
                     return True
     return False
 
-def OpInL1(current_bidding): # Oppenents Interference Level1
+def isOpInL1(current_bidding): # Oppenents Interference Level1
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 2:
         if current_bidding[0] != 'pass':
@@ -500,17 +496,19 @@ def OpInL1(current_bidding): # Oppenents Interference Level1
                 return True
     return False
 
-def OpInL1PaP(current_bidding):  # Oppenents Interference Level1 Partner Pass
+def isOpInL1PaP(current_bidding):  # Oppenents Interference Level1 Partner Pass
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 4:
         if current_bidding[0] != 'pass':
             if current_bidding[1] != 'pass' and current_bidding[3] == 'pass':
-                if current_bidding[2] == 'pass': return True 
+                if current_bidding[2] == 'pass': 
+                    return True 
             if current_bidding[1] == 'pass' and current_bidding[3] != 'pass':
-                if current_bidding[2] == 'pass': return True
+                if current_bidding[2] == 'pass': 
+                    return True
     return False
 
-def OpinL2M(current_bidding):  # Oppenents Interference Level2 or More
+def isOpinL2M(current_bidding):  # Oppenents Interference Level2 or More
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 2:
         if current_bidding[0] != 'pass' and levelofbid(current_bidding[0]) == '1':
@@ -518,7 +516,7 @@ def OpinL2M(current_bidding):  # Oppenents Interference Level2 or More
                 return True
     return False
 
-def OpInL2MPaP(current_bidding):  # Oppenents Interference Level1 or More Partner Pass
+def isOpInL2MPaP(current_bidding):  # Oppenents Interference Level1 or More Partner Pass
     remove_starting_passes(current_bidding)
     if len(current_bidding) == 4:
         if current_bidding[0] != 'pass' and levelofbid(current_bidding[0]) == '1':
@@ -529,4 +527,6 @@ def OpInL2MPaP(current_bidding):  # Oppenents Interference Level1 or More Partne
                 if levelofbid(current_bidding[3]) != '1':
                     if current_bidding[2] == 'pass': return True
     return False
-   
+
+
+

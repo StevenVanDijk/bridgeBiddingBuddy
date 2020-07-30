@@ -7,8 +7,13 @@ def biddingIsAllowed(previousBids, bid):
         currentBid.addBid(b)
     return currentBid.isAllowed(bid)
     
+north = 'N'
+east = 'E'
+south = 'S'
+west = 'W'
+playOrder = [north, east, south, west]
+
 class Bidding:
-    playOrder = ["N", "E", "S", "W"]
     biddingOrderList : List[str]
 
     current: list
@@ -24,6 +29,9 @@ class Bidding:
             for j in suitsAndSA:
                 self.biddingOrderList.append(str(i) + j)
         self.reset()
+
+    def getNextPlayOrder(self, currentPlay: str):
+        return playOrder[(playOrder.index(currentPlay) + 1) % len(playOrder)]
 
     def isSpecial(self, bid):
         return bid == 'pass' or bid == 'X' or bid == 'XX'
@@ -52,6 +60,9 @@ class Bidding:
             if self.current[-1] == 'pass' and self.current[-2] == 'pass' and self.current[-3] == 'pass':
                 return True
         return False
+
+    def needsSpecification(self):
+        return self.nrOfPoints == None or not all([color in self.nrOfCards for color in colors])
 
     def isAllowed(self, bid):
         biddings_passed = len(self.current)
@@ -88,7 +99,7 @@ class Bidding:
 
     def reset(self):
         self.current = []
-        self.whoStarts = 'N'
+        self.whoStarts = north
         self.nrOfPoints = None
         self.nrOfCards = {}
 

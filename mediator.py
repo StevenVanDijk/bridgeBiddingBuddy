@@ -67,7 +67,7 @@ class Mediator():
         name = "Bidding at " + datetime.now().strftime("%c")
         value = bid2Json(self.bidding)
         (contract, leader) = self.bidding.contract()
-        self.__storage.put(key, name=name, bid=value, contract=contract + " (" + leader + ")" )
+        self.__storage.put(key, name=name, bid=value, contract=contract + " " + leader )
         self.__switchTo(fileChooserScreen)
 
     def loadBidding(self, key):

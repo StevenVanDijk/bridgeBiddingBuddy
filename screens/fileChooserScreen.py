@@ -6,7 +6,7 @@ from kivy.uix.scrollview import ScrollView
 
 from bidding import Bidding
 from mediator import Mediator
-from uibuilders import (buildButton, buildIconButton, buildLabel,
+from uibuilders import (buildButton, buildIconButton, buildLabel, buildText,
                         buildTextInput, gap, halfGap, iconPencil, iconTrashcan)
 
 
@@ -60,14 +60,19 @@ class FileChooserScreen(Screen):
                 return cb
 
             itemLyt = BoxLayout(orientation='horizontal', size_hint=(1.0, None))
-            itemLyt.add_widget(buildButton(name + ' | ' + contract, createCallbackSelect(key), size_hint=(0.8, 1.0)))
+
             btns = GridLayout(rows=1, spacing=[gap, 0], padding=[gap, 0], size_hint=(0.2, 1.0))
             btns.add_widget(buildIconButton(iconPencil, createCallbackEdit(key)))
             btns.add_widget(buildIconButton(iconTrashcan, createCallbackDelete(key)))
 
+            itemNameLyt = GridLayout(cols=1)
+            itemNameLyt.add_widget(buildText(name))
+            itemLyt.add_widget(buildButton(itemNameLyt, createCallbackSelect(key), size_hint=(0.7, 1.0)))
+            itemLyt.add_widget(buildText(contract, size_hint=(0.1, 1.0)))
+            itemLyt.add_widget(btns)
+
             newBidBtn.bind(height=itemLyt.setter('height'))
 
-            itemLyt.add_widget(btns)
             listLyt.add_widget(itemLyt)
 
         scrlView.add_widget(listLyt)

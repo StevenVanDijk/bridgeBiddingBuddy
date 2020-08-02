@@ -1,4 +1,5 @@
 from kivy.core.window import Window
+from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import Screen
@@ -6,8 +7,9 @@ from kivy.uix.scrollview import ScrollView
 
 from bidding import Bidding
 from mediator import Mediator
-from uibuilders import (buildButton, buildIconButton, buildLabel, buildText,
-                        buildTextInput, gap, halfGap, iconPencil, iconTrashcan)
+from uibuilders import (buildButton, buildIconButton, buildLabel,
+                        buildMultilineLabel, buildText, buildTextInput, gap,
+                        halfGap, iconPencil, iconTrashcan)
 
 
 class FileChooserScreen(Screen):
@@ -65,8 +67,8 @@ class FileChooserScreen(Screen):
             btns.add_widget(buildIconButton(iconPencil, createCallbackEdit(key)))
             btns.add_widget(buildIconButton(iconTrashcan, createCallbackDelete(key)))
 
-            itemNameLyt = GridLayout(cols=1)
-            itemNameLyt.add_widget(buildText(name))
+            itemNameLyt = AnchorLayout()
+            itemNameLyt.add_widget(buildMultilineLabel(name))
             itemLyt.add_widget(buildButton(itemNameLyt, createCallbackSelect(key), size_hint=(0.7, 1.0)))
             itemLyt.add_widget(buildText(contract, size_hint=(0.1, 1.0)))
             itemLyt.add_widget(btns)

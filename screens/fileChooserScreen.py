@@ -46,7 +46,7 @@ class FileChooserScreen(Screen):
 
                 return cb
 
-            def createCallbackEdit(key):
+            def createCallbackEdit(key, name):
                 def cb(instance):
                     dad = instance.parent.parent  # GridLayout -> BoxLayout
                     dad.clear_widgets()
@@ -54,17 +54,17 @@ class FileChooserScreen(Screen):
                     def setNameCallback(instance):
                         self.mediator.changeBiddingName(key, instance.text)
 
-                    input = buildTextInput(setNameCallback, size_hint=(0.9, 1.0))
+                    input = buildTextInput(setNameCallback, size_hint=(0.8, 1.0))
                     input.text = name
                     dad.add_widget(input)
-                    dad.add_widget(buildButton('Klaar', lambda i: setNameCallback(input), size_hint=(0.1, 1.0)))
+                    dad.add_widget(buildButton('Klaar', lambda i: setNameCallback(input), size_hint=(0.2, 1.0)))
 
                 return cb
 
             itemLyt = BoxLayout(orientation='horizontal', size_hint=(1.0, None))
 
             btns = GridLayout(rows=1, spacing=[gap, 0], padding=[gap, 0], size_hint=(0.2, 1.0))
-            btns.add_widget(buildIconButton(iconPencil, createCallbackEdit(key)))
+            btns.add_widget(buildIconButton(iconPencil, createCallbackEdit(key, name)))
             btns.add_widget(buildIconButton(iconTrashcan, createCallbackDelete(key)))
 
             itemNameLyt = AnchorLayout()

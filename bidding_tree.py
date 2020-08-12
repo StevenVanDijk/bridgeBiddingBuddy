@@ -60,6 +60,9 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
     thirththighest_series = colors[1]
     secondhighest_series = colors[2] 
 
+    regelVanTwintig = False
+    if points <= 11 and points + highest_series + secondhighest_series >= 20: regelVanTwintig = True
+
     sansverdeling = False
     if highest_series <= 5 and lowest_series >= 2: sansverdeling = True     
 
@@ -84,16 +87,14 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
 
                 if points >= 10 and points <= 11:
                     return 'is3Ds'    
-
-    if not points <= 11 and (points + highest_series + secondhighest_series >= 20):
+    if not regelVanTwintig: 
         if isPotentielRondPass(current_bidding) and points <= 11: return ('pass', 'rondpass')
 
     remove_starting_passes(current_bidding)
     # opening
 
     if len(current_bidding) == 0:
-        if points <= 11 and (points + highest_series + secondhighest_series >= 20):
-            return ('1' + color_hs, 'regelVanTwintig')
+        if regelVanTwintig: return ('1' + color_hs, 'regelVanTwintig')
 
         if points >= 12:
             if points >= 15:
@@ -584,6 +585,15 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
 
         else:
             return ('pass', 'normal_pass')
+
+    if isManchByPartner(current_bidding):
+        return ('pass', 'passAfterManchPartner')
+
+    #speculations
+    if lastBidIsOps(current_bidding): return ('pass', 'normal_pass')
+    if points <= 8: return ('pass', 'normal_pass')
+    # if highest_series >= 6 and not in current_bidding and points >= 10: 
+    #     if biddingIsAllowed(current_bidding, '1' + color_hs): return ('1' + color_hs, 'normal_5Crd')
 
     return ("pass", 'unknown')            
 

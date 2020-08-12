@@ -443,7 +443,12 @@ def uitleg_nl(state):
 
     if state == 'normal_pass':
         uitleg =  '''
-        Soms heeft u gewoon niet genoeg punten, en niet een bijzonder genoege kaart om te bieden, dan moet u gewoon passen
+        Soms heeft u gewoon niet genoeg punten, en niet een bijzonder genoege kaart om te bieden, dan moet u gewoon passen. 
+        Vergeet niet dat pass niet betekend dat u niet mee doet in de bieding, met een bod geeft u belangrijke 
+        informatie maar met een pass ook, u verteld uw partner wat u niet heeft. 
+        Bijvoorbeeld als u passt in plaats van te openen, weet uw partner dat uw punten aantal onder de twaalf zit en uw niet een hele lange kaart heeft.
+        Bovendien is het belangrijk dat u geen valse informatie naar uw partner stuurd, als u opend alleen maar omdat u wilt openen en niet omdat u twaalf punten heeft,
+        weet uw partner niet wat u nou precies heeft. Terwijl als u passt u veel meer informatie geeft.
         '''
 
     if state == 'answering_partnerClr':
@@ -693,6 +698,15 @@ def uitleg_nl(state):
         Dat lief vragen doet u met 2SA.
         '''
 
+    if state == 'passAfterManchPartner':
+        uitleg = '''
+        U en uw partner hebben de manch bereikt en aangezien het niet meer punten oplevered om hoger te gaan is het alleen maar logisch zo laag moglijk te blijven en te passen.
+        
+        De manch is:
+            3 - SA
+            4 - ♥ / ♠
+            5 - ♣ / ♦
+        '''
 
     return uitleg
     

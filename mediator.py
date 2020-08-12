@@ -51,7 +51,7 @@ class Mediator():
         cleaned = re.sub(self.__patternExplanation, '\n\n', explanation)
         self.advice = (bid, cleaned)
 
-        self.showAdvice()
+        self.__switchTo(adviceScreen)
 
     def closeAdvice(self):
         self.showBidding()

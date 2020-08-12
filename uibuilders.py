@@ -89,6 +89,7 @@ def buildButton(content, callback, size_hint=None):
         widget.background_color = bcol
     else:
         widget.add_widget(content)
+
         widget.bind(width=lambda i, value: setattr(content, 'width', value))
         widget.bind(height=lambda i, value: setattr(content, 'height', value))
         widget.bind(pos=lambda i, value: setattr(content, 'pos', value))
@@ -192,25 +193,28 @@ def buildTextInput(callback, size_hint=None):
 
     return widget
 
+def buildMultilineLabel(text, size_hint=None):
+    widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
+    widget = buildLabel(text, size_hint=(1.0, None))
+    widget.multiline = True
+    widget.padding = [20, 20]
+    widget.valign = 'top'
+    widget.halign = 'left'
+    widget.markup = True
+
+    def setTextSize(instance, value):
+        widget.text_size = (value, None)
+
+    widget.bind(width=setTextSize)
+    widget.bind(texture_size=lambda i, v: setattr(widget, 'size', v))
+
+    return widget
 
 def buildText(text, size_hint=None):
     widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint
     widget = ScrollView(size_hint=widgetSizeHint)
 
-    txtView = buildLabel(text, size_hint=(1.0, None))
-    txtView.multiline = True
-    txtView.padding = [20, 20]
-    txtView.valign = 'top'
-    txtView.halign = 'left'
-    txtView.markup = True
-
-    def setTextSize(instance, value):
-        txtView.text_size = (value, None)
-
-    txtView.bind(width=setTextSize)
-    txtView.bind(texture_size=lambda i, v: setattr(txtView, 'size', v))
-
-    widget.add_widget(txtView)
+    widget.add_widget(buildMultilineLabel(text))
 
     return widget
 

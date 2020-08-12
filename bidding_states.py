@@ -19,7 +19,6 @@ def remove_starting_passes(current_bidding):
 def similar(x, y):
     return SequenceMatcher(None, x, y).ratio()
     
-
 def levelofbid(bid):
     if '1' in bid:
         return '1'
@@ -35,6 +34,13 @@ def levelofbid(bid):
         return '6'
     if '7' in bid:
         return '7'   
+    
+def lastBidIsOps(current_bidding):
+    remove_starting_passes(current_bidding)
+    if current_bidding[-1] != 'pass': return True
+    else:
+        if current_bidding[-2] != 'pass': return False
+        if current_bidding[-3] != 'pass': return True
 
 #############################################################################
 
@@ -528,5 +534,20 @@ def isOpInL2MPaP(current_bidding):  # Oppenents Interference Level1 or More Part
                     if current_bidding[2] == 'pass': return True
     return False
 
+def levelManch(current_bidding):
+    for bid in current_bidding:
+        if 'SA' in bid and levelofbid(current_bidding) == '3':
+            return '3'
+        if '♥' in bid or '♠' in bid and levelofbid(current_bidding) == '4':
+            return '4'
+        if '♦' in bid or '♣' in bid and levelofbid(current_bidding) == '5':
+            return '5'
+    return False
 
 
+
+def isManchByPartner(current_bidding):
+    remove_starting_passes(current_bidding)
+    if current_bidding % 2 == 1 and current_bidding[-1] == 'pass':
+        return True
+    return False

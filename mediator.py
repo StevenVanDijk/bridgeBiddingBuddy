@@ -51,7 +51,7 @@ class Mediator():
         cleaned = re.sub(self.__patternExplanation, '\n\n', explanation)
         self.advice = (bid, cleaned)
 
-        self.showAdvice()
+        self.__switchTo(adviceScreen)
 
     def closeAdvice(self):
         self.showBidding()
@@ -65,7 +65,7 @@ class Mediator():
 
     def closeBidding(self):
         if self.__currentBiddingKey != None:
-        key = uuid4().hex
+            key = uuid4().hex
         name = "Bidding at " + datetime.now().strftime("%c")
         value = bid2Json(self.bidding)
         (contract, leader) = self.bidding.contract()

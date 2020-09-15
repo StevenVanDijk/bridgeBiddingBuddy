@@ -1,13 +1,22 @@
 from difflib import SequenceMatcher
 
-def remove_starting_passes(current_bidding):
+def passes_are_back(current_bidding):
     count_pass = 0
+    for elem in current_bidding:
+        if elem == 'pass':
+            count_pass += 1
+        else: 
+            break
+    while count_pass > 0:
+        current_bidding.append('pass')
+        count_pass -= 1
+
+def remove_starting_passes(current_bidding):
     done = False
     while not done:
         if len(current_bidding) >= 1:
             if current_bidding[0] == 'pass':
                 current_bidding.remove('pass')
-                count_pass += 1
                 if len(current_bidding) == 0:
                     done = True
             else:

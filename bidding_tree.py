@@ -69,16 +69,16 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
     def Legal(schoppen, harten, ruiten, klaver):
         if klaver >= 5:
             if harten < 4 and schoppen < 4:
-                return 'is2Cs'
+                if biddingIsAllowed(current_bidding, '2♣'):
+                    return 'is2Cs'
 
         if klaver == 4:
             if harten == 3 and ruiten == 3 and klaver == 3:
                 return 'is2Cs'
         
         if klaver <= 6:
-            if points >= 12:
-                if schoppen < 4 and harten < 4:
-                    return 'is3Cs'
+            if points >= 12 and schoppen < 4 and harten < 4:
+                return 'is3Cs'
 
         if ruiten >= 4:
             if harten < 4 and schoppen < 4:
@@ -87,6 +87,7 @@ def bids(current_bidding, points, schoppen, harten, ruiten, klaver):
 
                 if points >= 10 and points <= 11:
                     return 'is3Ds'    
+
     if not regelVanTwintig: 
         if isPotentielRondPass(current_bidding) and points <= 11: return ('pass', 'rondpass')
 

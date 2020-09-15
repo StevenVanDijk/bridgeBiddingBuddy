@@ -23,7 +23,7 @@ class SpecificationScreen(Screen):
         def buildNumberInSuit():
             result = []
             for color in colors:
-                result.append(buildLabel(color))
+                result.append(buildLabel('Aantal kaarten in' + ' ' + color))
 
                 def createSetterCallback(color):
                     def cb(instance, value):
@@ -62,10 +62,10 @@ class SpecificationScreen(Screen):
             return nrOfPoints
 
         questions = BoxLayout(orientation='vertical')
-        questions.add_widget(buildText("Geef informatie over uw kaarten op", size_hint=(1.0, None)))
+        questions.add_widget(buildText("Hoe ziet uw hand eruit?", size_hint=(1.0, None)))
 
         gridLyt = GridLayout(cols=2)
-        gridLyt.add_widget(buildLabel('Punten'))
+        gridLyt.add_widget(buildLabel('Totaal aantal punten'))
         gridLyt.add_widget(buildInputNumberOfPoints())
         for w in buildNumberInSuit():
             gridLyt.add_widget(w)

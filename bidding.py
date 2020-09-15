@@ -135,9 +135,9 @@ class Bidding:
         if lastPlayer in [east, west]:
             return firstToPlayColorOW[lastColor]
 
-        raise NotImplementedError()
+        return None
 
     def contract(self):
         normalBids = [ bid for bid in self.current if not self.isSpecial(bid) ]
-        contract = None if len(normalBids) == 0 else normalBids[-1]
+        contract = "AP" if len(normalBids) == 0 else normalBids[-1]
         return (contract, self.getLeader())

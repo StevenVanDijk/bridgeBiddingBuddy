@@ -9,7 +9,7 @@ from bidding_tree import bids
 from constants import clubs, colors, diamonds, hearts, spades
 from mediator import Mediator
 from uibuilders import (
-    ButtonKind, buildButton, buildLabel, buildNumericInput, buildToggle, buildMenu,
+    ButtonKind, buildButton, buildLabel, buildNumericInput, buildToggle, buildMenu, buildText,
     colors, gap, halfGap, smallSize)
 
 
@@ -135,7 +135,10 @@ class BiddingScreen(Screen):
         topLayout = BoxLayout(orientation='vertical', size_hint=(1.0, 0.2))
         topLayout.add_widget(self.buildHeaders())
 
-        currentBidding = self.buildCurrentBidding()
+        if len(self.mediator.bidding.current) == 0:
+            currentBidding = buildText('Bumba')
+        else:
+            currentBidding = self.buildCurrentBidding()
 
         if (not self.mediator.bidding.finished()):
             bottom = BoxLayout(

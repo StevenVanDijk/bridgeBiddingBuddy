@@ -24,6 +24,7 @@ class Mediator():
     bidding: Bidding = Bidding()
     advice: str = None
 
+    __currentBiddingKey: str = None
     __storage = JsonStore('allbids.json')
     __patternExplanation = re.compile('\n[\t ]+')
     __switchTo: Callable[[str], None]
@@ -53,17 +54,18 @@ class Mediator():
         self.__switchTo(adviceScreen)
 
     def closeAdvice(self):
-        self.__switchTo(biddingScreen)
+        self.showBidding()
 
     def editBidding(self, bidding: Bidding):
         self.setBidding(bidding)
         if (bidding.needsSpecification()):
-            self.__switchTo(specificationScreen)
+            self.showSpecification()
         else:
-            self.__switchTo(biddingScreen)
+            self.showBidding()
 
     def closeBidding(self):
-        key = uuid4().hex
+        if self.__currentBiddingKey != None:
+            key = uuid4().hex
         name = "Bidding at " + datetime.now().strftime("%c")
         value = bid2Json(self.bidding)
         (contract, leader) = self.bidding.contract()
@@ -73,24 +75,29 @@ class Mediator():
 
     def loadBidding(self, key):
         bidding = json2Bid(self.__storage.get(key)['bid'])
+        self.__currentBiddingKey = key
         self.editBidding(bidding)
 
     def deleteBidding(self, key):
         self.__storage.delete(key)
-        self.__switchTo(fileChooserScreen)
+        self.showBiddingChooser()
 
     def changeBiddingName(self, key, value):
         self.__storage.put(key, bid=self.__storage.get(key)['bid'], contract=self.__storage.get(key)['contract'], name=value)
-        self.__switchTo(fileChooserScreen)
+        self.showBiddingChooser()
+
+    def closeSpecification(self):
+        if (not self.bidding.needsSpecification()):
+            self.showBidding()
 
     def showSpecification(self):
         self.__switchTo(specificationScreen)
 
-    def closeSpecification(self):
-        if (not self.bidding.needsSpecification()):
-            self.__switchTo(biddingScreen)
+    def showBidding(self):
+        self.__switchTo(biddingScreen)
 
     def showBiddingChooser(self):
+        self.__currentBiddingKey = None
         self.__switchTo(fileChooserScreen)
     
     def showCredits(self):

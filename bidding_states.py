@@ -556,7 +556,9 @@ def levelManch(current_bidding):
 
 
 def isManchByPartner(current_bidding):
-    remove_starting_passes(current_bidding)
-    if current_bidding % 2 == 1 and current_bidding[-1] == 'pass':
-        return True
+    if current_bidding[-1] != 'pass': return False
+    if current_bidding[-2] != 'pass' and levelManch(current_bidding) in ('3', '4', '5'): return True
     return False
+
+        
+    

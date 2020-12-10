@@ -136,7 +136,7 @@ class BiddingScreen(Screen):
         topLayout.add_widget(self.buildHeaders())
 
         if len(self.mediator.bidding.current) == 0:
-            currentBidding = buildText('Bumba')
+            currentBidding = buildText('Kies de dealer door op de knop van de juiste windrichting te klikken. \n\nVoer een bod in door de combinatie op de knoppen beneden te kiezen.\n\nKlik op \'?\' voor een advies!')
         else:
             currentBidding = self.buildCurrentBidding()
 

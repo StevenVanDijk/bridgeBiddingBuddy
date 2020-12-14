@@ -1,4 +1,4 @@
-__version__ = "0.0.11"
+__version__ = "0.0.12"
 
 from kivy.app import App
 from kivy.core.window import Window

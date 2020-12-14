@@ -276,7 +276,7 @@ def uitleg_nl(state):
 
    
 
- if state == 'AnswerJacoby':
+    if state == 'AnswerJacoby':
         uitleg = '''
         Uw partner weet dat uw laagste kaart een doubleton is, en dat u 15-17 punten heeft.
         Samen 8 kaarten heet een fit (met een fit kunt u in die kleur spelen), dus minimaal 2 + 5 is bijna een fit.
@@ -479,10 +479,10 @@ def uitleg_nl(state):
         Maar soms kunt u dus niets bieden, omdat u dan of niet voldoet aan de punten regel of de vierkaart regel.
         Dan zit u vast, dan is er nog maar een optie en dat is 1SA bieden, waarmee u aangeeft dat u minimaal bent en niets kunt bieden.
         '''
-        
+                
     if state == 'answering_partner_min':
         uitleg = '''
-        Uw partner heeft aangegeven een kleur te hebben maar niet dezelfde kleur als u.
+        Uw partner heeft aangegeven een kleur te hebben maar niet dezelfde kleur als u heeft.
         U wilt niet meer punten, en kaartwaarde aangeven dan u heeft dus soms is de enige optie, 1SA te bieden.
         Daarmee geeft 12-14 punten aan en niet overwaarde ergens in, kortom een minimale hand.
         '''
@@ -498,79 +498,80 @@ def uitleg_nl(state):
         uitleg = '''
         Soms heeft u meer dan een goede kleur.
         U laat vanzelfsprekend eerst de beste kaart horen maar het kan van belang zijn voor uw partner om meer informatie te hebben.
-        Zoals of u een tweede kaart hebt, of te wel een kaart die minder goed is dan de kaart die als eerst heeft laten weten maar wel van belang is.        
+        Zoals of u een tweede kaart hebt, oftewel een kaart die minder goed is dan de kaart die als eerst heeft laten weten maar wel van belang is.        
         '''
     
     if state == 'answerPaLevel2':
         uitleg = '''
-        Uw tegenstanders doen vervelend bij tussenbieden wat betekend dat u uw partner niet meer op 1-niveau kan vertellen wat uw beste kleur is.
-        Maar dat betekend niet dat u dat helemaal niet meer kunt doen.
+        Uw tegenstanders doen vervelend door tussen te bieden wat betekent dat u uw partner niet meer op 1-niveau kan vertellen wat uw beste kleur is.
+        Maar dat betekent niet dat u dat helemaal niet meer kunt doen.
         Met 10 punten of meer mag u namelijk gewoon uw beste kleur op 2-niveau bieden.
         '''
 
     if state == 'fitFoundedNoPoints':
         uitleg = '''
-        U heeft uw fit gevonden wat betekend dat de volgende vraag is of jullie voldoende punten hebben om naar de manch te gaan.
+        U heeft uw fit gevonden wat betekent dat de volgende vraag is of jullie voldoende punten hebben om naar de manch te gaan.
         Om de manch te spelen heeft u ruwweg 25 punten nodig, en als u die niet heeft is het ook niet nodig om hoger te gaan en is er dus wijsheid in passen.
         '''
 
     if state == 'fitFoundedInvite':
         uitleg = '''
-        U heeft uw fit gevonden wat betekend dat de volgende vraag is of jullie voldoende punten hebben om naar de manch te gaan.
+        U heeft uw fit gevonden wat betekent dat de volgende vraag is of jullie voldoende punten hebben om naar de manch te gaan.
         Om de manch te spelen heeft u ruwweg 25 punten nodig.
-        Uw partner beloofd met zijn bod op 2-niveau 6-9, als u tussen de 14 en 18 punten heeft is er nog kans op de manch.
+        Uw partner belooft met zijn bod op 2-niveau 6-9, als u tussen de 14 en 18 punten heeft is er nog kans op de manch.
         Maar de manch is niet gegarandeerd, dus moet u eerst aan uw partner vragen of hij / zij genoeg heeft om naar de manch te gaan.
-        Dat doet u met een bid op 3-niveau, een invite.
+        Dat doet u met een bod op 3-niveau dat heet een invite.
         '''
 
     if state == 'fitFoundedInviteU2':
         uitleg = '''
-        De ideale manch is 4 in de hoge kleuren wat betekend dat als u een fit heeft gevonden in de hoge kleuren u daar op handeld.
-        Dus als u weet dat uw partner een vijfkaart hoog heeft, doordat hij dat heeft geopend, en u heeft een driekaart of meer in die kleur weet u dat als er een potentiele manch in zit dat in die kleur gaat zijn.
+        De ideale manch is 4 in de hoge kleuren wat betekent dat als u een fit heeft gevonden in de hoge kleuren u daar op handelt.
+        Dus als u weet dat uw partner een vijfkaart hoog heeft, doordat hij / zij dat heeft geopend, en u heeft een driekaart of meer in die kleur weet u dat als er een potentiële manch in zit de manch in die kleur gaat zijn.
         Dus als u nog een vijfkaart in een andere kleur heeft is dat minder belangrijk dan uw partner laten weten dat jullie een fit hebben in de hoge kleuren.
-        Ok, u heeft uw fit gevonden wat betekend dat de volgende vraag is of jullie voldoende punten hebben om naar de manch te gaan.
+        Ok, u heeft uw fit gevonden wat betekent dat de volgende vraag is of jullie voldoende punten hebben om naar de manch te gaan.
         Om de manch te spelen heeft u ruwweg 25 punten nodig.
         U heeft 6-9 punten, als uw partner meer dan 18 punten heeft is er nog kans op de manch.
         Maar de manch is niet gegarandeerd, dus moet u eerst aan uw partner vragen of hij / zij genoeg heeft om naar de manch te gaan.
-        Dat doet u met een bid op 2-niveau, een invite.
+        Dat doet u met een bod op 2-niveau dat heet een invite.
         '''
 
     if state == 'fitFoundedInviteU3':
         uitleg = '''
-        De ideale manch is 4 in de hoge kleuren wat betekend dat als u een fit heeft gevonden in de hoge kleuren u daar op handeld.
-        Dus als u weet dat uw partner een vijfkaart hoog heeft, doordat hij dat heeft geopend, en u heeft een driekaart of meer in die kleur weet u dat als er een potentiele manch in zit dat in die kleur gaat zijn.
+        De ideale manch is 4 in de hoge kleuren wat betekent dat als u een fit heeft gevonden in de hoge kleuren u daar op handelt.
+        Dus als u weet dat uw partner een vijfkaart hoog heeft, doordat hij dat heeft geopend, en u heeft een driekaart of meer in die kleur weet u dat als er een potentiële manch in zit dat in die kleur gaat zijn.
         Dus als u nog een vijfkaart in een andere kleur heeft is dat minder belangrijk dan uw partner laten weten dat jullie een fit hebben in de hoge kleuren.
         Ok, u heeft uw fit gevonden wat betekend dat de volgende vraag is of jullie voldoende punten hebben om naar de manch te gaan.
         Om de manch te spelen heeft u ruwweg 25 punten nodig.
         U heeft 10/11 punten, als uw partner 14/15 punten heeft is er nog kans op de manch.
         Maar de manch is niet gegarandeerd, dus moet u eerst aan uw partner vragen of hij / zij genoeg heeft om naar de manch te gaan.
-        Dat doet u met een bid op 3-niveau, een invite.
+        Dat doet u met een bod op 3-niveau dat heet een invite.
         '''
 
     if state == 'fitFoundedManchU':
         uitleg = '''
-        De ideale manch is 4 in de hoge kleuren wat betekend dat als u een fit heeft gevonden in de hoge kleuren u daar op handeld.
-        Dus als u weet dat uw partner een vijfkaart hoog heeft, doordat hij dat heeft geopend, en u heeft een driekaart of meer in die kleur weet u dat als er een potentiele manch in zit dat in die kleur gaat zijn.
+        De ideale manch is 4 in de hoge kleuren wat betekent dat als u een fit heeft gevonden in de hoge kleuren u daar op handelt.
+        Dus als u weet dat uw partner een vijfkaart hoog heeft, doordat hij dat heeft geopend, en u heeft een driekaart of meer in die kleur weet u dat als er een potentiële manch in zit dat in die kleur gaat zijn.
         Dus als u nog een vijfkaart in een andere kleur heeft is dat minder belangrijk dan uw partner laten weten dat jullie een fit hebben in de hoge kleuren.
         Ok, u heeft uw fit gevonden wat betekend dat de volgende vraag is of jullie voldoende punten hebben om naar de manch te gaan.
         Om de manch te spelen heeft u ruwweg 25 punten nodig.
-        U heeft net als uw partner, een opening, dat betekend dat jullie sowieso genoeg punten hebben om naar de manch te gaan.
+        U heeft, net als uw partner, een opening dat betekent dat jullie sowieso genoeg punten hebben om naar de manch te gaan.
         Als u een hoge kleur heeft gevonden waarin jullie de manch kunnen spelen en u weet dat er genoeg punten bij jullie zitten om naar de manch te gaan is het logisch het gewoon te bieden.
         '''
+
 
     if state == 'fitFoundedU2Cs':
         uitleg = '''
         De ideale manch is 4 in de hoge kleuren, maar soms zit dat er niet in en moeten jullie op zoek naar een andere optie, bijvoorbeeld sans of de lage kleuren.
-        Als uw partner 1♣ opent betekend dat dat hij of een erg gebalanceerde kaart heeft, of klaveren. 
-        Idealiter verteld u eerst uw hoge kleuren maar soms is dat gewoon geen optie dus kunt u als u een vijfkaart heeft of een vierkaart met in de rest van de kleuren een driekaart uw partners klaveren steunen.
+        Als uw partner 1♣ opent betekent dat dat hij of een erg gebalanceerde kaart heeft, of klaveren. 
+        Idealiter vertelt u eerst uw hoge kleuren maar soms is dat gewoon geen optie dus kunt u als u een vijfkaart heeft of een vierkaart met in de rest van de kleuren een driekaart uw partners klaveren steunen.
         '''
 
     if state == 'fitFoundedU3Cs':
         uitleg = '''
-        Uw partner beloofd met een 1♣ opening minimaal een tweekaart klaveren, als u een zeskaart heeft betekend dat een fit in de klaveren.
+        Uw partner belooft met een 1♣ opening minimaal een doubleton klaveren, als u een zeskaart heeft betekent dat dat jullie een fit in de klaveren hebben.
         Onthoud wel, een fit in de klaveren is veel minder waard dan een fit in de hoge kleuren. 
         Als uw partner een vijfkaart in een van de hoge kleuren had gehad, had hij / zij die geboden dus dat is niet aan de orde.
-        Dat betekend ook dat als u niet een vierkaart in een van de hoge kleuren heeft u die niet hoeft te bieden en ook geen aandacht meer hoeft te geven aan die kleuren.
+        Dat betekent ook dat als u niet een vierkaart in een van de hoge kleuren heeft u die niet hoeft te bieden en ook geen aandacht meer hoeft te geven aan die kleuren.
         Dus kunt u veilig klaveren bieden, door 3♣ te bieden in plaats van 2, geeft u aan dat jullie manch waarde bezitten en een fit in de klaveren.
         Het is dan aan uw partner om te kiezen tussen 3SA en 5♣.
         '''
@@ -578,26 +579,26 @@ def uitleg_nl(state):
     if state == 'fitFoundedU2Ds':
         uitleg = '''
         Als u niets te vertellen heeft in de hoge kleuren, dus een vierkaart of zelfs vijfkaart, kunt u net zo goed vertellen wat u wel heeft. 
-        Bijvoorbeeld een vierkaart, of vijfkaart, in partners eerstgeboden kleur. 
-        Maar u bent niet super sterk, dat is ook informatie voor uw partner. Daarom bied u voorzichtig 2♦.
+        Bijvoorbeeld een vierkaart, of vijfkaart, in partners eerst geboden kleur. 
+        Maar u bent niet super sterk wat ook informatie voor uw partner is. Daarom biedt u voorzichtig 2♦.
         '''
 
     if state == 'fitFoundedU3Ds':
         uitleg = '''
         Als u niets te vertellen heeft in de hoge kleuren, dus een vierkaart of zelfs vijfkaart, kunt u net zo goed vertellen wat u wel heeft. 
-        Bijvoorbeeld een vierkaart, of vijfkaart, in partners eerstgeboden kleur. 
+        Bijvoorbeeld een vierkaart, of vijfkaart, in partners eerst geboden kleur. 
 
-        Uw partner beloofd met een 1♦ opening minimaal een vierkaart klaveren, als u een vierkaart heeft betekend dat een fit in de ruiten.
+        Uw partner belooft met een 1♦ opening minimaal een vierkaart klaveren, als u een vierkaart heeft betekent dat een fit in de ruiten.
         Onthoud wel, een fit in de lage kleuren is veel minder waard dan een fit in de hoge kleuren. 
         Als uw partner een vijfkaart in een van de hoge kleuren had gehad, had hij / zij die geboden dus dat is niet aan de orde.
-        Dat betekend ook dat als u niet een vierkaart in een van de hoge kleuren heeft u die niet hoeft te bieden en ook geen aandacht meer hoeft te geven aan die kleuren.
+        Dat betekent ook dat als u niet een vierkaart in een van de hoge kleuren heeft u die niet hoeft te bieden en ook geen aandacht meer hoeft te geven aan die kleuren.
         Dus kunt u veilig klaveren bieden, door 3♣ te bieden in plaats van 2, geeft u aan dat jullie manch waarde bezitten en een fit in de klaveren.
         Het is dan aan uw partner om te kiezen tussen 3SA en 5♦.
         '''
 
     if state == 'fitFoundedManch':
         uitleg = '''
-        U heeft uw fit gevonden wat betekend dat de volgende vraag is of jullie voldoende punten hebben om naar de manch te gaan.
+        U heeft uw fit gevonden wat betekent dat de volgende vraag is of jullie voldoende punten hebben om naar de manch te gaan.
         Om de manch te spelen heeft u ruwweg 25 punten nodig.
         Uw partner beloofd met zijn bod op 2-niveau 6-9, dus als u meer dan 18 punten hebt is de manch haast gegarandeerd en is het dus ook logisch die te bieden.
         '''
@@ -613,22 +614,22 @@ def uitleg_nl(state):
         uitleg = '''
         Er is iets gebeurd wat BidBud niet helemaal snapt, of voorzien had.
         Dit kan liggen aan een gebrek aan BidBuds kennis of er is iets niet helemaal goed gegaan in de bieding.
-        Als het ligt aan BidBuds kennis hoopt hij bij de volgende verzie u wel van dienst te zijn.
+        Als het ligt aan BidBuds kennis hoopt hij bij de volgende versie u wel van dienst te kunnen zijn.
         '''
     
     if state == 'tussenbieden':
         uitleg = '''
-        Als de tegenstanders openen betekend dat niet meteen dat u en uw partner helemaal niet meer mee mogen doen.
-        En omdat als uw tegenstanders veel punten hebben, ze toch niet stoppen met bieden, met relatief weinig punten u al veilig bemoeien met de bieding.
-        Dat is een reden om tussen te bieden maar de voornaamste reden is informatie.
-        Het hele biedingproces gaat erom, zoveel mogelijk informatie naar uw partner te krijgen en dit is een perfecte situatie om informatie naar uw partner te krijgen over uw hand.
-        En ookal wordt het niets weet uw partner wel tijdens het spelen waar u sterk in bent.
+        Als de tegenstanders openen betekent dat niet meteen dat u en uw partner helemaal niet meer mee mogen doen.
+        En omdat als uw tegenstanders veel punten hebben ze toch niet stoppen met bieden, kunt u met relatief weinig punten u al veilig bemoeien met de bieding.
+        De bieding van de tegenstanders veilig verstoren is een reden om tussen te bieden maar de voornaamste reden is informatie aan uw partner kunnen geven.
+        Het hele biedingsproces gaat erom zoveel mogelijk informatie naar uw partner te krijgen en dit is een perfecte situatie om informatie naar uw partner te krijgen over uw hand.
+        En ook al wordt het niets uw partner weet wel tijdens het spelen waar u sterk in bent.
         '''
 
     if state == 'infoX':
         uitleg = '''
-        Soms heeft u een opening maar is uw tegenstander u voor en weet u niet goed wat u nu moet doen.
-        U heeft veel punten en wilt dat dus op een zo'n effictiefste manier aan uw partner laten weten.
+        Soms heeft u een opening, maar is uw tegenstander u voor en weet u niet goed wat u nu moet doen.
+        U heeft veel punten en wilt dat dus op een zo'n effectief mogelijke manier aan uw partner laten weten.
         Daar is het informatie doublet voor, u doubleert op de opening van de tegenstanders en uw partner weet dat u een opening heeft.
         '''
 
@@ -647,9 +648,13 @@ def uitleg_nl(state):
         U krijgt als het ware 2 beurten achter elkaar en dat is een goede kans om uw partner goed te vertellen wat u in uw handen hebt.
         U weet heel precies wat uw partner heeft en kunt dat goed gebruiken om te bepalen in welk contract jullie gaan zitten, u weet dat uw partner meer dan 15 punten heeft bijvoorbeeld.
         Als u dus meer dan 10 punten heeft weet u dat er een manch in gaat zitten, u weet ook dat dat of 3SA of 4♥/♠ gaat zijn.
-        Welke het wordt hangt af van of jullie een fit hebben in de hoge kleuren, en dat hangt weer af van of uw partner een tweekaart of meer heeft.
+        Welke het wordt hangt af van of jullie een fit hebben in de hoge kleuren, en dat hangt weer af van of uw partner een doubleton of meer heeft.
         Door 3SA te bieden vraagt u aan uw partner welk contract hem beter uitkomt, 3SA of 4 in de hoge kleuren.
         '''
+
+
+
+
 
     if state == 'Jacoby-2SA':
         uitleg = '''
@@ -659,16 +664,16 @@ def uitleg_nl(state):
         U krijgt als het ware 2 beurten achter elkaar en dat is een goede kans om uw partner goed te vertellen wat u in uw handen hebt.
         U weet heel precies wat uw partner heeft en kunt dat goed gebruiken om te bepalen in welk contract jullie gaan zitten, u weet dat uw partner meer dan 15 punten heeft bijvoorbeeld.
         U weet dus ook dat als er een manch in zit dat 3SA of 4♥/♠ gaat zijn.
-        Met 8/9 punten is het mogelijk dat er nog een manch in zit, wat betekend dat u niet kunt passen, u wilt eerst van uw partner weten of er een manch in zit. 
-        Welke het wordt hangt af van of jullie een fit hebben in de hoge kleuren, en dat hangt weer af van of uw partner een tweekaart of meer heeft.
-        Door 2SA te bieden vraagt u aan uw partner of hij/zij maximaal is of minimaal en welk contract hem beter uitkomt, 3SA of 4 in de hoge kleuren.
+        Met 8/9 punten is het mogelijk dat er nog een manch in zit, wat betekent dat u niet kunt passen, u wilt eerst van uw partner weten of er een manch in zit. 
+        Welke het wordt hangt af van of jullie een fit hebben in de hoge kleuren, en dat hangt weer af van of uw partner een doubleton of meer heeft.
+        Door 2SA te bieden vraagt u aan uw partner of hij / zij maximaal is of minimaal en welk contract hem beter uitkomt, 3SA of 4 in de hoge kleuren. Het kan ook nog zo zijn dat uw partner minimaal is en er dus helemaal geen manch in zit, dan zal uw partner passen.
         '''
 
     if state == 'answeringJacoby5Crd':
         uitleg = '''
         U heeft Jacoby gedaan om uw partner te laten weten dat u een vijfkaart in die kleur heeft, net niet genoeg voor een fit.
         Maar als u overwaarde heeft, een zeskaart dus, hebben jullie ineens wel een fit in die kleur en kunt u aan nadenken of er een manch in zit.
-        Dus als u meer dan 10 punten heeft en een zeskaart in die hoge kleur is het meestal een goed idee om eerst Jacoby te doen en dan nadat uw partner de transfer heeft beantwoord, de manch te bieden.
+        Dus als u meer dan 10 punten heeft en een zeskaart in die hoge kleur is het meestal een goed idee om eerst Jacoby te doen en dan nadat uw partner de transfer heeft beantwoordt, de manch te bieden.
         Maar soms heeft u niet meer dan 10 punten en heeft u mogelijke manch waarde en wilt u dat aan uw partner laten weten.
         U wilt laten weten hoeveel punten u heeft en dat u een zeskaart heeft in die kleur, daarom herhaald u uw langste kleur
         '''
@@ -676,8 +681,8 @@ def uitleg_nl(state):
     if state == 'X-1SA-tussenbieden':
         uitleg = '''
         Met uw hand wilde u 1SA openen en nu doet uw tegenstander dat, dat is vervelend, en dus moet u een oplossing bedenken.
-        U weet dat uw tegenstanders 15+ punten hebben en u weet ook dat u 15 punten heeft, u weet dus ook dat u in het tegenspel erg dwars kan zitten aangezien de snits enzo allemaal bij u zitten.
-        Daarom kunt u doubleren, dat verteld uw partner dat u sterk bent en als de partner van de tegenstander niets bied zit u ook nog eens in een fijn contract.
+        U weet dat uw tegenstanders 15+ punten hebben en u weet ook dat u 15 punten heeft, u weet dus ook dat u in het tegenspel erg dwars kan zitten aangezien de snits en zo allemaal bij u zitten.
+        Daarom kunt u doubleren, dat vertelt uw partner dat u sterk bent en als de partner van de tegenstander niets biedt zit u ook nog eens in een fijn contract.
         '''
 
     if state == 'Clr-1SA-tussenbieden':
@@ -693,8 +698,8 @@ def uitleg_nl(state):
         Uw partner heeft daarom ook 6-9 punten en geen vierkaart in een van de kleuren die hij / zij nog mogelijk had kunnen bieden.
         Nu is het aan u om te bedenken in welk contract jullie kunnen eindigen.
         U heeft een uitermate sterke hand dus u wilt niet in 1SA eindigen, maar u heeft ook niet een overweldigende kleur die u kunt spelen.
-        Dus sans is de goede 'kleur' nu is altijd de volgende vraag, manch?
-        U heeft meer dan 19 punten, uw partner 6-9, 19 + 6 = 25, dat zijn genoeg punten om de manch te halen dus het is alleen maar logisch die dan ook te bieden.
+        Dus sans is de goede 'kleur' en is altijd nog de vraag, manch?
+        U heeft meer dan 19 punten, uw partner minimaal 6 (en maximaal 9), en 19 + minimaal 6 = minimaal 25, dat zijn genoeg punten om de manch te halen dus het is alleen maar logisch die dan ook te bieden.
         '''
 
     if state == '2SAtoWeak1SA':
@@ -703,15 +708,15 @@ def uitleg_nl(state):
         Uw partner heeft daarom ook 6-9 punten en geen vierkaart in een van de kleuren die hij / zij nog mogelijk had kunnen bieden.
         Nu is het aan u om te bedenken in welk contract jullie kunnen eindigen.
         U heeft een uitermate sterke hand dus u wilt niet in 1SA eindigen, maar u heeft ook niet een overweldigende kleur die u kunt spelen.
-        Dus sans is de goede 'kleur' nu is altijd de volgende vraag, manch?
-        U heeft 16-18 punten, 6 + 16 = 22, 9 + 16 = 25, oftewel misschien zit er manch in, misschien niet.
-        En degene die weet of er manch in zit is uw partner, die weet namelijk hoeveel punten hij precies heeft, en door het gewoon lief aan uw partner te vragen kunt u erachter komen wat het precies is.
+        Dus sans is de goede 'kleur' nu is altijd nog de vraag, manch?
+        U heeft 16-18 punten, als uw partner 6 punten heeft hebben jullie 22 punten (6 + 16 = 22), als uw partner 9 punten heeft hebben jullie samen 25 punten (9 + 16 = 25), met andere woorden misschien zit er manch in, misschien niet.
+        En degene die weet of er manch in zit is uw partner, die weet namelijk hoeveel punten hij precies heeft, en door het gewoon lief aan uw partner te vragen kunt u erachter komen welke van de twee het precies is.
         Dat lief vragen doet u met 2SA.
         '''
 
     if state == 'passAfterManchPartner':
         uitleg = '''
-        U en uw partner hebben de manch bereikt en aangezien het niet meer punten oplevered om hoger te gaan is het alleen maar logisch zo laag moglijk te blijven en te passen.
+        U en uw partner hebben de manch bereikt en aangezien het niet meer punten oplevert om hoger te gaan is het alleen maar logisch zo laag mogelijk te blijven en te passen.
         
         De manch is:
             3 - SA

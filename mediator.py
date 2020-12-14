@@ -66,6 +66,8 @@ class Mediator():
     def closeBidding(self):
         if self.__currentBiddingKey != None:
             key = uuid4().hex
+        else:
+            key = self.__currentBiddingKey
         name = "Bidding at " + datetime.now().strftime("%c")
         value = bid2Json(self.bidding)
         (contract, leader) = self.bidding.contract()

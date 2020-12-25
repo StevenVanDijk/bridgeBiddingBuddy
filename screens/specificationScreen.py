@@ -3,7 +3,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import Screen
 
 from mediator import Mediator
-from uibuilders import ButtonKind, buildButton, buildLabel, buildMenu, buildNumericInput, buildText
+from uibuilders import ButtonKind, buildButton, buildLabel, buildMultilineLabel, buildMenu, buildNumericInput, buildText
 
 from constants import colors
 
@@ -23,7 +23,7 @@ class SpecificationScreen(Screen):
         def buildNumberInSuit():
             result = []
             for color in colors:
-                result.append(buildLabel('Aantal kaarten in' + ' ' + color))
+                result.append(buildMultilineLabel('Aantal kaarten in' + ' ' + color))
 
                 def createSetterCallback(color):
                     def cb(instance, value):
@@ -65,7 +65,7 @@ class SpecificationScreen(Screen):
         questions.add_widget(buildText("Hoe ziet uw hand eruit?", size_hint=(1.0, None)))
 
         gridLyt = GridLayout(cols=2)
-        gridLyt.add_widget(buildLabel('Totaal aantal punten'))
+        gridLyt.add_widget(buildMultilineLabel('Totaal aantal punten'))
         gridLyt.add_widget(buildInputNumberOfPoints())
         for w in buildNumberInSuit():
             gridLyt.add_widget(w)

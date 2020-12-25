@@ -21,6 +21,7 @@ from constants import colors
 from mediator import Mediator
 
 fontSize = 20
+hugeFontSize = fontSize * 3
 bigSize = 160
 normalSize = 80
 smallSize = 40
@@ -111,6 +112,10 @@ def buildLabel(txt, size_hint=None):
                  text=str(txt),
                  size_hint=widgetSizeHint)
 
+def buildHugeLabel(txt, size_hint=None):
+    widget = buildLabel(txt, size_hint)
+    widget.font_size = hugeFontSize
+    return widget
 
 def buildToggle(txt, isDown, callback, group=None, size_hint=None):
     widgetSizeHint = (1.0, 1.0) if size_hint == None else size_hint

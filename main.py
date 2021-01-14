@@ -8,7 +8,7 @@ from mediator import (Mediator, adviceScreen, biddingScreen, blankScreen, credit
                       fileChooserScreen, specificationScreen)
 from screens.adviceScreen import AdviceScreen
 from screens.biddingScreen import BiddingScreen
-from screens.blankScreen import BlankScree1
+from screens.blankScreen import BlankScreen
 from screens.fileChooserScreen import FileChooserScreen
 from screens.specificationScreen import SpecificationScreen
 from screens.creditsScreen import CreditsScreen

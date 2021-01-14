@@ -136,7 +136,22 @@ class BiddingScreen(Screen):
         topLayout.add_widget(self.buildHeaders())
 
         if len(self.mediator.bidding.current) == 0:
-            currentBidding = buildText('Kies de dealer door op de knop van de juiste windrichting te klikken. \n\nVoer een bod in door de combinatie op de knoppen beneden te kiezen.\n\nKlik op \'?\' voor een advies!')
+            currentBidding = buildText('''
+BridgeBiddingBuddy is een app dat beginnende bridgers die onzeker zijn over hun bieding kan helpen.
+
+U heeft zojuist ingevuld hoe uw hand eruit ziet, met die informatie en de bieding kan BidBud bepalen wat waarschijnlijk de beste volgende stap is.
+        
+Ook BidBud (de naam van het programma dat u helpt met biedingen) is niet perfect, dus lees de uitleg en denk goed na of dat past bij wat u wilt bereiken.
+        
+Druk als eerste stap op de windrichting die de leider is, en vul in welke bieding deze persoon doet.
+Als u de leider bent geldt dit uiteraard ook. 
+        
+Als u aan de beurt bent en u weet niet wat u moet doen kunt u op het vraagtekentje drukken.
+        
+Als de bieding klaar is kunt u deze bieding een naam geven door op het potloodje de drukken, zo kunt u als u de spellen nog wilt bespreken of bekijken later de bieding goed terug vinden.
+        
+Veel speel plezier! Van BidBud en van ons!
+            ''')
         else:
             currentBidding = self.buildCurrentBidding()
 
